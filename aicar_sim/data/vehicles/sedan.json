@@ -1,0 +1,8 @@
+{
+  "vehicle_type": "sedan",
+  "length_mm": 4700,
+  "width_mm": 1800,
+  "height_mm": 1450,
+  "wash_profile": "standard_sedan",
+  "notes": "Phase 1.9 mock simulation dimensions; not a real vehicle specification."
+}

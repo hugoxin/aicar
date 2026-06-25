@@ -1,0 +1,13 @@
+file_name,image_path,true_class,pred_class,confidence,correct
+sedan_local_0003.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\sedan\sedan_local_0003.jpg,sedan,sedan,0.678106,True
+sedan_local_0004.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\sedan\sedan_local_0004.jpg,sedan,sedan,0.859628,True
+sedan_local_0015.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\sedan\sedan_local_0015.jpg,sedan,sedan,0.982518,True
+sedan_local_0019.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\sedan\sedan_local_0019.jpg,sedan,sedan,0.838860,True
+suv_local_0007.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\suv\suv_local_0007.jpg,suv,suv,0.518494,True
+suv_local_0008.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\suv\suv_local_0008.jpg,suv,suv,0.872453,True
+suv_local_0010.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\suv\suv_local_0010.jpg,suv,suv,0.875057,True
+suv_local_0016.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\suv\suv_local_0016.jpg,suv,suv,0.962495,True
+mpv_local_0004.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\mpv\mpv_local_0004.jpg,mpv,mpv,0.769439,True
+mpv_local_0007.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\mpv\mpv_local_0007.jpg,mpv,suv,0.847209,False
+mpv_local_0011.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\mpv\mpv_local_0011.jpg,mpv,sedan,0.612926,False
+mpv_local_0018.jpg,F:\aicar\vehicle_type_lab\data\datasets\vehicle_type_classification\split\val\mpv\mpv_local_0018.jpg,mpv,mpv,0.808649,True

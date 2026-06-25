@@ -1,0 +1,14 @@
+recipe_name: "basic_scaffold_wash"
+description: "Placeholder wash recipe for future simulation."
+steps:
+  - name: "pre_check"
+    action: "validate_virtual_safety_state"
+  - name: "pre_rinse"
+    action: "placeholder_nozzle_motion"
+  - name: "foam"
+    action: "placeholder_foam_pass"
+  - name: "rinse"
+    action: "placeholder_rinse_pass"
+  - name: "dry"
+    action: "placeholder_dry_pass"
+

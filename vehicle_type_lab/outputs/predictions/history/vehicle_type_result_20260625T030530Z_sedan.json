@@ -1,0 +1,25 @@
+{
+  "vehicle_detected": true,
+  "vehicle_type": "sedan",
+  "confidence": 0.666374683380127,
+  "bbox": [
+    42,
+    142,
+    434,
+    365
+  ],
+  "source_image": "F:\\aicar\\vehicle_type_lab\\data\\input_images\\test_car.jpg",
+  "image_width": 449,
+  "image_height": 438,
+  "model_name": "yolo11n.pt + best.pt",
+  "model_version": "yolo-detect-plus-vehicle-type-classifier",
+  "timestamp": "2026-06-25T03:05:30.084371+00:00",
+  "notes": "YOLO detected a vehicle target. Vehicle type classifier produced a top-1 prediction. This classify pipeline is a small-sample demo and may confuse MPV/SUV boundary cases. Classified visualization saved to F:\\aicar\\vehicle_type_lab\\outputs\\predictions\\visualized\\test_car_classified.jpg.",
+  "detection_confidence": 0.8791555762290955,
+  "classification_confidence": 0.666374683380127,
+  "detector_model_name": "yolo11n.pt",
+  "classifier_model_name": "best.pt",
+  "classifier_model_path": "F:\\aicar\\vehicle_type_lab\\models\\vehicle_type_classifier\\best.pt",
+  "crop_path": "F:\\aicar\\vehicle_type_lab\\outputs\\predictions\\crops\\test_car_crop.jpg",
+  "pipeline_mode": "classify"
+}

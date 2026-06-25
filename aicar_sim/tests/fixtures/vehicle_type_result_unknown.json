@@ -1,0 +1,16 @@
+{
+  "vehicle_detected": false,
+  "vehicle_type": "unknown",
+  "confidence": 0.0,
+  "bbox": [],
+  "source_image": "fixtures/unknown.jpg",
+  "image_width": 640,
+  "image_height": 480,
+  "model_name": "yolo11n.pt + best.pt",
+  "model_version": "yolo-detect-plus-vehicle-type-classifier",
+  "timestamp": "2026-06-25T03:30:00+00:00",
+  "notes": "Fixture for unknown fallback vehicle model selection.",
+  "pipeline_mode": "classify",
+  "detection_confidence": 0.0,
+  "classification_confidence": 0.0
+}

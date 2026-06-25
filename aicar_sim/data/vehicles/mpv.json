@@ -1,0 +1,8 @@
+{
+  "vehicle_type": "mpv",
+  "length_mm": 5200,
+  "width_mm": 1950,
+  "height_mm": 1850,
+  "wash_profile": "standard_mpv",
+  "notes": "Phase 1.9 mock simulation dimensions; not a real vehicle specification."
+}

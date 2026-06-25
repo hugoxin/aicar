@@ -1,0 +1,126 @@
+# AI Car Wash Workspace
+
+这是 AI 智能无人洗车项目的总工作区。
+
+当前状态：
+
+- 阶段1：车辆识别小闭环已完成，可冻结。
+- 当前暂不进入阶段2。
+- 当前暂不创建 Demo，Demo 会在阶段1最终修补完成后单独规划。
+
+阶段1最终链路：
+
+```text
+test_car.jpg
+  -> YOLO 检测
+  -> crop
+  -> best.pt 分类 sedan/suv/mpv
+  -> vehicle_type_result.json
+  -> aicar_sim
+  -> 车辆模型
+  -> wash_profile
+```
+
+重要说明：
+
+- 当前 `best.pt` 不进入 Git，需要单独备份。
+- 当前车辆尺寸是 mock 参数。
+- 当前模型是小样本 demo，不代表商业精度。
+- 所有项目内容统一归入 `F:\aicar`。
+- 不建议在 `F:\aicar` 外创建散落目录。
+
+阶段1冻结前关键文档：
+
+- [docs\PROJECT_DIRECTORY_STRATEGY.md](docs/PROJECT_DIRECTORY_STRATEGY.md)
+- [docs\INDEX.md](docs/INDEX.md)
+- [docs\MODEL_ARTIFACTS.md](docs/MODEL_ARTIFACTS.md)
+- [docs\STAGE1_FINAL_FIX_NOTES.md](docs/STAGE1_FINAL_FIX_NOTES.md)
+- [docs\STAGE1_VEHICLE_RECOGNITION_SUMMARY.md](docs/STAGE1_VEHICLE_RECOGNITION_SUMMARY.md)
+
+当前包含：
+
+- `aicar_sim`：主仿真框架，用于无人洗车纯仿真、路径规划占位、洗车状态机占位、VirtualPLC 占位、喷嘴动画占位、日志和配置。
+- `vehicle_type_lab`：车辆识别小闭环项目，后续用于 sedan / SUV / MPV 三分类识别。
+- `external_repos`：开源参考项目存放区，只做参考，不把第三方源码复制进主项目。
+- `datasets`：统一数据目录，当前只预留结构，不下载大数据集。
+- `models`：统一模型目录，当前只预留结构，不下载大模型。
+- `docs`：总文档，记录路线、架构、边界、数据、模型、协作策略。
+- `tools`：总工作区工具脚本。
+
+建议第一步验收命令：
+
+```powershell
+python tools\check_workspace.py
+python aicar_sim\src\aicar_sim\main.py
+python vehicle_type_lab\src\vehicle_type_lab\main.py
+```
+
+车辆类型接口验收命令：
+
+```powershell
+python vehicle_type_lab\src\vehicle_type_lab\main.py --mock-type suv
+python aicar_sim\src\aicar_sim\main.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+python vehicle_type_lab\scripts\check_interface.py
+python aicar_sim\scripts\check_vehicle_type_input.py
+```
+
+YOLO 车辆检测模式：
+
+```powershell
+python vehicle_type_lab\src\vehicle_type_lab\main.py --mode detect --image vehicle_type_lab\data\input_images\test_car.jpg --save-history
+python vehicle_type_lab\scripts\check_yolo_detect.py
+```
+
+三分类数据目录检查：
+
+```powershell
+python vehicle_type_lab\scripts\check_vehicle_type_dataset.py
+```
+
+三分类图片标准化预处理：
+
+```powershell
+python vehicle_type_lab\scripts\prepare_vehicle_type_images.py --dry-run
+python vehicle_type_lab\scripts\prepare_vehicle_type_images.py --use-yolo-crop --clean-output
+```
+
+三分类 train / val 切分：
+
+```powershell
+python vehicle_type_lab\scripts\split_vehicle_type_dataset.py --dry-run
+python vehicle_type_lab\scripts\split_vehicle_type_dataset.py --clean-split
+python vehicle_type_lab\scripts\check_vehicle_type_dataset.py
+```
+
+生成 split 质检总览图：
+
+```powershell
+python vehicle_type_lab\scripts\make_vehicle_type_split_contact_sheets.py
+```
+
+三分类小模型训练：
+
+```powershell
+python vehicle_type_lab\scripts\train_vehicle_type_classifier.py --dry-run
+python vehicle_type_lab\scripts\train_vehicle_type_classifier.py --copy-best
+python vehicle_type_lab\scripts\eval_vehicle_type_classifier.py --save-report
+```
+
+阶段 1.8 已增加 YOLO 检测框 + 三分类模型推理接入验证：`classify` 模式会先检测车辆 bbox，再裁切车辆区域，并调用 `vehicle_type_lab\models\vehicle_type_classifier\best.pt` 输出 `sedan` / `suv` / `mpv` / `unknown`。当前仍是小样本 demo，不代表商业精度，且本阶段不修改 `aicar_sim`。
+
+```powershell
+python vehicle_type_lab\src\vehicle_type_lab\main.py --mode classify --image vehicle_type_lab\data\input_images\test_car.jpg --save-history
+python vehicle_type_lab\scripts\check_vehicle_type_classify.py
+```
+
+阶段 1.9 已增加 `aicar_sim` 车辆模型选择闭环：`aicar_sim` 会读取 `vehicle_type_result.json` 中的 `sedan` / `suv` / `mpv`，加载 `aicar_sim\data\vehicles` 下对应车辆尺寸和 `wash_profile`。如果 `vehicle_type=unknown` 或未检测到车辆，则回退到 `suv.json`。
+
+```powershell
+python aicar_sim\src\aicar_sim\main.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+python aicar_sim\scripts\check_vehicle_model_selection.py
+python aicar_sim\scripts\check_all_vehicle_model_selection.py
+```
+
+阶段 1 已冻结为车辆识别小闭环，冻结总结见：
+
+- [docs\STAGE1_VEHICLE_RECOGNITION_SUMMARY.md](docs/STAGE1_VEHICLE_RECOGNITION_SUMMARY.md)

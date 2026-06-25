@@ -1,0 +1,5 @@
+image_path,class_name,source,split,notes
+raw/sedan/sedan_local_0001.jpg,sedan,local,unassigned,manual sample
+raw/suv/suv_local_0001.jpg,suv,local,unassigned,manual sample
+raw/mpv/mpv_local_0001.jpg,mpv,local,unassigned,manual sample
+

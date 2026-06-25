@@ -1,0 +1,13 @@
+{
+  "vehicle_detected": false,
+  "vehicle_type": "unknown",
+  "confidence": 0.0,
+  "bbox": [],
+  "source_image": "vehicle_type_lab\\data\\input_images\\test_car.jpg",
+  "image_width": 0,
+  "image_height": 0,
+  "model_name": "yolo11n.pt",
+  "model_version": "ultralytics-yolo-detect",
+  "timestamp": "2026-06-24T02:20:14.017558+00:00",
+  "notes": "Input image does not exist; YOLO detection was not run."
+}

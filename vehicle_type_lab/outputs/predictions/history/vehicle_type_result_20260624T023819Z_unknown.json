@@ -1,0 +1,18 @@
+{
+  "vehicle_detected": true,
+  "vehicle_type": "unknown",
+  "confidence": 0.8791555762290955,
+  "bbox": [
+    42,
+    142,
+    434,
+    365
+  ],
+  "source_image": "vehicle_type_lab\\data\\input_images\\test_car.jpg",
+  "image_width": 449,
+  "image_height": 438,
+  "model_name": "yolo11n.pt",
+  "model_version": "ultralytics-yolo-detect",
+  "timestamp": "2026-06-24T02:38:18.427786+00:00",
+  "notes": "YOLO only detects vehicle presence; vehicle type classification is not enabled yet. Visualized result saved to F:\\aicar\\vehicle_type_lab\\outputs\\predictions\\visualized\\test_car_detected.jpg."
+}

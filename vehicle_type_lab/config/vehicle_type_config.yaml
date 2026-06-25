@@ -1,0 +1,18 @@
+classes:
+  - sedan
+  - suv
+  - mpv
+
+output_schema:
+  vehicle_detected: bool
+  vehicle_type: sedan/suv/mpv/unknown
+  confidence: float
+  bbox: [x1, y1, x2, y2]
+  source_image: string
+  timestamp: string
+
+current_scope:
+  train_model: false
+  download_dataset: false
+  connect_hardware: false
+

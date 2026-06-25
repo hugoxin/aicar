@@ -1,0 +1,16 @@
+{
+  "vehicle_detected": true,
+  "vehicle_type": "mpv",
+  "confidence": 0.81,
+  "bbox": [44, 120, 540, 390],
+  "source_image": "fixtures/mpv.jpg",
+  "image_width": 640,
+  "image_height": 480,
+  "model_name": "yolo11n.pt + best.pt",
+  "model_version": "yolo-detect-plus-vehicle-type-classifier",
+  "timestamp": "2026-06-25T03:30:00+00:00",
+  "notes": "Fixture for mpv vehicle model selection.",
+  "pipeline_mode": "classify",
+  "detection_confidence": 0.88,
+  "classification_confidence": 0.81
+}

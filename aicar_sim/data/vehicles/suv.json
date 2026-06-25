@@ -1,0 +1,8 @@
+{
+  "vehicle_type": "suv",
+  "length_mm": 4850,
+  "width_mm": 1900,
+  "height_mm": 1750,
+  "wash_profile": "standard_suv",
+  "notes": "Phase 1.9 mock simulation dimensions; not a real vehicle specification."
+}

@@ -1,0 +1,21 @@
+wash_bay:
+  length_mm: 8000
+  width_mm: 3600
+  height_mm: 3200
+
+coordinate_system:
+  origin: "front-left floor corner of wash bay"
+  x_axis: "vehicle forward direction"
+  y_axis: "vehicle left-to-right direction"
+  z_axis: "floor to ceiling"
+  unit: "mm"
+
+safety:
+  nozzle_min_distance_mm: 300
+  emergency_stop_enabled: true
+
+simulation:
+  mode: "scaffold"
+  time_step_ms: 100
+  notes: "No real hardware is connected in the current phase."
+

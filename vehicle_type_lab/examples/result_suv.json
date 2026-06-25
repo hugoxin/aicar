@@ -1,0 +1,14 @@
+{
+  "vehicle_detected": true,
+  "vehicle_type": "suv",
+  "confidence": 0.9,
+  "bbox": [110, 70, 1180, 700],
+  "source_image": "examples/suv_mock.jpg",
+  "image_width": 1280,
+  "image_height": 720,
+  "model_name": "mock_vehicle_type_classifier",
+  "model_version": "0.1.0-mock",
+  "timestamp": "2026-06-24T10:00:00+08:00",
+  "notes": "Mock SUV result for interface testing only."
+}
+

@@ -1,0 +1,19 @@
+[project]
+name = "vehicle-type-lab"
+version = "0.1.0"
+description = "Scaffold for sedan / SUV / MPV vehicle type recognition."
+requires-python = ">=3.10"
+dependencies = [
+  "ultralytics",
+  "opencv-python",
+  "pyyaml",
+  "pillow",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

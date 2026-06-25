@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/aicar/vehicle_type_result.schema.json",
+  "title": "Vehicle Type Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "vehicle_detected",
+    "vehicle_type",
+    "confidence",
+    "bbox",
+    "source_image",
+    "image_width",
+    "image_height",
+    "model_name",
+    "model_version",
+    "timestamp",
+    "notes"
+  ],
+  "properties": {
+    "vehicle_detected": {
+      "type": "boolean"
+    },
+    "vehicle_type": {
+      "type": "string",
+      "enum": ["sedan", "suv", "mpv", "unknown"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "bbox": {
+      "type": "array",
+      "oneOf": [
+        {
+          "maxItems": 0
+        },
+        {
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      ]
+    },
+    "source_image": {
+      "type": "string"
+    },
+    "image_width": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "image_height": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "model_name": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "detection_confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "classification_confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "detector_model_name": {
+      "type": "string"
+    },
+    "classifier_model_name": {
+      "type": "string"
+    },
+    "classifier_model_path": {
+      "type": "string"
+    },
+    "crop_path": {
+      "type": "string"
+    },
+    "pipeline_mode": {
+      "type": "string",
+      "enum": ["mock", "detect", "classify"]
+    },
+    "selected_class_name": {
+      "type": "string"
+    }
+  }
+}

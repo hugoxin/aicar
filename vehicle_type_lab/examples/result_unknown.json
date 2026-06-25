@@ -1,0 +1,14 @@
+{
+  "vehicle_detected": false,
+  "vehicle_type": "unknown",
+  "confidence": 0.2,
+  "bbox": [],
+  "source_image": "examples/unknown_mock.jpg",
+  "image_width": 1280,
+  "image_height": 720,
+  "model_name": "mock_vehicle_type_classifier",
+  "model_version": "0.1.0-mock",
+  "timestamp": "2026-06-24T10:00:00+08:00",
+  "notes": "Mock unknown result for interface fallback testing only."
+}
+
