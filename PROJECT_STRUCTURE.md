@@ -29,6 +29,18 @@ docs\MODEL_ARTIFACTS.md
 docs\STAGE1_FINAL_FIX_NOTES.md
 ```
 
+## demos
+
+`demos` 保存项目展示层内容。阶段 1.D 已创建：
+
+```text
+demos\stage1_visual_demo
+```
+
+该 Demo 用于给项目组、客户或合作方展示阶段1车辆识别成果：输入一张车辆图片，调用现有 `vehicle_type_lab --mode classify`，复制 JSON、检测分类可视化图和 crop，再读取 `aicar_sim\data\vehicles` 中的车辆模型，生成单文件 HTML 报告。
+
+Demo 是展示壳，不属于阶段2，不修改 `vehicle_type_lab` / `aicar_sim` 核心逻辑。`demo_inputs` 和 `demo_outputs` 中的真实图片、生成报告和 JSON 默认不进入 Git。
+
 ## aicar_sim
 
 `aicar_sim` 是主仿真框架项目。它负责无人洗车纯仿真、路径规划占位、洗车状态机占位、VirtualPLC 占位、喷嘴控制占位、日志、输出和配置。
@@ -68,7 +80,6 @@ docs\STAGE1_FINAL_FIX_NOTES.md
 以下目录是后续预留共识，当前暂未创建，不属于阶段1冻结缺陷：
 
 ```text
-demos          # 后续对外展示 Demo
 experiments    # 后续实验验证
 business_docs  # 后续商业方案、汇报材料、客户材料
 ```

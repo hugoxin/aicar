@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 智能无人洗车阶段1车辆识别 Demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #17202a;
+      --muted: #5f6f7f;
+      --line: #d8dee6;
+      --accent: #1167b1;
+      --ok: #0f8f4f;
+      --warn: #aa6a00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    header {
+      padding: 28px 32px 18px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px 24px 40px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+    }
+    .section {
+      margin-top: 18px;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfd;
+    }
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .metric-value {
+      margin-top: 4px;
+      font-size: 17px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .image-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fbfcfd;
+    }
+    .image-card h3 {
+      margin: 0;
+      padding: 10px 12px;
+      font-size: 15px;
+      border-bottom: 1px solid var(--line);
+      background: #ffffff;
+    }
+    .image-card img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      display: block;
+      background: #eef2f5;
+    }
+    .missing {
+      padding: 54px 14px;
+      text-align: center;
+      color: var(--warn);
+      background: #fff8ec;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow-wrap: anywhere;
+    }
+    th, td {
+      text-align: left;
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      width: 260px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e9f4ff;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .notes {
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI 智能无人洗车阶段1车辆识别 Demo</h1>
+    <p class="subtitle">展示从车辆图片到车型大类、车辆模型和 wash_profile 的阶段1闭环。</p>
+  </header>
+  <main>
+    <section class="section">
+      <h2>顶部摘要</h2>
+      <div class="summary">
+        {{SUMMARY_CARDS}}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>图片展示</h2>
+      <div class="image-grid">
+        {{IMAGE_CARDS}}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>识别结果</h2>
+      {{RESULT_TABLE}}
+    </section>
+
+    <section class="section">
+      <h2>车辆模型</h2>
+      {{MODEL_TABLE}}
+    </section>
+
+    <section class="section">
+      <h2>说明</h2>
+      <div class="notes">
+        <p>当前为阶段1车辆识别 Demo，用于展示识别链路已跑通。</p>
+        <p>当前模型是小样本 demo，不代表商业级车型识别精度。</p>
+        <p>当前车辆尺寸是 mock 参数，阶段2 才会进入洗车策略和喷嘴路径仿真。</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+

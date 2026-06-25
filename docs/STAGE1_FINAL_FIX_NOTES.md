@@ -122,6 +122,21 @@ test_car.jpg
 - 本次未移动或复制 `best.pt`。
 - 本次未修改核心推理代码或仿真消费代码。
 
+## 10. 阶段1.D：阶段1车辆识别可视化 Demo
+
+阶段1冻结和 GitHub 备份完成后，新增 `demos\stage1_visual_demo` 作为展示层 Demo。
+
+本次记录：
+
+- 新增 Demo README、客户说明文档、检查脚本、运行脚本和 HTML 模板。
+- Demo 只通过 subprocess 调用已有 `vehicle_type_lab --mode classify`，不修改核心推理代码。
+- Demo 读取 `aicar_sim\data\vehicles` 下的车辆模型 JSON，不修改核心仿真消费代码。
+- Demo 输出 HTML 报告、输入图片副本、可视化图、crop 和 JSON 到 `demo_outputs`。
+- `demo_inputs` 和 `demo_outputs` 中的真实图片、HTML 报告和 JSON 已加入 `.gitignore`，不进入 Git。
+- 本阶段不进入阶段2，不训练模型，不做喷嘴路径规划，不连接硬件。
+- 本阶段不移动、不复制、不修改 `best.pt`。
+- 本阶段不修改 `stage1-frozen-baseline` tag。
+
 ## 8. 阶段1.G-backup：best.pt 本地备份
 
 本次在正式 Git 初始化前完成 `best.pt` 外部备份。

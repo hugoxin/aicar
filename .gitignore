@@ -45,6 +45,26 @@ vehicle_type_lab/outputs/training/vehicle_type_classifier/runs/**
 vehicle_type_lab/outputs/training/vehicle_type_classifier/**/*.pt
 vehicle_type_lab/outputs/training/vehicle_type_classifier/**/*.png
 vehicle_type_lab/outputs/training/vehicle_type_classifier/**/*.jpg
+demos/stage1_visual_demo/demo_inputs/*.jpg
+demos/stage1_visual_demo/demo_inputs/*.jpeg
+demos/stage1_visual_demo/demo_inputs/*.png
+demos/stage1_visual_demo/demo_inputs/*.webp
+demos/stage1_visual_demo/demo_inputs/*.bmp
+demos/stage1_visual_demo/demo_inputs/*.jfif
+demos/stage1_visual_demo/demo_outputs/reports/*.html
+demos/stage1_visual_demo/demo_outputs/visualized/*.jpg
+demos/stage1_visual_demo/demo_outputs/visualized/*.jpeg
+demos/stage1_visual_demo/demo_outputs/visualized/*.png
+demos/stage1_visual_demo/demo_outputs/visualized/*.webp
+demos/stage1_visual_demo/demo_outputs/visualized/*.bmp
+demos/stage1_visual_demo/demo_outputs/visualized/*.jfif
+demos/stage1_visual_demo/demo_outputs/crops/*.jpg
+demos/stage1_visual_demo/demo_outputs/crops/*.jpeg
+demos/stage1_visual_demo/demo_outputs/crops/*.png
+demos/stage1_visual_demo/demo_outputs/crops/*.webp
+demos/stage1_visual_demo/demo_outputs/crops/*.bmp
+demos/stage1_visual_demo/demo_outputs/crops/*.jfif
+demos/stage1_visual_demo/demo_outputs/json/*.json
 
 # Keep scaffold placeholders visible when this workspace is later split.
 !**/.gitkeep

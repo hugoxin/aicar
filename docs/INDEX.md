@@ -10,6 +10,11 @@
 - [PROJECT_DIRECTORY_STRATEGY.md](PROJECT_DIRECTORY_STRATEGY.md)
 - [STAGE1_VEHICLE_RECOGNITION_SUMMARY.md](STAGE1_VEHICLE_RECOGNITION_SUMMARY.md)
 
+阶段1可视化 Demo 位于：
+
+- [..\demos\stage1_visual_demo\README.md](../demos/stage1_visual_demo/README.md)
+- [..\demos\stage1_visual_demo\docs\STAGE1_DEMO_EXPLANATION.md](../demos/stage1_visual_demo/docs/STAGE1_DEMO_EXPLANATION.md)
+
 ## 2. 接口与链路
 
 - [VEHICLE_TYPE_INTERFACE.md](VEHICLE_TYPE_INTERFACE.md)
@@ -46,7 +51,12 @@
 - [STAGE1_VEHICLE_RECOGNITION_SUMMARY.md](STAGE1_VEHICLE_RECOGNITION_SUMMARY.md)
 - [STAGE1_FINAL_FIX_NOTES.md](STAGE1_FINAL_FIX_NOTES.md)
 
-## 8. 后续整理建议
+## 8. Demo 与展示
+
+- [Stage1 Visual Demo README](../demos/stage1_visual_demo/README.md)
+- [Stage1 Demo Explanation](../demos/stage1_visual_demo/docs/STAGE1_DEMO_EXPLANATION.md)
+
+## 9. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。

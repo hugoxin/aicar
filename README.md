@@ -5,8 +5,8 @@
 当前状态：
 
 - 阶段1：车辆识别小闭环已完成，可冻结。
+- 阶段1.D：车辆识别可视化 Demo 已创建，用于展示阶段1成果。
 - 当前暂不进入阶段2。
-- 当前暂不创建 Demo，Demo 会在阶段1最终修补完成后单独规划。
 
 阶段1最终链路：
 
@@ -41,6 +41,7 @@ test_car.jpg
 
 - `aicar_sim`：主仿真框架，用于无人洗车纯仿真、路径规划占位、洗车状态机占位、VirtualPLC 占位、喷嘴动画占位、日志和配置。
 - `vehicle_type_lab`：车辆识别小闭环项目，后续用于 sedan / SUV / MPV 三分类识别。
+- `demos\stage1_visual_demo`：阶段1车辆识别可视化 Demo。它是展示层，只调用已有阶段1识别能力，不修改 `vehicle_type_lab` / `aicar_sim` 核心逻辑。
 - `external_repos`：开源参考项目存放区，只做参考，不把第三方源码复制进主项目。
 - `datasets`：统一数据目录，当前只预留结构，不下载大数据集。
 - `models`：统一模型目录，当前只预留结构，不下载大模型。
@@ -124,3 +125,13 @@ python aicar_sim\scripts\check_all_vehicle_model_selection.py
 阶段 1 已冻结为车辆识别小闭环，冻结总结见：
 
 - [docs\STAGE1_VEHICLE_RECOGNITION_SUMMARY.md](docs/STAGE1_VEHICLE_RECOGNITION_SUMMARY.md)
+
+阶段 1.D 可视化 Demo：
+
+```powershell
+Set-Location F:\aicar\demos\stage1_visual_demo
+python scripts\check_demo.py
+python scripts\run_stage1_demo.py --image demo_inputs\car_demo.jpg --open-report
+```
+
+Demo 会生成本地 HTML 报告：`demos\stage1_visual_demo\demo_outputs\reports\stage1_demo_report.html`。`demo_inputs` 和 `demo_outputs` 中的真实图片、HTML、JSON 不进入 Git。
