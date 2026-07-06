@@ -1,0 +1,17 @@
+{
+  "wash_profile": "standard_sedan",
+  "description": "Standard wash profile for sedan demo vehicles.",
+  "vehicle_type": "sedan",
+  "safe_distance_mm": 320,
+  "top_clearance_mm": 220,
+  "side_clearance_mm": 280,
+  "front_rear_clearance_mm": 300,
+  "gantry_speed_mm_s": 200,
+  "nozzle_travel_speed_mm_s": 240,
+  "foam_seconds": 18,
+  "dwell_seconds": 25,
+  "rinse_seconds": 30,
+  "dry_seconds": 35,
+  "wheel_focus_seconds": 8,
+  "notes": "Stage2.1 demo parameters only. Not real hardware parameters."
+}

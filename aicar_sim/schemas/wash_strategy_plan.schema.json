@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.1 Wash Strategy Plan",
+  "type": "object",
+  "required": [
+    "plan_version",
+    "vehicle",
+    "profile",
+    "strategy_summary",
+    "stages",
+    "limitations"
+  ],
+  "properties": {
+    "plan_version": {
+      "type": "string",
+      "const": "stage2.1"
+    },
+    "vehicle": {
+      "type": "object",
+      "required": [
+        "vehicle_type",
+        "length_mm",
+        "width_mm",
+        "height_mm",
+        "wash_profile"
+      ],
+      "properties": {
+        "vehicle_type": {
+          "type": "string",
+          "enum": ["sedan", "suv", "mpv", "unknown"]
+        },
+        "input_vehicle_type": {
+          "type": "string"
+        },
+        "vehicle_detected": {
+          "type": "boolean"
+        },
+        "length_mm": {
+          "type": "integer"
+        },
+        "width_mm": {
+          "type": "integer"
+        },
+        "height_mm": {
+          "type": "integer"
+        },
+        "wash_profile": {
+          "type": "string"
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "required": [
+        "wash_profile",
+        "safe_distance_mm",
+        "top_clearance_mm",
+        "side_clearance_mm",
+        "front_rear_clearance_mm",
+        "gantry_speed_mm_s",
+        "nozzle_travel_speed_mm_s"
+      ],
+      "properties": {
+        "wash_profile": {
+          "type": "string"
+        },
+        "safe_distance_mm": {
+          "type": "integer"
+        },
+        "top_clearance_mm": {
+          "type": "integer"
+        },
+        "side_clearance_mm": {
+          "type": "integer"
+        },
+        "front_rear_clearance_mm": {
+          "type": "integer"
+        },
+        "gantry_speed_mm_s": {
+          "type": "integer"
+        },
+        "nozzle_travel_speed_mm_s": {
+          "type": "integer"
+        },
+        "fallback_used": {
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "strategy_summary": {
+      "type": "object",
+      "required": ["estimated_total_seconds", "stage_count", "notes"],
+      "properties": {
+        "estimated_total_seconds": {
+          "type": "integer"
+        },
+        "stage_count": {
+          "type": "integer"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "stage_id",
+          "display_name",
+          "duration_seconds",
+          "target_area",
+          "action",
+          "description"
+        ],
+        "properties": {
+          "stage_id": {
+            "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "duration_seconds": {
+            "type": "integer"
+          },
+          "target_area": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

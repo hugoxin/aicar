@@ -49,6 +49,8 @@ Demo 是展示壳，不属于阶段2，不修改 `vehicle_type_lab` / `aicar_sim
 
 阶段 1.9 中，`aicar_sim` 正式消费 `sedan` / `suv` / `mpv` 分类结果，加载 `data\vehicles\sedan.json`、`suv.json`、`mpv.json` 中的 mock 尺寸和 `wash_profile`。`scripts\check_vehicle_model_selection.py` 检查当前真实 JSON，`scripts\check_all_vehicle_model_selection.py` 使用 fixtures 检查三类和 unknown fallback。
 
+阶段 2.1 中，`aicar_sim` 新增 `data\wash_profiles`、`wash_profile.py` 和 `wash_strategy.py`，根据车辆模型中的 `wash_profile` 生成 `outputs\wash_strategy\wash_strategy_plan.json`。该阶段只做策略层 JSON，不做路径规划、喷嘴轨迹、PLC 或硬件控制。
+
 后续它可以作为独立 git 仓库维护。当前阶段只做 scaffold，不做复杂仿真算法。
 
 ## vehicle_type_lab

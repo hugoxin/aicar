@@ -65,6 +65,7 @@ demos/stage1_visual_demo/demo_outputs/crops/*.webp
 demos/stage1_visual_demo/demo_outputs/crops/*.bmp
 demos/stage1_visual_demo/demo_outputs/crops/*.jfif
 demos/stage1_visual_demo/demo_outputs/json/*.json
+aicar_sim/outputs/wash_strategy/*.json
 
 # Keep scaffold placeholders visible when this workspace is later split.
 !**/.gitkeep
@@ -91,6 +92,8 @@ demos/stage1_visual_demo/demo_outputs/json/*.json
 !aicar_sim/logs/.gitkeep
 !aicar_sim/outputs/
 !aicar_sim/outputs/.gitkeep
+!aicar_sim/outputs/wash_strategy/
+!aicar_sim/outputs/wash_strategy/.gitkeep
 !vehicle_type_lab/outputs/
 !vehicle_type_lab/outputs/predictions/
 !vehicle_type_lab/outputs/predictions/.gitkeep
