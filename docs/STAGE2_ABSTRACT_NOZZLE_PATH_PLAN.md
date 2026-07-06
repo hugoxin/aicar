@@ -97,6 +97,12 @@ wash_flow_run.json
 
 阶段2.6可以在抽象路径点基础上做覆盖率检查与报告。也可以单独做阶段2.D可视化 Demo，用于展示车辆区域、喷嘴分配和抽象路径点。
 
+阶段2.6文档见：
+
+```text
+docs\STAGE2_COVERAGE_REPORT.md
+```
+
 ## 验收命令
 
 ```powershell

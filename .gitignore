@@ -70,6 +70,7 @@ aicar_sim/outputs/space_model/*.json
 aicar_sim/outputs/nozzle_plan/*.json
 aicar_sim/outputs/wash_flow/*.json
 aicar_sim/outputs/path_plan/*.json
+aicar_sim/outputs/coverage_report/*.json
 
 # Keep scaffold placeholders visible when this workspace is later split.
 !**/.gitkeep
@@ -106,6 +107,8 @@ aicar_sim/outputs/path_plan/*.json
 !aicar_sim/outputs/wash_flow/.gitkeep
 !aicar_sim/outputs/path_plan/
 !aicar_sim/outputs/path_plan/.gitkeep
+!aicar_sim/outputs/coverage_report/
+!aicar_sim/outputs/coverage_report/.gitkeep
 !vehicle_type_lab/outputs/
 !vehicle_type_lab/outputs/predictions/
 !vehicle_type_lab/outputs/predictions/.gitkeep
