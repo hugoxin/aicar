@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.2 Space Model Report",
+  "type": "object",
+  "required": [
+    "report_version",
+    "vehicle",
+    "wash_profile",
+    "wash_bay",
+    "vehicle_envelope",
+    "clearance_check",
+    "zone_summary",
+    "limitations"
+  ],
+  "properties": {
+    "report_version": {
+      "type": "string",
+      "const": "stage2.2"
+    },
+    "vehicle": {
+      "type": "object"
+    },
+    "wash_profile": {
+      "type": "string"
+    },
+    "wash_strategy": {
+      "type": "object"
+    },
+    "wash_bay": {
+      "type": "object"
+    },
+    "vehicle_envelope": {
+      "type": "object"
+    },
+    "clearance_check": {
+      "type": "object",
+      "required": [
+        "fits_in_bay",
+        "x_clearance_each_side_mm",
+        "y_clearance_front_rear_mm",
+        "z_clearance_top_mm",
+        "warnings"
+      ]
+    },
+    "zone_summary": {
+      "type": "object",
+      "required": ["zone_count", "zones"]
+    },
+    "next_stage_hint": {
+      "type": "string"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.2 Wash Bay",
+  "type": "object",
+  "required": [
+    "wash_bay_id",
+    "coordinate_system",
+    "bay_dimensions",
+    "vehicle_alignment",
+    "gantry",
+    "safety_margin"
+  ],
+  "properties": {
+    "wash_bay_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "coordinate_system": {
+      "type": "object",
+      "required": ["unit", "origin", "x_axis", "y_axis", "z_axis"]
+    },
+    "bay_dimensions": {
+      "type": "object",
+      "required": ["length_mm", "width_mm", "height_mm"]
+    },
+    "vehicle_alignment": {
+      "type": "object",
+      "required": ["center_x_mm", "center_y_mm", "floor_z_mm"]
+    },
+    "gantry": {
+      "type": "object",
+      "required": [
+        "rail_y_min_mm",
+        "rail_y_max_mm",
+        "rail_x_left_mm",
+        "rail_x_right_mm",
+        "max_z_mm"
+      ]
+    },
+    "safety_margin": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

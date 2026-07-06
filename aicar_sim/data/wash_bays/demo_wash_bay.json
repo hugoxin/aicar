@@ -1,0 +1,34 @@
+{
+  "wash_bay_id": "demo_wash_bay",
+  "description": "Stage2.2 demo wash bay model. Not real hardware dimensions.",
+  "coordinate_system": {
+    "unit": "mm",
+    "origin": "bay_center_floor",
+    "x_axis": "vehicle_left_right",
+    "y_axis": "vehicle_front_rear",
+    "z_axis": "vertical_up"
+  },
+  "bay_dimensions": {
+    "length_mm": 8000,
+    "width_mm": 3600,
+    "height_mm": 3000
+  },
+  "vehicle_alignment": {
+    "center_x_mm": 0,
+    "center_y_mm": 0,
+    "floor_z_mm": 0
+  },
+  "gantry": {
+    "rail_y_min_mm": -3600,
+    "rail_y_max_mm": 3600,
+    "rail_x_left_mm": -1900,
+    "rail_x_right_mm": 1900,
+    "max_z_mm": 2800
+  },
+  "safety_margin": {
+    "bay_wall_margin_mm": 300,
+    "vehicle_margin_mm": 250,
+    "top_margin_mm": 200
+  },
+  "notes": "Stage2.2 static space model only. No real nozzle path or PLC control."
+}
