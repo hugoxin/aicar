@@ -28,6 +28,14 @@ aicar_sim\outputs\wash_strategy\wash_strategy_plan.json
 
 该计划只描述预冲洗、泡沫、停留、车顶清洗、侧面清洗、轮毂重点清洗和风干等阶段参数。不生成喷嘴路径，不控制 PLC，也不连接真实硬件。
 
+阶段 2.2 中，`aicar_sim` 会基于车辆模型、wash profile、wash strategy plan 和 `data\wash_bays\demo_wash_bay.json` 生成静态空间模型：
+
+```text
+aicar_sim\outputs\space_model\space_model_report.json
+```
+
+该报告描述车辆 `bounding_box`、`safe_envelope`、车顶/侧面/前后/轮毂区域，以及车辆安全包络是否能放入 demo 洗车房。不生成喷嘴路径，不做动画，不控制 PLC，也不连接真实硬件。
+
 运行 scaffold：
 
 ```powershell
@@ -59,4 +67,13 @@ python aicar_sim\scripts\check_all_vehicle_model_selection.py
 python aicar_sim\scripts\check_wash_profile_selection.py
 python aicar_sim\scripts\check_wash_strategy_plan.py
 python aicar_sim\scripts\generate_wash_strategy_plan.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+生成阶段2.2空间模型报告：
+
+```powershell
+python aicar_sim\scripts\check_vehicle_envelope.py
+python aicar_sim\scripts\check_wash_bay.py
+python aicar_sim\scripts\check_space_model.py
+python aicar_sim\scripts\generate_space_model.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
 ```

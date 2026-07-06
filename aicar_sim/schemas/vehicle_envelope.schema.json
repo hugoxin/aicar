@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.2 Vehicle Envelope",
+  "type": "object",
+  "required": [
+    "vehicle_type",
+    "base_dimensions",
+    "coordinate_system",
+    "bounding_box",
+    "safe_envelope",
+    "surface_zones"
+  ],
+  "properties": {
+    "vehicle_type": {
+      "type": "string"
+    },
+    "base_dimensions": {
+      "type": "object",
+      "required": ["length_mm", "width_mm", "height_mm"]
+    },
+    "coordinate_system": {
+      "type": "object",
+      "required": ["origin", "x_axis", "y_axis", "z_axis"]
+    },
+    "bounding_box": {
+      "$ref": "#/$defs/bounds"
+    },
+    "safe_envelope": {
+      "$ref": "#/$defs/bounds"
+    },
+    "surface_zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["zone_id", "display_name", "target_area", "bounds"]
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "bounds": {
+      "type": "object",
+      "required": [
+        "x_min_mm",
+        "x_max_mm",
+        "y_min_mm",
+        "y_max_mm",
+        "z_min_mm",
+        "z_max_mm"
+      ],
+      "properties": {
+        "x_min_mm": {"type": "integer"},
+        "x_max_mm": {"type": "integer"},
+        "y_min_mm": {"type": "integer"},
+        "y_max_mm": {"type": "integer"},
+        "z_min_mm": {"type": "integer"},
+        "z_max_mm": {"type": "integer"}
+      }
+    }
+  }
+}
