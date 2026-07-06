@@ -85,6 +85,12 @@ aicar_sim\outputs\wash_flow\wash_flow_run.json
 
 阶段2.5可以在 `wash_flow_run.json` 的基础上，为每个洗车状态生成抽象喷嘴路径点和覆盖顺序。
 
+阶段2.5文档见：
+
+```text
+docs\STAGE2_ABSTRACT_NOZZLE_PATH_PLAN.md
+```
+
 ## 验收命令
 
 ```powershell

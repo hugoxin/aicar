@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.5 Abstract Nozzle Path Plan",
+  "type": "object",
+  "required": [
+    "plan_version",
+    "source_versions",
+    "vehicle",
+    "wash_profile",
+    "wash_bay_id",
+    "summary",
+    "path_segments",
+    "limitations"
+  ],
+  "properties": {
+    "plan_version": {
+      "type": "string",
+      "const": "stage2.5"
+    },
+    "source_versions": {
+      "type": "object"
+    },
+    "vehicle": {
+      "type": "object"
+    },
+    "wash_profile": {
+      "type": "string"
+    },
+    "wash_bay_id": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "state_count",
+        "segment_count",
+        "point_count",
+        "estimated_total_seconds",
+        "notes"
+      ]
+    },
+    "path_segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "segment_id",
+          "state_id",
+          "zone_id",
+          "nozzle_id",
+          "media_type",
+          "path_type",
+          "duration_seconds",
+          "recommended_distance_mm",
+          "points",
+          "notes"
+        ]
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
