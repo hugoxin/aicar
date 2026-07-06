@@ -67,6 +67,7 @@ demos/stage1_visual_demo/demo_outputs/crops/*.jfif
 demos/stage1_visual_demo/demo_outputs/json/*.json
 aicar_sim/outputs/wash_strategy/*.json
 aicar_sim/outputs/space_model/*.json
+aicar_sim/outputs/nozzle_plan/*.json
 
 # Keep scaffold placeholders visible when this workspace is later split.
 !**/.gitkeep
@@ -97,6 +98,8 @@ aicar_sim/outputs/space_model/*.json
 !aicar_sim/outputs/wash_strategy/.gitkeep
 !aicar_sim/outputs/space_model/
 !aicar_sim/outputs/space_model/.gitkeep
+!aicar_sim/outputs/nozzle_plan/
+!aicar_sim/outputs/nozzle_plan/.gitkeep
 !vehicle_type_lab/outputs/
 !vehicle_type_lab/outputs/predictions/
 !vehicle_type_lab/outputs/predictions/.gitkeep

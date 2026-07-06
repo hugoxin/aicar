@@ -36,6 +36,14 @@ aicar_sim\outputs\space_model\space_model_report.json
 
 该报告描述车辆 `bounding_box`、`safe_envelope`、车顶/侧面/前后/轮毂区域，以及车辆安全包络是否能放入 demo 洗车房。不生成喷嘴路径，不做动画，不控制 PLC，也不连接真实硬件。
 
+阶段 2.3 中，`aicar_sim` 会基于 `space_model_report.json` 的 surface zones、`data\nozzles\demo_nozzle_catalog.json` 和 `demo_nozzle_zone_mapping.json` 生成喷嘴覆盖参数计划：
+
+```text
+aicar_sim\outputs\nozzle_plan\nozzle_coverage_plan.json
+```
+
+该计划说明每个区域使用哪些 demo 喷嘴、目标覆盖率、建议距离、有效宽度和 pass 数提示。不生成真实喷嘴路径，不做动画，不控制 PLC，也不连接真实硬件。
+
 运行 scaffold：
 
 ```powershell
@@ -76,4 +84,13 @@ python aicar_sim\scripts\check_vehicle_envelope.py
 python aicar_sim\scripts\check_wash_bay.py
 python aicar_sim\scripts\check_space_model.py
 python aicar_sim\scripts\generate_space_model.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+生成阶段2.3喷嘴覆盖参数计划：
+
+```powershell
+python aicar_sim\scripts\check_nozzle_catalog.py
+python aicar_sim\scripts\check_nozzle_zone_mapping.py
+python aicar_sim\scripts\check_nozzle_coverage_plan.py
+python aicar_sim\scripts\generate_nozzle_coverage_plan.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
 ```

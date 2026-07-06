@@ -1,0 +1,76 @@
+{
+  "mapping_id": "demo_nozzle_zone_mapping",
+  "description": "Stage2.3 demo mapping from surface zones to nozzle strategies.",
+  "zone_mappings": [
+    {
+      "zone_id": "roof",
+      "display_name": "车顶区域",
+      "priority": 1,
+      "coverage_target_percent": 95,
+      "pass_count_hint": 2,
+      "nozzles": [
+        {"nozzle_id": "foam_nozzle", "pass_count_hint": 1},
+        {"nozzle_id": "top_high_pressure", "pass_count_hint": 2},
+        {"nozzle_id": "air_dry_nozzle", "pass_count_hint": 1}
+      ]
+    },
+    {
+      "zone_id": "left_side",
+      "display_name": "左侧区域",
+      "priority": 2,
+      "coverage_target_percent": 92,
+      "pass_count_hint": 2,
+      "nozzles": [
+        {"nozzle_id": "foam_nozzle", "pass_count_hint": 1},
+        {"nozzle_id": "side_high_pressure", "pass_count_hint": 2},
+        {"nozzle_id": "air_dry_nozzle", "pass_count_hint": 1}
+      ]
+    },
+    {
+      "zone_id": "right_side",
+      "display_name": "右侧区域",
+      "priority": 2,
+      "coverage_target_percent": 92,
+      "pass_count_hint": 2,
+      "nozzles": [
+        {"nozzle_id": "foam_nozzle", "pass_count_hint": 1},
+        {"nozzle_id": "side_high_pressure", "pass_count_hint": 2},
+        {"nozzle_id": "air_dry_nozzle", "pass_count_hint": 1}
+      ]
+    },
+    {
+      "zone_id": "front",
+      "display_name": "车头区域",
+      "priority": 3,
+      "coverage_target_percent": 92,
+      "pass_count_hint": 2,
+      "nozzles": [
+        {"nozzle_id": "foam_nozzle", "pass_count_hint": 1},
+        {"nozzle_id": "side_high_pressure", "pass_count_hint": 2},
+        {"nozzle_id": "air_dry_nozzle", "pass_count_hint": 1}
+      ]
+    },
+    {
+      "zone_id": "rear",
+      "display_name": "车尾区域",
+      "priority": 3,
+      "coverage_target_percent": 92,
+      "pass_count_hint": 2,
+      "nozzles": [
+        {"nozzle_id": "foam_nozzle", "pass_count_hint": 1},
+        {"nozzle_id": "side_high_pressure", "pass_count_hint": 2},
+        {"nozzle_id": "air_dry_nozzle", "pass_count_hint": 1}
+      ]
+    },
+    {
+      "zone_id": "wheels",
+      "display_name": "轮毂区域",
+      "priority": 1,
+      "coverage_target_percent": 90,
+      "pass_count_hint": 2,
+      "nozzles": [
+        {"nozzle_id": "wheel_focused_nozzle", "pass_count_hint": 2}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.3 Nozzle Catalog",
+  "type": "object",
+  "required": ["catalog_id", "nozzles"],
+  "properties": {
+    "catalog_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "nozzles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "nozzle_id",
+          "display_name",
+          "media_type",
+          "pressure_level",
+          "spray_angle_deg",
+          "recommended_distance_mm",
+          "effective_width_mm",
+          "flow_l_min",
+          "target_zones"
+        ]
+      }
+    }
+  }
+}
