@@ -1,0 +1,102 @@
+{
+  "flow_id": "demo_wash_flow",
+  "description": "Stage2.4 demo wash flow state machine. Not PLC logic.",
+  "initial_state": "idle",
+  "terminal_states": ["completed", "aborted", "error"],
+  "states": [
+    {
+      "state_id": "idle",
+      "display_name": "待机",
+      "state_type": "system",
+      "next_states": ["load_vehicle_context"]
+    },
+    {
+      "state_id": "load_vehicle_context",
+      "display_name": "加载车辆与策略",
+      "state_type": "prepare",
+      "next_states": ["pre_rinse"]
+    },
+    {
+      "state_id": "pre_rinse",
+      "display_name": "预冲洗",
+      "state_type": "wash",
+      "strategy_stage_id": "pre_rinse",
+      "next_states": ["foam"]
+    },
+    {
+      "state_id": "foam",
+      "display_name": "泡沫覆盖",
+      "state_type": "wash",
+      "strategy_stage_id": "foam",
+      "next_states": ["dwell"]
+    },
+    {
+      "state_id": "dwell",
+      "display_name": "泡沫停留",
+      "state_type": "wait",
+      "strategy_stage_id": "dwell",
+      "next_states": ["top_clean"]
+    },
+    {
+      "state_id": "top_clean",
+      "display_name": "车顶清洗",
+      "state_type": "wash",
+      "strategy_stage_id": "top_clean",
+      "target_zone_ids": ["roof"],
+      "next_states": ["side_clean"]
+    },
+    {
+      "state_id": "side_clean",
+      "display_name": "侧面与前后清洗",
+      "state_type": "wash",
+      "strategy_stage_id": "side_clean",
+      "target_zone_ids": ["left_side", "right_side", "front", "rear"],
+      "next_states": ["wheel_clean"]
+    },
+    {
+      "state_id": "wheel_clean",
+      "display_name": "轮毂重点清洗",
+      "state_type": "wash",
+      "strategy_stage_id": "wheel_clean",
+      "target_zone_ids": ["wheels"],
+      "next_states": ["air_dry"]
+    },
+    {
+      "state_id": "air_dry",
+      "display_name": "风干",
+      "state_type": "dry",
+      "strategy_stage_id": "air_dry",
+      "target_zone_ids": ["roof", "left_side", "right_side", "front", "rear"],
+      "next_states": ["completed"]
+    },
+    {
+      "state_id": "completed",
+      "display_name": "完成",
+      "state_type": "terminal",
+      "next_states": []
+    },
+    {
+      "state_id": "aborted",
+      "display_name": "人工中止",
+      "state_type": "terminal",
+      "next_states": []
+    },
+    {
+      "state_id": "error",
+      "display_name": "异常",
+      "state_type": "terminal",
+      "next_states": []
+    }
+  ],
+  "global_transitions": [
+    {
+      "event": "abort",
+      "target_state": "aborted"
+    },
+    {
+      "event": "fault",
+      "target_state": "error"
+    }
+  ],
+  "notes": "Stage2.4 state machine only. No real PLC, actuator, nozzle path, or hardware control."
+}

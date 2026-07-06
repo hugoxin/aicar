@@ -55,6 +55,8 @@ Demo 是展示壳，不属于阶段2，不修改 `vehicle_type_lab` / `aicar_sim
 
 阶段 2.3 中，`aicar_sim` 新增 `data\nozzles`、`nozzle_model.py` 和 `nozzle_coverage.py`，根据 `space_model_report.json` 的 surface zones 生成 `outputs\nozzle_plan\nozzle_coverage_plan.json`。该阶段只做喷嘴参数和区域覆盖计划，不生成真实喷嘴路径，不做动画、PLC 或硬件控制。
 
+阶段 2.4 中，`aicar_sim` 新增 `data\wash_flows`、`wash_flow.py`、`wash_state_machine.py` 的真实状态机构建逻辑和 `outputs\wash_flow\wash_flow_run.json` 输出。该阶段只把洗车策略、空间模型和喷嘴覆盖计划串成状态级 timeline，不生成真实喷嘴路径，不做动画、PLC 或硬件控制。
+
 后续它可以作为独立 git 仓库维护。当前阶段只做 scaffold，不做复杂仿真算法。
 
 ## vehicle_type_lab

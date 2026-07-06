@@ -9,6 +9,7 @@
 - 阶段2.1：洗车策略配置与车辆数字模型接入已开始，当前只生成策略计划 JSON，不做路径规划、PLC 或硬件控制。
 - 阶段2.2：车辆包络模型与洗车空间模型已开始，当前只做静态空间 JSON，不做喷嘴路径规划、动画、PLC 或硬件控制。
 - 阶段2.3：喷嘴模型与喷嘴覆盖参数已开始，当前只生成覆盖参数 JSON，不做真实路径规划、动画、PLC 或硬件控制。
+- 阶段2.4：洗车流程状态机已开始，当前只生成状态机运行 JSON，不做真实喷嘴路径、动画、PLC 或硬件控制。
 
 阶段1最终链路：
 
@@ -169,3 +170,14 @@ python aicar_sim\scripts\generate_nozzle_coverage_plan.py --vehicle-type-result 
 ```
 
 阶段2.3会生成 `aicar_sim\outputs\nozzle_plan\nozzle_coverage_plan.json`。该 JSON 是运行输出，不进入 Git。
+
+阶段 2.4 洗车流程状态机：
+
+```powershell
+python aicar_sim\scripts\check_wash_flow_config.py
+python aicar_sim\scripts\check_wash_state_machine.py
+python aicar_sim\scripts\check_wash_flow_run.py
+python aicar_sim\scripts\generate_wash_flow_run.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+阶段2.4会生成 `aicar_sim\outputs\wash_flow\wash_flow_run.json`。该 JSON 是运行输出，不进入 Git。
