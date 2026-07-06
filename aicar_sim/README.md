@@ -44,6 +44,14 @@ aicar_sim\outputs\nozzle_plan\nozzle_coverage_plan.json
 
 该计划说明每个区域使用哪些 demo 喷嘴、目标覆盖率、建议距离、有效宽度和 pass 数提示。不生成真实喷嘴路径，不做动画，不控制 PLC，也不连接真实硬件。
 
+阶段 2.4 中，`aicar_sim` 会基于 wash strategy、space model 和 nozzle coverage plan 生成洗车流程状态机运行结果：
+
+```text
+aicar_sim\outputs\wash_flow\wash_flow_run.json
+```
+
+该结果包含 `idle`、`load_vehicle_context`、`pre_rinse`、`foam`、`dwell`、`top_clean`、`side_clean`、`wheel_clean`、`air_dry` 和 `completed` 主流程，同时保留 `aborted` 与 `error` 终止状态。它只描述状态级 timeline 和喷嘴分配，不生成真实喷嘴路径，不做动画，不控制 PLC，也不连接真实硬件。
+
 运行 scaffold：
 
 ```powershell
@@ -93,4 +101,13 @@ python aicar_sim\scripts\check_nozzle_catalog.py
 python aicar_sim\scripts\check_nozzle_zone_mapping.py
 python aicar_sim\scripts\check_nozzle_coverage_plan.py
 python aicar_sim\scripts\generate_nozzle_coverage_plan.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+生成阶段2.4洗车流程状态机运行结果：
+
+```powershell
+python aicar_sim\scripts\check_wash_flow_config.py
+python aicar_sim\scripts\check_wash_state_machine.py
+python aicar_sim\scripts\check_wash_flow_run.py
+python aicar_sim\scripts\generate_wash_flow_run.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
 ```

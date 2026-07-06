@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.4 Wash Flow Run",
+  "type": "object",
+  "required": [
+    "run_version",
+    "flow_id",
+    "vehicle",
+    "wash_profile",
+    "wash_bay_id",
+    "summary",
+    "timeline",
+    "limitations"
+  ],
+  "properties": {
+    "run_version": {
+      "type": "string",
+      "const": "stage2.4"
+    },
+    "flow_id": {
+      "type": "string"
+    },
+    "vehicle": {
+      "type": "object"
+    },
+    "wash_profile": {
+      "type": "string"
+    },
+    "wash_bay_id": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "state_count",
+        "timeline_state_count",
+        "wash_state_count",
+        "estimated_total_seconds",
+        "terminal_states",
+        "notes"
+      ],
+      "properties": {
+        "state_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timeline_state_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "wash_state_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_total_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "terminal_states": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "order",
+          "state_id",
+          "duration_seconds",
+          "start_time_s",
+          "end_time_s",
+          "target_zone_ids",
+          "assigned_nozzles"
+        ]
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

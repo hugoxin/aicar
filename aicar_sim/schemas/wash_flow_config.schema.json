@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.4 Wash Flow Config",
+  "type": "object",
+  "required": [
+    "flow_id",
+    "initial_state",
+    "terminal_states",
+    "states"
+  ],
+  "properties": {
+    "flow_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "initial_state": {
+      "type": "string"
+    },
+    "terminal_states": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["state_id", "display_name", "state_type", "next_states"]
+      }
+    },
+    "global_transitions": {
+      "type": "array"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
