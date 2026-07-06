@@ -1,0 +1,66 @@
+{
+  "catalog_id": "demo_nozzle_catalog",
+  "description": "Stage2.3 demo nozzle catalog. Not real hardware parameters.",
+  "nozzles": [
+    {
+      "nozzle_id": "top_high_pressure",
+      "display_name": "顶部高压喷嘴",
+      "media_type": "water",
+      "pressure_level": "high",
+      "spray_angle_deg": 65,
+      "recommended_distance_mm": 350,
+      "effective_width_mm": 500,
+      "flow_l_min": 12,
+      "target_zones": ["roof"],
+      "notes": "Stage2.3 demo parameters only. Not real hardware parameters."
+    },
+    {
+      "nozzle_id": "side_high_pressure",
+      "display_name": "侧面高压喷嘴",
+      "media_type": "water",
+      "pressure_level": "high",
+      "spray_angle_deg": 55,
+      "recommended_distance_mm": 320,
+      "effective_width_mm": 420,
+      "flow_l_min": 10,
+      "target_zones": ["left_side", "right_side", "front", "rear"],
+      "notes": "Stage2.3 demo parameters only. Not real hardware parameters."
+    },
+    {
+      "nozzle_id": "foam_nozzle",
+      "display_name": "泡沫喷嘴",
+      "media_type": "foam",
+      "pressure_level": "low",
+      "spray_angle_deg": 80,
+      "recommended_distance_mm": 450,
+      "effective_width_mm": 700,
+      "flow_l_min": 6,
+      "target_zones": ["roof", "left_side", "right_side", "front", "rear"],
+      "notes": "Stage2.3 demo parameters only. Not real hardware parameters."
+    },
+    {
+      "nozzle_id": "wheel_focused_nozzle",
+      "display_name": "轮毂重点喷嘴",
+      "media_type": "water",
+      "pressure_level": "focused",
+      "spray_angle_deg": 35,
+      "recommended_distance_mm": 280,
+      "effective_width_mm": 250,
+      "flow_l_min": 8,
+      "target_zones": ["wheels"],
+      "notes": "Stage2.3 demo parameters only. Not real hardware parameters."
+    },
+    {
+      "nozzle_id": "air_dry_nozzle",
+      "display_name": "风干喷嘴",
+      "media_type": "air",
+      "pressure_level": "medium",
+      "spray_angle_deg": 70,
+      "recommended_distance_mm": 400,
+      "effective_width_mm": 600,
+      "flow_l_min": 0,
+      "target_zones": ["roof", "left_side", "right_side", "front", "rear"],
+      "notes": "Stage2.3 demo parameters only. Not real hardware parameters."
+    }
+  ]
+}

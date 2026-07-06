@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.3 Nozzle Zone Mapping",
+  "type": "object",
+  "required": ["mapping_id", "zone_mappings"],
+  "properties": {
+    "mapping_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "zone_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "zone_id",
+          "priority",
+          "coverage_target_percent",
+          "pass_count_hint",
+          "nozzles"
+        ]
+      }
+    }
+  }
+}

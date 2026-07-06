@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage2.3 Nozzle Coverage Plan",
+  "type": "object",
+  "required": [
+    "plan_version",
+    "source_space_model_version",
+    "vehicle",
+    "wash_profile",
+    "wash_bay_id",
+    "coverage_summary",
+    "zone_coverage",
+    "limitations"
+  ],
+  "properties": {
+    "plan_version": {
+      "type": "string",
+      "const": "stage2.3"
+    },
+    "source_space_model_version": {
+      "type": "string"
+    },
+    "vehicle": {
+      "type": "object"
+    },
+    "wash_profile": {
+      "type": "string"
+    },
+    "wash_bay_id": {
+      "type": "string"
+    },
+    "coverage_summary": {
+      "type": "object",
+      "required": [
+        "zone_count",
+        "nozzle_count",
+        "estimated_coverage_percent",
+        "notes"
+      ]
+    },
+    "zone_coverage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "zone_id",
+          "target_coverage_percent",
+          "assigned_nozzles"
+        ]
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
