@@ -20,6 +20,8 @@
 - [VEHICLE_TYPE_INTERFACE.md](VEHICLE_TYPE_INTERFACE.md)
 - [VEHICLE_TYPE_CLASSIFY_PIPELINE.md](VEHICLE_TYPE_CLASSIFY_PIPELINE.md)
 - [AICAR_SIM_VEHICLE_MODEL_SELECTION.md](AICAR_SIM_VEHICLE_MODEL_SELECTION.md)
+- [STAGE2_WASH_STRATEGY_PLAN.md](STAGE2_WASH_STRATEGY_PLAN.md)
+- [WASH_PROFILE_SCHEMA.md](WASH_PROFILE_SCHEMA.md)
 
 ## 3. 图片输入与 YOLO 检测
 
@@ -56,7 +58,12 @@
 - [Stage1 Visual Demo README](../demos/stage1_visual_demo/README.md)
 - [Stage1 Demo Explanation](../demos/stage1_visual_demo/docs/STAGE1_DEMO_EXPLANATION.md)
 
-## 9. 后续整理建议
+## 9. 阶段2策略层
+
+- [STAGE2_WASH_STRATEGY_PLAN.md](STAGE2_WASH_STRATEGY_PLAN.md)
+- [WASH_PROFILE_SCHEMA.md](WASH_PROFILE_SCHEMA.md)
+
+## 10. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。

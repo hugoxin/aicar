@@ -1,0 +1,17 @@
+{
+  "wash_profile": "standard_mpv",
+  "description": "Standard wash profile for MPV demo vehicles.",
+  "vehicle_type": "mpv",
+  "safe_distance_mm": 380,
+  "top_clearance_mm": 280,
+  "side_clearance_mm": 340,
+  "front_rear_clearance_mm": 360,
+  "gantry_speed_mm_s": 160,
+  "nozzle_travel_speed_mm_s": 200,
+  "foam_seconds": 25,
+  "dwell_seconds": 35,
+  "rinse_seconds": 45,
+  "dry_seconds": 50,
+  "wheel_focus_seconds": 14,
+  "notes": "Stage2.1 demo parameters only. Not real hardware parameters."
+}

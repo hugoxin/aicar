@@ -6,7 +6,7 @@
 
 - 阶段1：车辆识别小闭环已完成，可冻结。
 - 阶段1.D：车辆识别可视化 Demo 已创建，用于展示阶段1成果。
-- 当前暂不进入阶段2。
+- 阶段2.1：洗车策略配置与车辆数字模型接入已开始，当前只生成策略计划 JSON，不做路径规划、PLC 或硬件控制。
 
 阶段1最终链路：
 
@@ -135,3 +135,13 @@ python scripts\run_stage1_demo.py --image demo_inputs\car_demo.jpg --open-report
 ```
 
 Demo 会生成本地 HTML 报告：`demos\stage1_visual_demo\demo_outputs\reports\stage1_demo_report.html`。`demo_inputs` 和 `demo_outputs` 中的真实图片、HTML、JSON 不进入 Git。
+
+阶段 2.1 洗车策略计划：
+
+```powershell
+python aicar_sim\scripts\check_wash_profile_selection.py
+python aicar_sim\scripts\check_wash_strategy_plan.py
+python aicar_sim\scripts\generate_wash_strategy_plan.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+阶段2.1会读取车辆模型中的 `wash_profile`，生成 `aicar_sim\outputs\wash_strategy\wash_strategy_plan.json`。该 JSON 是运行输出，不进入 Git。

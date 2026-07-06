@@ -1,0 +1,17 @@
+{
+  "wash_profile": "standard_suv",
+  "description": "Standard wash profile for SUV demo vehicles.",
+  "vehicle_type": "suv",
+  "safe_distance_mm": 350,
+  "top_clearance_mm": 260,
+  "side_clearance_mm": 320,
+  "front_rear_clearance_mm": 340,
+  "gantry_speed_mm_s": 180,
+  "nozzle_travel_speed_mm_s": 220,
+  "foam_seconds": 22,
+  "dwell_seconds": 30,
+  "rinse_seconds": 38,
+  "dry_seconds": 45,
+  "wheel_focus_seconds": 12,
+  "notes": "Stage2.1 demo parameters only. Not real hardware parameters."
+}

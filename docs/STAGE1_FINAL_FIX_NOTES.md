@@ -137,6 +137,12 @@ test_car.jpg
 - 本阶段不移动、不复制、不修改 `best.pt`。
 - 本阶段不修改 `stage1-frozen-baseline` tag。
 
+## 11. 阶段2.1 开始说明
+
+阶段2.1 在新分支 `stage2-wash-strategy` 上开始，不影响阶段1冻结 tag `stage1-frozen-baseline`。
+
+本阶段只新增洗车策略配置、车辆数字模型接入和 `wash_strategy_plan.json` 生成能力；不修改 `vehicle_type_lab` 核心推理代码，不修改 `best.pt`，不进入路径规划、PLC 或硬件控制。
+
 ## 8. 阶段1.G-backup：best.pt 本地备份
 
 本次在正式 Git 初始化前完成 `best.pt` 外部备份。
