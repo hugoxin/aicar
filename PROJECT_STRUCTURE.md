@@ -41,6 +41,14 @@ demos\stage1_visual_demo
 
 Demo 是展示壳，不属于阶段2，不修改 `vehicle_type_lab` / `aicar_sim` 核心逻辑。`demo_inputs` 和 `demo_outputs` 中的真实图片、生成报告和 JSON 默认不进入 Git。
 
+阶段 2.D 已创建：
+
+```text
+demos\stage2_pipeline_demo
+```
+
+该 Demo 用于展示阶段2.1到阶段2.6完整链路：从 `vehicle_type_result.json` 出发，一键生成洗车策略、空间模型、喷嘴覆盖、流程状态机、抽象路径点和覆盖率报告，并生成单文件 HTML。它只是展示层，不做新算法、不做动画引擎、不做 PLC 或硬件控制。`demo_outputs` 中的 HTML 和 JSON 默认不进入 Git。
+
 ## aicar_sim
 
 `aicar_sim` 是主仿真框架项目。它负责无人洗车纯仿真、路径规划占位、洗车状态机占位、VirtualPLC 占位、喷嘴控制占位、日志、输出和配置。

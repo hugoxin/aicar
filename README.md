@@ -12,6 +12,7 @@
 - 阶段2.4：洗车流程状态机已开始，当前只生成状态机运行 JSON，不做真实喷嘴路径、动画、PLC 或硬件控制。
 - 阶段2.5：抽象喷嘴路径点生成已开始，当前只生成可检查路径点 JSON，不做真实硬件路径规划、动画、PLC 或硬件控制。
 - 阶段2.6：抽象路径覆盖率检查与报告已开始，当前只生成覆盖率报告 JSON，不做真实流体仿真、动画、PLC 或硬件控制。
+- 阶段2.D：阶段2完整链路可视化 Demo 已开始，当前只做本地 HTML 展示层，不做新算法、动画引擎、PLC 或硬件控制。
 
 阶段1最终链路：
 
@@ -202,3 +203,13 @@ python aicar_sim\scripts\generate_coverage_report.py --vehicle-type-result vehic
 ```
 
 阶段2.6会生成 `aicar_sim\outputs\coverage_report\coverage_report.json`。该 JSON 是运行输出，不进入 Git。
+
+阶段 2.D 完整链路可视化 Demo：
+
+```powershell
+Set-Location F:\aicar\demos\stage2_pipeline_demo
+python scripts\check_stage2_pipeline_demo.py
+python scripts\run_stage2_pipeline_demo.py --open-report
+```
+
+Demo 会生成 `demos\stage2_pipeline_demo\demo_outputs\reports\stage2_pipeline_report.html`，并复制六个阶段2 JSON 到 `demo_outputs\json`。这些 HTML 和 JSON 是运行输出，不进入 Git。
