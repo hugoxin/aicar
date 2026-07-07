@@ -11,6 +11,7 @@
 - 阶段2.3：喷嘴模型与喷嘴覆盖参数已开始，当前只生成覆盖参数 JSON，不做真实路径规划、动画、PLC 或硬件控制。
 - 阶段2.4：洗车流程状态机已开始，当前只生成状态机运行 JSON，不做真实喷嘴路径、动画、PLC 或硬件控制。
 - 阶段2.5：抽象喷嘴路径点生成已开始，当前只生成可检查路径点 JSON，不做真实硬件路径规划、动画、PLC 或硬件控制。
+- 阶段2.6：抽象路径覆盖率检查与报告已开始，当前只生成覆盖率报告 JSON，不做真实流体仿真、动画、PLC 或硬件控制。
 
 阶段1最终链路：
 
@@ -192,3 +193,12 @@ python aicar_sim\scripts\generate_abstract_nozzle_path_plan.py --vehicle-type-re
 ```
 
 阶段2.5会生成 `aicar_sim\outputs\path_plan\abstract_nozzle_path_plan.json`。该 JSON 是运行输出，不进入 Git。
+
+阶段 2.6 抽象路径覆盖率检查与报告：
+
+```powershell
+python aicar_sim\scripts\check_coverage_report.py
+python aicar_sim\scripts\generate_coverage_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+阶段2.6会生成 `aicar_sim\outputs\coverage_report\coverage_report.json`。该 JSON 是运行输出，不进入 Git。

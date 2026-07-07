@@ -60,6 +60,14 @@ aicar_sim\outputs\path_plan\abstract_nozzle_path_plan.json
 
 该结果只描述车辆坐标系下的参考点、path segment、喷嘴和区域对应关系。它不是电机坐标，不是 PLC 指令，不生成真实硬件路径规划，也不做动画。
 
+阶段 2.6 中，`aicar_sim` 会基于 abstract path plan、nozzle coverage plan 和 space model 生成抽象覆盖率报告：
+
+```text
+aicar_sim\outputs\coverage_report\coverage_report.json
+```
+
+该报告统计每个 zone 的 segment、point、目标覆盖率和估算覆盖率。它不是流体仿真，不代表真实清洗效果，不控制 PLC，也不连接真实硬件。
+
 运行 scaffold：
 
 ```powershell
@@ -126,4 +134,11 @@ python aicar_sim\scripts\generate_wash_flow_run.py --vehicle-type-result vehicle
 python aicar_sim\scripts\check_abstract_path.py
 python aicar_sim\scripts\check_path_plan.py
 python aicar_sim\scripts\generate_abstract_nozzle_path_plan.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+生成阶段2.6抽象覆盖率报告：
+
+```powershell
+python aicar_sim\scripts\check_coverage_report.py
+python aicar_sim\scripts\generate_coverage_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
 ```
