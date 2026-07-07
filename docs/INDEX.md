@@ -62,6 +62,8 @@
 
 - [Stage1 Visual Demo README](../demos/stage1_visual_demo/README.md)
 - [Stage1 Demo Explanation](../demos/stage1_visual_demo/docs/STAGE1_DEMO_EXPLANATION.md)
+- [Stage2 Pipeline Demo README](../demos/stage2_pipeline_demo/README.md)
+- [Stage2 Pipeline Demo Explanation](../demos/stage2_pipeline_demo/docs/STAGE2_PIPELINE_DEMO_EXPLANATION.md)
 
 ## 9. 阶段2策略层
 

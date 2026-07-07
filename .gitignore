@@ -65,6 +65,8 @@ demos/stage1_visual_demo/demo_outputs/crops/*.webp
 demos/stage1_visual_demo/demo_outputs/crops/*.bmp
 demos/stage1_visual_demo/demo_outputs/crops/*.jfif
 demos/stage1_visual_demo/demo_outputs/json/*.json
+demos/stage2_pipeline_demo/demo_outputs/reports/*.html
+demos/stage2_pipeline_demo/demo_outputs/json/*.json
 aicar_sim/outputs/wash_strategy/*.json
 aicar_sim/outputs/space_model/*.json
 aicar_sim/outputs/nozzle_plan/*.json

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 智能无人洗车阶段2完整链路 Demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f9;
+      --panel: #ffffff;
+      --text: #17202a;
+      --muted: #627084;
+      --line: #d9e1ea;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --warn: #b45309;
+      --ok: #15803d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+    header {
+      padding: 28px 32px 18px;
+      background: #0f172a;
+      color: #fff;
+    }
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+    header p {
+      max-width: 980px;
+      margin: 0;
+      color: #cbd5e1;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    section {
+      margin: 0 0 22px;
+      padding: 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 16px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfdff;
+      min-height: 78px;
+    }
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .metric-value {
+      font-size: 20px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+    .flow-step {
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 12px;
+    }
+    .flow-step strong { display: block; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 14px;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      width: 220px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 820px) {
+      main { padding: 14px; }
+      header { padding: 22px 18px; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    .progress {
+      height: 10px;
+      border-radius: 99px;
+      overflow: hidden;
+      background: #e2e8f0;
+      min-width: 120px;
+    }
+    .progress span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .status-ok { color: var(--ok); font-weight: 700; }
+    .status-warn { color: var(--warn); font-weight: 700; }
+    .vehicle-map {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      grid-template-rows: 0.7fr 1.1fr 0.7fr;
+      gap: 8px;
+      max-width: 520px;
+      min-height: 320px;
+      margin: 8px auto 0;
+    }
+    .zone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #eef6ff;
+      color: #1e3a8a;
+      text-align: center;
+      padding: 8px;
+      font-size: 13px;
+      min-height: 72px;
+    }
+    .zone.roof { grid-column: 2; grid-row: 2; background: #ecfdf5; color: #065f46; }
+    .zone.front { grid-column: 2; grid-row: 1; }
+    .zone.rear { grid-column: 2; grid-row: 3; }
+    .zone.left { grid-column: 1; grid-row: 2; }
+    .zone.right { grid-column: 3; grid-row: 2; }
+    .zone.wheels { grid-column: 1 / 4; grid-row: 4; background: #fff7ed; color: #9a3412; }
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .missing {
+      border: 1px dashed var(--warn);
+      color: var(--warn);
+      padding: 10px;
+      border-radius: 8px;
+      background: #fffbeb;
+      margin: 8px 0;
+    }
+    code {
+      background: #eef2f7;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI 智能无人洗车阶段2完整链路 Demo</h1>
+    <p>从阶段1车型识别结果出发，串联阶段2.1到阶段2.6：洗车策略、空间模型、喷嘴覆盖、流程状态机、抽象路径点和覆盖率报告。</p>
+  </header>
+  <main>
+    <section>
+      <h2>顶部摘要</h2>
+      <div class="metrics">{{SUMMARY_CARDS}}</div>
+      {{MISSING_NOTICE}}
+    </section>
+    <section>
+      <h2>链路概览</h2>
+      <div class="flow">{{FLOW_STEPS}}</div>
+    </section>
+    <section>
+      <h2>洗车策略计划</h2>
+      {{STRATEGY_SECTION}}
+    </section>
+    <section>
+      <h2>洗车空间</h2>
+      <div class="grid-2">
+        <div>{{SPACE_SECTION}}</div>
+        <div>{{VEHICLE_MAP}}</div>
+      </div>
+    </section>
+    <section>
+      <h2>喷嘴覆盖</h2>
+      {{NOZZLE_SECTION}}
+    </section>
+    <section>
+      <h2>流程状态机</h2>
+      {{FLOW_SECTION}}
+    </section>
+    <section>
+      <h2>抽象路径</h2>
+      {{PATH_SECTION}}
+    </section>
+    <section>
+      <h2>覆盖率报告</h2>
+      {{COVERAGE_SECTION}}
+    </section>
+    <section>
+      <h2>边界说明</h2>
+      <p class="note">当前 Demo 是展示层：不代表真实硬件控制，不代表真实清洗效果，不包含 PLC，不包含动画引擎，也不包含最终机械轨迹规划。</p>
+    </section>
+  </main>
+</body>
+</html>
