@@ -68,6 +68,12 @@ aicar_sim\outputs\coverage_report\coverage_report.json
 
 该报告统计每个 zone 的 segment、point、目标覆盖率和估算覆盖率。它不是流体仿真，不代表真实清洗效果，不控制 PLC，也不连接真实硬件。
 
+阶段 2.F 中，阶段2已形成 simulation baseline。冻结总结见：
+
+```text
+docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md
+```
+
 运行 scaffold：
 
 ```powershell

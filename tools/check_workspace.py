@@ -39,6 +39,7 @@ REQUIRED_PATHS = [
     "docs/STAGE2_WASH_FLOW_STATE_MACHINE.md",
     "docs/STAGE2_ABSTRACT_NOZZLE_PATH_PLAN.md",
     "docs/STAGE2_COVERAGE_REPORT.md",
+    "docs/STAGE2_SIMULATION_BASELINE_SUMMARY.md",
     "aicar_sim/README.md",
     "aicar_sim/requirements.txt",
     "aicar_sim/pyproject.toml",

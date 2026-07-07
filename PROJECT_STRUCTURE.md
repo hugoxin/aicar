@@ -69,6 +69,12 @@ demos\stage2_pipeline_demo
 
 阶段 2.6 中，`aicar_sim` 新增 `coverage_report.py` 和 `outputs\coverage_report\coverage_report.json` 输出。该阶段只基于抽象路径点、喷嘴覆盖目标和空间 zone 做覆盖率估算报告，不做真实流体仿真、动画、PLC 或硬件控制。
 
+阶段 2.F 中，阶段2已形成 simulation baseline。冻结总结文档位于：
+
+```text
+docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md
+```
+
 后续它可以作为独立 git 仓库维护。当前阶段只做 scaffold，不做复杂仿真算法。
 
 ## vehicle_type_lab

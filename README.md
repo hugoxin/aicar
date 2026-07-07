@@ -13,6 +13,7 @@
 - 阶段2.5：抽象喷嘴路径点生成已开始，当前只生成可检查路径点 JSON，不做真实硬件路径规划、动画、PLC 或硬件控制。
 - 阶段2.6：抽象路径覆盖率检查与报告已开始，当前只生成覆盖率报告 JSON，不做真实流体仿真、动画、PLC 或硬件控制。
 - 阶段2.D：阶段2完整链路可视化 Demo 已开始，当前只做本地 HTML 展示层，不做新算法、动画引擎、PLC 或硬件控制。
+- 阶段2.F：阶段2已形成 simulation baseline，冻结总结见 `docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md`。
 
 阶段1最终链路：
 
@@ -213,3 +214,7 @@ python scripts\run_stage2_pipeline_demo.py --open-report
 ```
 
 Demo 会生成 `demos\stage2_pipeline_demo\demo_outputs\reports\stage2_pipeline_report.html`，并复制六个阶段2 JSON 到 `demo_outputs\json`。这些 HTML 和 JSON 是运行输出，不进入 Git。
+
+阶段2 simulation baseline 总结：
+
+- [docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md](docs/STAGE2_SIMULATION_BASELINE_SUMMARY.md)
