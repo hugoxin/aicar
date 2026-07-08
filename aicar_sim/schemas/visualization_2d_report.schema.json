@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage3 2D Visualization Report Structure",
+  "type": "object",
+  "required": [
+    "report_version",
+    "vehicle",
+    "wash_profile",
+    "summary",
+    "top_view",
+    "side_view",
+    "coverage_table",
+    "timeline",
+    "path_statistics",
+    "limitations"
+  ],
+  "properties": {
+    "report_version": {
+      "type": "string"
+    },
+    "vehicle": {
+      "type": "object"
+    },
+    "wash_profile": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "top_view": {
+      "type": "object",
+      "description": "Top-view SVG drawing metadata."
+    },
+    "side_view": {
+      "type": "object",
+      "description": "Side-view SVG drawing metadata."
+    },
+    "coverage_table": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "path_statistics": {
+      "type": "object"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
