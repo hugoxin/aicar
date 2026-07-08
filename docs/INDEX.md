@@ -31,6 +31,7 @@
 - [STAGE3_2D_VISUALIZATION_PLAN.md](STAGE3_2D_VISUALIZATION_PLAN.md)
 - [STAGE3_TIMELINE_ANIMATION_PLAN.md](STAGE3_TIMELINE_ANIMATION_PLAN.md)
 - [STAGE3_VISUAL_BASELINE_SUMMARY.md](STAGE3_VISUAL_BASELINE_SUMMARY.md)
+- [STAGE3_CUSTOMER_SHOWCASE_PLAN.md](STAGE3_CUSTOMER_SHOWCASE_PLAN.md)
 
 ## 3. 图片输入与 YOLO 检测
 
@@ -74,6 +75,8 @@
 - [Stage3 2D Visual Demo Explanation](../demos/stage3_2d_visual_demo/docs/STAGE3_2D_VISUAL_DEMO_EXPLANATION.md)
 - [Stage3 Timeline Animation Demo README](../demos/stage3_timeline_animation_demo/README.md)
 - [Stage3 Timeline Animation Demo Explanation](../demos/stage3_timeline_animation_demo/docs/STAGE3_TIMELINE_ANIMATION_DEMO_EXPLANATION.md)
+- [Stage3 Customer Showcase Demo README](../demos/stage3_customer_showcase_demo/README.md)
+- [Stage3 Customer Showcase Demo Explanation](../demos/stage3_customer_showcase_demo/docs/STAGE3_CUSTOMER_SHOWCASE_DEMO_EXPLANATION.md)
 
 ## 9. 阶段2策略层
 
@@ -91,6 +94,7 @@
 - [STAGE3_2D_VISUALIZATION_PLAN.md](STAGE3_2D_VISUALIZATION_PLAN.md)
 - [STAGE3_TIMELINE_ANIMATION_PLAN.md](STAGE3_TIMELINE_ANIMATION_PLAN.md)
 - [STAGE3_VISUAL_BASELINE_SUMMARY.md](STAGE3_VISUAL_BASELINE_SUMMARY.md)
+- [STAGE3_CUSTOMER_SHOWCASE_PLAN.md](STAGE3_CUSTOMER_SHOWCASE_PLAN.md)
 
 ## 11. 后续整理建议
 

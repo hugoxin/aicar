@@ -5,6 +5,7 @@
 - tag: `stage3-visual-baseline`
 - 阶段3定位：AI智能无人洗车仿真结果可视化展示层。
 - 当前仍然不是真实硬件控制，不是 PLC，不是 3D 引擎，不是真实运动轨迹。
+- Stage3.3 customer showcase 是在 visual baseline 之后追加的展示优化，不改变 `stage3-visual-baseline` tag。
 
 阶段3的核心目标，是把阶段2已经生成的策略、空间、喷嘴、流程、抽象路径和覆盖率 JSON，用更直观的 HTML 可视化方式展示出来，方便项目组、客户或合作方理解系统链路。
 

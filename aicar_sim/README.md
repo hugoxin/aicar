@@ -96,6 +96,14 @@ aicar_sim\outputs\timeline_animation\stage3_timeline_animation_report.html
 docs\STAGE3_VISUAL_BASELINE_SUMMARY.md
 ```
 
+阶段 3.3 中，`aicar_sim` 会读取阶段1识别结果和阶段2六个 JSON 输出，并生成面向客户/领导/项目组的一页式展示报告：
+
+```text
+aicar_sim\outputs\customer_showcase\stage3_customer_showcase_report.html
+```
+
+该报告用于说明项目定位、当前能力、完整链路、Demo 数据摘要、阶段进度、业务价值、技术边界和后续路线。它不做新算法、不做 3D、不做 PLC 或硬件控制。
+
 运行 scaffold：
 
 ```powershell
@@ -183,4 +191,11 @@ python aicar_sim\scripts\generate_2d_visualization_report.py --vehicle-type-resu
 ```powershell
 python aicar_sim\scripts\check_timeline_animation.py
 python aicar_sim\scripts\generate_timeline_animation_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+生成阶段3.3客户展示页：
+
+```powershell
+python aicar_sim\scripts\check_customer_showcase.py
+python aicar_sim\scripts\generate_customer_showcase_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
 ```
