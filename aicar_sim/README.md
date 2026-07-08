@@ -90,6 +90,12 @@ aicar_sim\outputs\timeline_animation\stage3_timeline_animation_report.html
 
 报告使用原生 HTML/CSS/JavaScript，支持 Play、Pause、Reset、slider、当前状态面板、当前区域高亮和当前抽象路径高亮。该阶段不是 3D，不是复杂动画引擎，不是真实运动控制，不是 PLC，也不连接硬件。
 
+阶段 3.F 中，阶段3已形成 visual baseline。冻结总结见：
+
+```text
+docs\STAGE3_VISUAL_BASELINE_SUMMARY.md
+```
+
 运行 scaffold：
 
 ```powershell

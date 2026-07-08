@@ -29,6 +29,12 @@ docs\MODEL_ARTIFACTS.md
 docs\STAGE1_FINAL_FIX_NOTES.md
 ```
 
+阶段 3 可视化基线冻结总结：
+
+```text
+docs\STAGE3_VISUAL_BASELINE_SUMMARY.md
+```
+
 ## demos
 
 `demos` 保存项目展示层内容。阶段 1.D 已创建：
@@ -94,6 +100,12 @@ docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md
 阶段 3.1 中，`aicar_sim` 新增 `visualization_2d.py`、`generate_2d_visualization_report.py` 和 `outputs\visualization_2d\stage3_2d_visual_report.html` 输出。该阶段只做静态 2D 可视化，不做 3D、动画引擎、真实路径规划、PLC 或硬件控制。
 
 阶段 3.2 中，`aicar_sim` 新增 `timeline_animation.py`、`generate_timeline_animation_report.py` 和 `outputs\timeline_animation\stage3_timeline_animation_report.html` 输出。该阶段只做轻量时间轴动画展示，不做 3D、复杂动画引擎、真实运动控制、PLC 或硬件控制。
+
+阶段 3.F 中，阶段3已形成 visual baseline。冻结总结文档位于：
+
+```text
+docs\STAGE3_VISUAL_BASELINE_SUMMARY.md
+```
 
 后续它可以作为独立 git 仓库维护。当前阶段只做 scaffold，不做复杂仿真算法。
 

@@ -42,6 +42,7 @@ REQUIRED_PATHS = [
     "docs/STAGE2_SIMULATION_BASELINE_SUMMARY.md",
     "docs/STAGE3_2D_VISUALIZATION_PLAN.md",
     "docs/STAGE3_TIMELINE_ANIMATION_PLAN.md",
+    "docs/STAGE3_VISUAL_BASELINE_SUMMARY.md",
     "aicar_sim/README.md",
     "aicar_sim/requirements.txt",
     "aicar_sim/pyproject.toml",

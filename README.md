@@ -16,6 +16,7 @@
 - 阶段2.F：阶段2已形成 simulation baseline，冻结总结见 `docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md`。
 - 阶段3.1：阶段2结果 2D 可视化已开始，当前只生成静态 HTML/SVG 报告，不做 3D、动画引擎、PLC 或硬件控制。
 - 阶段3.2：简单时间轴动画 Demo 已开始，当前只做原生 HTML/CSS/JavaScript 播放展示，不做 3D、复杂动画引擎、PLC 或硬件控制。
+- 阶段3.F：阶段3已形成 visual baseline，冻结总结见 `docs\STAGE3_VISUAL_BASELINE_SUMMARY.md`。
 
 阶段1最终链路：
 
@@ -222,6 +223,10 @@ Demo 会生成 `demos\stage2_pipeline_demo\demo_outputs\reports\stage2_pipeline_
 阶段2 simulation baseline 总结：
 
 - [docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md](docs/STAGE2_SIMULATION_BASELINE_SUMMARY.md)
+
+阶段3 visual baseline 总结：
+
+- [docs\STAGE3_VISUAL_BASELINE_SUMMARY.md](docs/STAGE3_VISUAL_BASELINE_SUMMARY.md)
 
 阶段 3.1 2D 可视化：
 
