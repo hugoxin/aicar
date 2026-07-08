@@ -15,6 +15,7 @@
 - 阶段2.D：阶段2完整链路可视化 Demo 已开始，当前只做本地 HTML 展示层，不做新算法、动画引擎、PLC 或硬件控制。
 - 阶段2.F：阶段2已形成 simulation baseline，冻结总结见 `docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md`。
 - 阶段3.1：阶段2结果 2D 可视化已开始，当前只生成静态 HTML/SVG 报告，不做 3D、动画引擎、PLC 或硬件控制。
+- 阶段3.2：简单时间轴动画 Demo 已开始，当前只做原生 HTML/CSS/JavaScript 播放展示，不做 3D、复杂动画引擎、PLC 或硬件控制。
 
 阶段1最终链路：
 
@@ -51,6 +52,7 @@ test_car.jpg
 - `vehicle_type_lab`：车辆识别小闭环项目，后续用于 sedan / SUV / MPV 三分类识别。
 - `demos\stage1_visual_demo`：阶段1车辆识别可视化 Demo。它是展示层，只调用已有阶段1识别能力，不修改 `vehicle_type_lab` / `aicar_sim` 核心逻辑。
 - `demos\stage3_2d_visual_demo`：阶段3.1 2D 可视化 Demo。它读取阶段2 JSON，生成俯视图、侧视图、覆盖率表和流程时间线 HTML。
+- `demos\stage3_timeline_animation_demo`：阶段3.2 时间轴动画 Demo。它读取阶段2 JSON，按 wash flow timeline 高亮当前状态、区域和抽象路径。
 - `external_repos`：开源参考项目存放区，只做参考，不把第三方源码复制进主项目。
 - `datasets`：统一数据目录，当前只预留结构，不下载大数据集。
 - `models`：统一模型目录，当前只预留结构，不下载大模型。
@@ -239,3 +241,20 @@ python scripts\run_stage3_2d_visual_demo.py --open-report
 ```
 
 Demo 输出：`demos\stage3_2d_visual_demo\demo_outputs\reports\stage3_2d_visual_report.html`。Demo HTML 和 JSON 不进入 Git。
+
+阶段 3.2 时间轴动画 Demo：
+
+```powershell
+python aicar_sim\scripts\check_timeline_animation.py
+python aicar_sim\scripts\generate_timeline_animation_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+输出 HTML：`aicar_sim\outputs\timeline_animation\stage3_timeline_animation_report.html`。该 HTML 是运行输出，不进入 Git。
+
+```powershell
+Set-Location F:\aicar\demos\stage3_timeline_animation_demo
+python scripts\check_stage3_timeline_animation_demo.py
+python scripts\run_stage3_timeline_animation_demo.py --open-report
+```
+
+Demo 输出：`demos\stage3_timeline_animation_demo\demo_outputs\reports\stage3_timeline_animation_report.html`。Demo HTML 和 JSON 不进入 Git。

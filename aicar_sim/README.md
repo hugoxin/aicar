@@ -82,6 +82,14 @@ aicar_sim\outputs\visualization_2d\stage3_2d_visual_report.html
 
 报告包含洗车房俯视图、车辆 `bounding_box`、`safe_envelope`、surface zones、抽象喷嘴路径、覆盖率表、喷嘴分配表和流程时间线。该阶段不是 3D，不是动画引擎，不是真实路径规划，不是 PLC，也不连接硬件。
 
+阶段 3.2 中，`aicar_sim` 会读取阶段2六个 JSON 输出，并生成简单时间轴动画 HTML 报告：
+
+```text
+aicar_sim\outputs\timeline_animation\stage3_timeline_animation_report.html
+```
+
+报告使用原生 HTML/CSS/JavaScript，支持 Play、Pause、Reset、slider、当前状态面板、当前区域高亮和当前抽象路径高亮。该阶段不是 3D，不是复杂动画引擎，不是真实运动控制，不是 PLC，也不连接硬件。
+
 运行 scaffold：
 
 ```powershell
@@ -162,4 +170,11 @@ python aicar_sim\scripts\generate_coverage_report.py --vehicle-type-result vehic
 ```powershell
 python aicar_sim\scripts\check_visualization_2d.py
 python aicar_sim\scripts\generate_2d_visualization_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+生成阶段3.2时间轴动画报告：
+
+```powershell
+python aicar_sim\scripts\check_timeline_animation.py
+python aicar_sim\scripts\generate_timeline_animation_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
 ```

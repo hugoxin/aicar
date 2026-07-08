@@ -57,6 +57,14 @@ demos\stage3_2d_visual_demo
 
 该 Demo 用于把阶段2 JSON 结果渲染为 2D HTML/SVG 报告，包括洗车房俯视图、车辆包络、安全包络、抽象喷嘴路径、覆盖率表和流程时间线。它不是 3D、不是动画引擎、不是真实路径规划，也不连接 PLC 或硬件。`demo_outputs` 中的 HTML 和 JSON 默认不进入 Git。
 
+阶段 3.2 已创建：
+
+```text
+demos\stage3_timeline_animation_demo
+```
+
+该 Demo 用于把阶段2 JSON 结果按洗车流程时间轴播放展示，包括 Play/Pause/Reset、slider、当前状态面板、当前区域高亮和当前抽象路径高亮。它不是 3D、不是复杂动画引擎、不是真实运动控制，也不连接 PLC 或硬件。`demo_outputs` 中的 HTML 和 JSON 默认不进入 Git。
+
 ## aicar_sim
 
 `aicar_sim` 是主仿真框架项目。它负责无人洗车纯仿真、路径规划占位、洗车状态机占位、VirtualPLC 占位、喷嘴控制占位、日志、输出和配置。
@@ -84,6 +92,8 @@ docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md
 ```
 
 阶段 3.1 中，`aicar_sim` 新增 `visualization_2d.py`、`generate_2d_visualization_report.py` 和 `outputs\visualization_2d\stage3_2d_visual_report.html` 输出。该阶段只做静态 2D 可视化，不做 3D、动画引擎、真实路径规划、PLC 或硬件控制。
+
+阶段 3.2 中，`aicar_sim` 新增 `timeline_animation.py`、`generate_timeline_animation_report.py` 和 `outputs\timeline_animation\stage3_timeline_animation_report.html` 输出。该阶段只做轻量时间轴动画展示，不做 3D、复杂动画引擎、真实运动控制、PLC 或硬件控制。
 
 后续它可以作为独立 git 仓库维护。当前阶段只做 scaffold，不做复杂仿真算法。
 

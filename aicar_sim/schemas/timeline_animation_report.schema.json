@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage3 Timeline Animation Report Structure",
+  "type": "object",
+  "required": [
+    "report_version",
+    "vehicle",
+    "wash_profile",
+    "summary",
+    "timeline",
+    "svg_scene",
+    "path_segments",
+    "coverage_panel",
+    "controls",
+    "limitations"
+  ],
+  "properties": {
+    "report_version": {
+      "type": "string"
+    },
+    "vehicle": {
+      "type": "object"
+    },
+    "wash_profile": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "svg_scene": {
+      "type": "object"
+    },
+    "path_segments": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "coverage_panel": {
+      "type": "object"
+    },
+    "controls": {
+      "type": "object"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

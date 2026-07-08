@@ -76,6 +76,9 @@ aicar_sim/outputs/coverage_report/*.json
 aicar_sim/outputs/visualization_2d/*.html
 demos/stage3_2d_visual_demo/demo_outputs/reports/*.html
 demos/stage3_2d_visual_demo/demo_outputs/json/*.json
+aicar_sim/outputs/timeline_animation/*.html
+demos/stage3_timeline_animation_demo/demo_outputs/reports/*.html
+demos/stage3_timeline_animation_demo/demo_outputs/json/*.json
 
 # Keep scaffold placeholders visible when this workspace is later split.
 !**/.gitkeep
@@ -116,6 +119,8 @@ demos/stage3_2d_visual_demo/demo_outputs/json/*.json
 !aicar_sim/outputs/coverage_report/.gitkeep
 !aicar_sim/outputs/visualization_2d/
 !aicar_sim/outputs/visualization_2d/.gitkeep
+!aicar_sim/outputs/timeline_animation/
+!aicar_sim/outputs/timeline_animation/.gitkeep
 !vehicle_type_lab/outputs/
 !vehicle_type_lab/outputs/predictions/
 !vehicle_type_lab/outputs/predictions/.gitkeep
