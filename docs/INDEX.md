@@ -28,6 +28,7 @@
 - [STAGE2_ABSTRACT_NOZZLE_PATH_PLAN.md](STAGE2_ABSTRACT_NOZZLE_PATH_PLAN.md)
 - [STAGE2_COVERAGE_REPORT.md](STAGE2_COVERAGE_REPORT.md)
 - [STAGE2_SIMULATION_BASELINE_SUMMARY.md](STAGE2_SIMULATION_BASELINE_SUMMARY.md)
+- [STAGE3_2D_VISUALIZATION_PLAN.md](STAGE3_2D_VISUALIZATION_PLAN.md)
 
 ## 3. 图片输入与 YOLO 检测
 
@@ -65,6 +66,8 @@
 - [Stage1 Demo Explanation](../demos/stage1_visual_demo/docs/STAGE1_DEMO_EXPLANATION.md)
 - [Stage2 Pipeline Demo README](../demos/stage2_pipeline_demo/README.md)
 - [Stage2 Pipeline Demo Explanation](../demos/stage2_pipeline_demo/docs/STAGE2_PIPELINE_DEMO_EXPLANATION.md)
+- [Stage3 2D Visual Demo README](../demos/stage3_2d_visual_demo/README.md)
+- [Stage3 2D Visual Demo Explanation](../demos/stage3_2d_visual_demo/docs/STAGE3_2D_VISUAL_DEMO_EXPLANATION.md)
 
 ## 9. 阶段2策略层
 
@@ -77,7 +80,11 @@
 - [STAGE2_COVERAGE_REPORT.md](STAGE2_COVERAGE_REPORT.md)
 - [STAGE2_SIMULATION_BASELINE_SUMMARY.md](STAGE2_SIMULATION_BASELINE_SUMMARY.md)
 
-## 10. 后续整理建议
+## 10. 阶段3可视化
+
+- [STAGE3_2D_VISUALIZATION_PLAN.md](STAGE3_2D_VISUALIZATION_PLAN.md)
+
+## 11. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。
