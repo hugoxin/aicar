@@ -41,6 +41,12 @@ docs\STAGE3_VISUAL_BASELINE_SUMMARY.md
 docs\STAGE3_CUSTOMER_SHOWCASE_PLAN.md
 ```
 
+阶段 3.4 客户演示材料计划：
+
+```text
+docs\STAGE3_CUSTOMER_MATERIALS_PLAN.md
+```
+
 ## demos
 
 `demos` 保存项目展示层内容。阶段 1.D 已创建：
@@ -151,7 +157,7 @@ docs\STAGE3_VISUAL_BASELINE_SUMMARY.md
 
 ## future planned directories
 
-以下目录是后续预留共识，当前暂未创建，不属于阶段1冻结缺陷：
+以下目录是后续预留共识，当前 `business_docs` 已用于阶段3.4客户演示材料，`experiments` 暂未创建：
 
 ```text
 experiments    # 后续实验验证
@@ -159,6 +165,16 @@ business_docs  # 后续商业方案、汇报材料、客户材料
 ```
 
 所有后续相关内容应放在 `F:\aicar` 下，不建议在 `F:\aicar` 外创建散落项目目录。
+
+## business_docs
+
+`business_docs` 保存面向客户、领导、合作方和项目申报的材料。阶段3.4新增：
+
+```text
+business_docs\stage3_customer_materials
+```
+
+该目录包含一页式项目介绍、客户演示话术、客户演示PPT大纲、常见问题、价值主张、技术边界说明和后续路线图。当前只整理 Markdown/文本材料，不生成 PPTX，不修改核心代码。
 
 ## datasets
 

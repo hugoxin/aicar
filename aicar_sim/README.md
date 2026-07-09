@@ -104,6 +104,8 @@ aicar_sim\outputs\customer_showcase\stage3_customer_showcase_report.html
 
 该报告用于说明项目定位、当前能力、完整链路、Demo 数据摘要、阶段进度、业务价值、技术边界和后续路线。它不做新算法、不做 3D、不做 PLC 或硬件控制。
 
+阶段 3.4 中，项目新增 `business_docs\stage3_customer_materials` 客户演示材料包，用于配合 Stage3.3 展示页进行对外沟通。该阶段只整理 Markdown/文本材料，不修改 `aicar_sim` 核心代码。
+
 运行 scaffold：
 
 ```powershell
@@ -198,4 +200,10 @@ python aicar_sim\scripts\generate_timeline_animation_report.py --vehicle-type-re
 ```powershell
 python aicar_sim\scripts\check_customer_showcase.py
 python aicar_sim\scripts\generate_customer_showcase_report.py --vehicle-type-result vehicle_type_lab\outputs\predictions\vehicle_type_result.json
+```
+
+检查阶段3.4客户演示材料：
+
+```powershell
+python tools\check_customer_materials.py
 ```

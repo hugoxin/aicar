@@ -32,6 +32,7 @@
 - [STAGE3_TIMELINE_ANIMATION_PLAN.md](STAGE3_TIMELINE_ANIMATION_PLAN.md)
 - [STAGE3_VISUAL_BASELINE_SUMMARY.md](STAGE3_VISUAL_BASELINE_SUMMARY.md)
 - [STAGE3_CUSTOMER_SHOWCASE_PLAN.md](STAGE3_CUSTOMER_SHOWCASE_PLAN.md)
+- [STAGE3_CUSTOMER_MATERIALS_PLAN.md](STAGE3_CUSTOMER_MATERIALS_PLAN.md)
 
 ## 3. 图片输入与 YOLO 检测
 
@@ -77,6 +78,7 @@
 - [Stage3 Timeline Animation Demo Explanation](../demos/stage3_timeline_animation_demo/docs/STAGE3_TIMELINE_ANIMATION_DEMO_EXPLANATION.md)
 - [Stage3 Customer Showcase Demo README](../demos/stage3_customer_showcase_demo/README.md)
 - [Stage3 Customer Showcase Demo Explanation](../demos/stage3_customer_showcase_demo/docs/STAGE3_CUSTOMER_SHOWCASE_DEMO_EXPLANATION.md)
+- [Stage3 Customer Materials](../business_docs/stage3_customer_materials/README.md)
 
 ## 9. 阶段2策略层
 
@@ -95,8 +97,20 @@
 - [STAGE3_TIMELINE_ANIMATION_PLAN.md](STAGE3_TIMELINE_ANIMATION_PLAN.md)
 - [STAGE3_VISUAL_BASELINE_SUMMARY.md](STAGE3_VISUAL_BASELINE_SUMMARY.md)
 - [STAGE3_CUSTOMER_SHOWCASE_PLAN.md](STAGE3_CUSTOMER_SHOWCASE_PLAN.md)
+- [STAGE3_CUSTOMER_MATERIALS_PLAN.md](STAGE3_CUSTOMER_MATERIALS_PLAN.md)
 
-## 11. 后续整理建议
+## 11. 客户与商业材料
+
+- [Stage3 Customer Materials README](../business_docs/stage3_customer_materials/README.md)
+- [Customer One Pager](../business_docs/stage3_customer_materials/CUSTOMER_ONE_PAGER.md)
+- [Customer Demo Script](../business_docs/stage3_customer_materials/CUSTOMER_DEMO_SCRIPT.md)
+- [Customer Presentation Outline](../business_docs/stage3_customer_materials/CUSTOMER_PRESENTATION_OUTLINE.md)
+- [Customer FAQ](../business_docs/stage3_customer_materials/CUSTOMER_FAQ.md)
+- [Customer Value Proposition](../business_docs/stage3_customer_materials/CUSTOMER_VALUE_PROPOSITION.md)
+- [Technical Boundary Statement](../business_docs/stage3_customer_materials/TECHNICAL_BOUNDARY_STATEMENT.md)
+- [Next Stage Roadmap](../business_docs/stage3_customer_materials/NEXT_STAGE_ROADMAP.md)
+
+## 12. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。
