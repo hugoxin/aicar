@@ -13,6 +13,7 @@ REQUIRED_PATHS = [
     MATERIAL_ROOT / "CUSTOMER_VALUE_PROPOSITION.md",
     MATERIAL_ROOT / "TECHNICAL_BOUNDARY_STATEMENT.md",
     MATERIAL_ROOT / "NEXT_STAGE_ROADMAP.md",
+    MATERIAL_ROOT / "PPT_GENERATION_PLAN.md",
     WORKSPACE_ROOT / "docs" / "STAGE3_CUSTOMER_MATERIALS_PLAN.md",
 ]
 
@@ -33,6 +34,11 @@ REQUIRED_CONTENT = {
         "阶段4",
         "阶段5",
         "阶段6",
+    ],
+    MATERIAL_ROOT / "PPT_GENERATION_PLAN.md": [
+        "AI智能无人洗车仿真系统阶段性成果汇报",
+        "建议 12 页",
+        "本轮不生成 PPTX",
     ],
 }
 

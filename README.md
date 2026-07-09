@@ -291,4 +291,4 @@ Demo 输出：`demos\stage3_customer_showcase_demo\demo_outputs\reports\stage3_c
 python tools\check_customer_materials.py
 ```
 
-材料目录：`business_docs\stage3_customer_materials`。当前只整理 Markdown/文本材料，不生成 PPTX。
+材料目录：`business_docs\stage3_customer_materials`。当前只整理 Markdown/文本材料，不生成 PPTX。PPT 正式生成前方案见 `business_docs\stage3_customer_materials\PPT_GENERATION_PLAN.md`。

@@ -109,6 +109,7 @@
 - [Customer Value Proposition](../business_docs/stage3_customer_materials/CUSTOMER_VALUE_PROPOSITION.md)
 - [Technical Boundary Statement](../business_docs/stage3_customer_materials/TECHNICAL_BOUNDARY_STATEMENT.md)
 - [Next Stage Roadmap](../business_docs/stage3_customer_materials/NEXT_STAGE_ROADMAP.md)
+- [PPT Generation Plan](../business_docs/stage3_customer_materials/PPT_GENERATION_PLAN.md)
 
 ## 12. 后续整理建议
 

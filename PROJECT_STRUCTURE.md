@@ -176,6 +176,8 @@ business_docs\stage3_customer_materials
 
 该目录包含一页式项目介绍、客户演示话术、客户演示PPT大纲、常见问题、价值主张、技术边界说明和后续路线图。当前只整理 Markdown/文本材料，不生成 PPTX，不修改核心代码。
 
+`PPT_GENERATION_PLAN.md` 记录正式 PPTX 生成前方案，包括12页结构、每页核心观点、推荐图示、讲解要点和素材来源。当前只记录方案，不生成 PPTX。
+
 ## datasets
 
 `datasets` 是共享数据目录，用于统一管理 raw、processed、vehicle_type、annotations、samples 等数据。

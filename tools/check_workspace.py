@@ -259,6 +259,7 @@ REQUIRED_PATHS = [
     "business_docs/stage3_customer_materials/CUSTOMER_VALUE_PROPOSITION.md",
     "business_docs/stage3_customer_materials/TECHNICAL_BOUNDARY_STATEMENT.md",
     "business_docs/stage3_customer_materials/NEXT_STAGE_ROADMAP.md",
+    "business_docs/stage3_customer_materials/PPT_GENERATION_PLAN.md",
     "external_repos/README.md",
     "external_repos/clone_repos.ps1",
     "datasets/README.md",
