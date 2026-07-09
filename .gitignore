@@ -82,6 +82,11 @@ demos/stage3_timeline_animation_demo/demo_outputs/json/*.json
 aicar_sim/outputs/customer_showcase/*.html
 demos/stage3_customer_showcase_demo/demo_outputs/reports/*.html
 demos/stage3_customer_showcase_demo/demo_outputs/json/*.json
+business_docs/stage3_customer_materials/outputs/*.pptx
+business_docs/stage3_customer_materials/outputs/*.pdf
+business_docs/stage3_customer_materials/outputs/*.html
+!business_docs/stage3_customer_materials/outputs/
+!business_docs/stage3_customer_materials/outputs/*.md
 
 # Keep scaffold placeholders visible when this workspace is later split.
 !**/.gitkeep

@@ -14,6 +14,8 @@ REQUIRED_PATHS = [
     MATERIAL_ROOT / "TECHNICAL_BOUNDARY_STATEMENT.md",
     MATERIAL_ROOT / "NEXT_STAGE_ROADMAP.md",
     MATERIAL_ROOT / "PPT_GENERATION_PLAN.md",
+    MATERIAL_ROOT / "scripts" / "generate_customer_ppt.py",
+    MATERIAL_ROOT / "outputs" / "AI智能无人洗车仿真系统阶段性成果汇报_讲稿.md",
     WORKSPACE_ROOT / "docs" / "STAGE3_CUSTOMER_MATERIALS_PLAN.md",
 ]
 
@@ -39,6 +41,11 @@ REQUIRED_CONTENT = {
         "AI智能无人洗车仿真系统阶段性成果汇报",
         "建议 12 页",
         "本轮不生成 PPTX",
+    ],
+    MATERIAL_ROOT / "outputs" / "AI智能无人洗车仿真系统阶段性成果汇报_讲稿.md": [
+        "总讲解时间建议控制在 8-12 分钟",
+        "页1",
+        "页12",
     ],
 }
 

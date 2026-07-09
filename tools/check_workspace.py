@@ -260,6 +260,8 @@ REQUIRED_PATHS = [
     "business_docs/stage3_customer_materials/TECHNICAL_BOUNDARY_STATEMENT.md",
     "business_docs/stage3_customer_materials/NEXT_STAGE_ROADMAP.md",
     "business_docs/stage3_customer_materials/PPT_GENERATION_PLAN.md",
+    "business_docs/stage3_customer_materials/scripts/generate_customer_ppt.py",
+    "business_docs/stage3_customer_materials/outputs/AI智能无人洗车仿真系统阶段性成果汇报_讲稿.md",
     "external_repos/README.md",
     "external_repos/clone_repos.ps1",
     "datasets/README.md",
