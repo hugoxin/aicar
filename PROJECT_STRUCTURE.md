@@ -35,6 +35,12 @@ docs\STAGE1_FINAL_FIX_NOTES.md
 docs\STAGE3_VISUAL_BASELINE_SUMMARY.md
 ```
 
+阶段 3.3 客户展示页计划：
+
+```text
+docs\STAGE3_CUSTOMER_SHOWCASE_PLAN.md
+```
+
 ## demos
 
 `demos` 保存项目展示层内容。阶段 1.D 已创建：
@@ -71,6 +77,14 @@ demos\stage3_timeline_animation_demo
 
 该 Demo 用于把阶段2 JSON 结果按洗车流程时间轴播放展示，包括 Play/Pause/Reset、slider、当前状态面板、当前区域高亮和当前抽象路径高亮。它不是 3D、不是复杂动画引擎、不是真实运动控制，也不连接 PLC 或硬件。`demo_outputs` 中的 HTML 和 JSON 默认不进入 Git。
 
+阶段 3.3 已创建：
+
+```text
+demos\stage3_customer_showcase_demo
+```
+
+该 Demo 用于把阶段1车辆识别、阶段2仿真链路和阶段3可视化结果包装成一页式客户展示页，面向项目组、客户、领导、合作方和申报材料沟通。它不是新算法、不是 3D、不是真实路径规划、不是 PLC 或硬件控制。`demo_outputs` 中的 HTML 和 JSON 默认不进入 Git。
+
 ## aicar_sim
 
 `aicar_sim` 是主仿真框架项目。它负责无人洗车纯仿真、路径规划占位、洗车状态机占位、VirtualPLC 占位、喷嘴控制占位、日志、输出和配置。
@@ -100,6 +114,8 @@ docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md
 阶段 3.1 中，`aicar_sim` 新增 `visualization_2d.py`、`generate_2d_visualization_report.py` 和 `outputs\visualization_2d\stage3_2d_visual_report.html` 输出。该阶段只做静态 2D 可视化，不做 3D、动画引擎、真实路径规划、PLC 或硬件控制。
 
 阶段 3.2 中，`aicar_sim` 新增 `timeline_animation.py`、`generate_timeline_animation_report.py` 和 `outputs\timeline_animation\stage3_timeline_animation_report.html` 输出。该阶段只做轻量时间轴动画展示，不做 3D、复杂动画引擎、真实运动控制、PLC 或硬件控制。
+
+阶段 3.3 中，`aicar_sim` 新增 `customer_showcase.py`、`generate_customer_showcase_report.py` 和 `outputs\customer_showcase\stage3_customer_showcase_report.html` 输出。该阶段只做客户展示页包装，不改变阶段1识别、阶段2仿真或阶段3可视化核心逻辑。
 
 阶段 3.F 中，阶段3已形成 visual baseline。冻结总结文档位于：
 

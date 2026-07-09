@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage3 Customer Showcase Report Structure",
+  "type": "object",
+  "required": [
+    "report_version",
+    "vehicle",
+    "summary",
+    "capability_cards",
+    "pipeline_steps",
+    "stage_progress",
+    "business_value",
+    "technical_boundaries",
+    "next_steps"
+  ],
+  "properties": {
+    "report_version": {
+      "type": "string"
+    },
+    "vehicle": {
+      "type": "object"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "capability_cards": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "pipeline_steps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "stage_progress": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "business_value": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "technical_boundaries": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_steps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}
