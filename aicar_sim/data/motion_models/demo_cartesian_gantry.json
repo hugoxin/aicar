@@ -1,0 +1,58 @@
+{
+  "model_version": "stage4.1",
+  "motion_model_id": "demo_cartesian_gantry",
+  "display_name": "Demo Cartesian Gantry",
+  "coordinate_system": {
+    "origin": "wash_bay_center_floor",
+    "unit": "mm",
+    "axes": {
+      "x": "wash_bay_width",
+      "y": "wash_bay_length",
+      "z": "height"
+    }
+  },
+  "workspace": {
+    "x_min_mm": -1700,
+    "x_max_mm": 1700,
+    "y_min_mm": -3800,
+    "y_max_mm": 3800,
+    "z_min_mm": 300,
+    "z_max_mm": 2800
+  },
+  "axis_limits": {
+    "x": {
+      "max_velocity_mm_s": 500,
+      "max_acceleration_mm_s2": 350
+    },
+    "y": {
+      "max_velocity_mm_s": 650,
+      "max_acceleration_mm_s2": 450
+    },
+    "z": {
+      "max_velocity_mm_s": 350,
+      "max_acceleration_mm_s2": 250
+    }
+  },
+  "path_constraints": {
+    "minimum_vehicle_clearance_mm": 250,
+    "preferred_nozzle_standoff_mm": 350,
+    "maximum_nozzle_standoff_mm": 650,
+    "maximum_segment_gap_mm": 600,
+    "minimum_segment_duration_s": 0.2,
+    "sampling_interval_s": 0.1,
+    "transition_velocity_scale": 0.5
+  },
+  "orientation_model": {
+    "mode": "fixed_zone_normal",
+    "supports_roll": false,
+    "supports_pitch": false,
+    "supports_yaw": false
+  },
+  "limitations": [
+    "Generic Cartesian reference model",
+    "Not calibrated against a real machine",
+    "No actuator dynamics",
+    "No PLC output",
+    "No hardware control"
+  ]
+}

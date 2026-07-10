@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4 Motion Model",
+  "type": "object",
+  "required": ["model_version", "motion_model_id", "coordinate_system", "workspace", "axis_limits", "path_constraints", "limitations"],
+  "properties": {
+    "model_version": {"type": "string"},
+    "motion_model_id": {"type": "string"},
+    "coordinate_system": {"type": "object", "description": "Cartesian reference coordinate system in millimeters."},
+    "workspace": {
+      "type": "object",
+      "description": "Axis-aligned workspace bounds in millimeters.",
+      "required": ["x_min_mm", "x_max_mm", "y_min_mm", "y_max_mm", "z_min_mm", "z_max_mm"]
+    },
+    "axis_limits": {"type": "object", "description": "Per-axis velocity in mm/s and acceleration in mm/s^2.", "required": ["x", "y", "z"]},
+    "path_constraints": {"type": "object", "required": ["minimum_vehicle_clearance_mm", "preferred_nozzle_standoff_mm", "maximum_nozzle_standoff_mm", "maximum_segment_gap_mm", "minimum_segment_duration_s", "sampling_interval_s", "transition_velocity_scale"]},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

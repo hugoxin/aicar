@@ -82,6 +82,11 @@ demos/stage3_timeline_animation_demo/demo_outputs/json/*.json
 aicar_sim/outputs/customer_showcase/*.html
 demos/stage3_customer_showcase_demo/demo_outputs/reports/*.html
 demos/stage3_customer_showcase_demo/demo_outputs/json/*.json
+aicar_sim/outputs/machine_path/*.json
+aicar_sim/outputs/motion_validation/*.json
+aicar_sim/outputs/motion_validation/*.html
+demos/stage4_motion_constraint_demo/demo_outputs/json/*.json
+demos/stage4_motion_constraint_demo/demo_outputs/reports/*.html
 business_docs/stage3_customer_materials/outputs/*.pptx
 business_docs/stage3_customer_materials/outputs/*.pdf
 business_docs/stage3_customer_materials/outputs/*.html
@@ -131,6 +136,10 @@ business_docs/stage3_customer_materials/outputs/*.html
 !aicar_sim/outputs/timeline_animation/.gitkeep
 !aicar_sim/outputs/customer_showcase/
 !aicar_sim/outputs/customer_showcase/.gitkeep
+!aicar_sim/outputs/machine_path/
+!aicar_sim/outputs/machine_path/.gitkeep
+!aicar_sim/outputs/motion_validation/
+!aicar_sim/outputs/motion_validation/.gitkeep
 !vehicle_type_lab/outputs/
 !vehicle_type_lab/outputs/predictions/
 !vehicle_type_lab/outputs/predictions/.gitkeep

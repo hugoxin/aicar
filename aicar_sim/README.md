@@ -106,6 +106,16 @@ aicar_sim\outputs\customer_showcase\stage3_customer_showcase_report.html
 
 阶段 3.4 中，项目新增 `business_docs\stage3_customer_materials` 客户演示材料包，用于配合 Stage3.3 展示页进行对外沟通。该阶段只整理 Markdown/文本材料，不修改 `aicar_sim` 核心代码。
 
+阶段 4.1 / 4.2 中，`aicar_sim` 使用 `data\motion_models\demo_cartesian_gantry.json` 通用三轴参考模型，把阶段2抽象路径转换为机械可行候选轨迹，并生成：
+
+```text
+aicar_sim\outputs\machine_path\machine_path_plan.json
+aicar_sim\outputs\motion_validation\motion_validation_report.json
+aicar_sim\outputs\motion_validation\stage4_motion_validation_report.html
+```
+
+当前检查工作空间、洗车房、速度、加速度、连续性、时间戳和安全距离。车辆安全距离及喷嘴距离使用近似参考面。输出不能直接下发 PLC、伺服或真实设备。
+
 运行 scaffold：
 
 ```powershell
@@ -206,4 +216,14 @@ python aicar_sim\scripts\generate_customer_showcase_report.py --vehicle-type-res
 
 ```powershell
 python tools\check_customer_materials.py
+```
+
+生成并检查阶段4候选轨迹：
+
+```powershell
+python aicar_sim\scripts\check_motion_model.py
+python aicar_sim\scripts\generate_machine_path_plan.py
+python aicar_sim\scripts\check_machine_path_plan.py
+python aicar_sim\scripts\generate_motion_validation_report.py
+python aicar_sim\scripts\check_motion_validation.py
 ```

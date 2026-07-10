@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4 Machine-Feasible Candidate Path Plan",
+  "type": "object",
+  "required": ["plan_version", "motion_model_id", "vehicle_type", "wash_profile", "coordinate_system", "summary", "trajectory_points", "segments", "warnings", "limitations"],
+  "properties": {
+    "plan_version": {"type": "string"},
+    "motion_model_id": {"type": "string"},
+    "vehicle_type": {"type": "string"},
+    "wash_profile": {"type": "string"},
+    "coordinate_system": {"type": "object"},
+    "summary": {"type": "object", "required": ["source_segment_count", "source_point_count", "trajectory_point_count", "transition_segment_count", "estimated_motion_duration_s", "path_length_mm", "maximum_velocity_mm_s", "maximum_acceleration_mm_s2"]},
+    "trajectory_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sequence_index", "timestamp_s", "delta_time_s", "x_mm", "y_mm", "z_mm", "velocity_mm_s", "acceleration_mm_s2", "velocity_x_mm_s", "velocity_y_mm_s", "velocity_z_mm_s", "state_id", "zone_id", "nozzle_id", "segment_id", "motion_phase"]
+      }
+    },
+    "segments": {"type": "array", "items": {"type": "object"}},
+    "warnings": {"type": "array", "items": {"type": "object"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

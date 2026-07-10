@@ -19,6 +19,8 @@
 - 阶段3.F：阶段3已形成 visual baseline，冻结总结见 `docs\STAGE3_VISUAL_BASELINE_SUMMARY.md`。
 - 阶段3.3：客户展示页优化已开始，当前只生成一页式 HTML 展示报告，不做新算法、3D、PLC 或硬件控制。
 - 阶段3.4：客户演示材料整理已开始，当前只整理 Markdown/文本材料，不生成 PPTX，不修改核心代码。
+- 阶段4.1：运动约束模型已开始，当前使用通用三轴参考模型，不连接真实硬件。
+- 阶段4.2：机械可行候选路径生成与验证已开始，当前输出不能直接下发 PLC 或伺服。
 
 阶段1最终链路：
 
@@ -58,6 +60,7 @@ test_car.jpg
 - `demos\stage3_timeline_animation_demo`：阶段3.2 时间轴动画 Demo。它读取阶段2 JSON，按 wash flow timeline 高亮当前状态、区域和抽象路径。
 - `demos\stage3_customer_showcase_demo`：阶段3.3 客户展示页 Demo。它把阶段1/2/3结果整理成客户、领导和项目组能快速理解的一页式 HTML。
 - `business_docs\stage3_customer_materials`：阶段3.4 客户演示材料包，包含一页介绍、演示话术、PPT大纲、FAQ、价值主张、技术边界和后续路线图。
+- `demos\stage4_motion_constraint_demo`：阶段4运动约束 Demo，把抽象路径转换为机械可行候选轨迹，并生成约束验证 JSON/HTML。
 - `external_repos`：开源参考项目存放区，只做参考，不把第三方源码复制进主项目。
 - `datasets`：统一数据目录，当前只预留结构，不下载大数据集。
 - `models`：统一模型目录，当前只预留结构，不下载大模型。
@@ -292,3 +295,23 @@ python tools\check_customer_materials.py
 ```
 
 材料目录：`business_docs\stage3_customer_materials`。当前只整理 Markdown/文本材料，不生成 PPTX。PPT 正式生成前方案见 `business_docs\stage3_customer_materials\PPT_GENERATION_PLAN.md`。
+
+阶段 4.1 / 4.2 运动约束与候选路径：
+
+```powershell
+python aicar_sim\scripts\check_motion_model.py
+python aicar_sim\scripts\generate_machine_path_plan.py
+python aicar_sim\scripts\check_machine_path_plan.py
+python aicar_sim\scripts\generate_motion_validation_report.py
+python aicar_sim\scripts\check_motion_validation.py
+```
+
+Stage4 Demo：
+
+```powershell
+Set-Location F:\aicar\demos\stage4_motion_constraint_demo
+python scripts\check_stage4_motion_constraint_demo.py
+python scripts\run_stage4_motion_constraint_demo.py --open-report
+```
+
+输出只能称为机械可行候选轨迹或运动约束仿真结果，不是已验证真实设备轨迹，也不能直接控制 PLC、伺服或硬件。
