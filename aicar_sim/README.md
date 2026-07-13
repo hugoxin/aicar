@@ -281,3 +281,16 @@ python aicar_sim\scripts\check_continuous_surface_report.py
 ```
 
 输入为参考解析sedan surface model和continuous scan profile，输出位于 `outputs\continuous_surface_path`、`continuous_machine_path`、`continuous_collision_safety`、`continuous_schedule` 与 `continuous_surface_validation`。所有输出均为离线候选和近似验证，不连接PLC、伺服、SDK或真实硬件。
+
+阶段4.5第一次实验结论为 `NO_MEANINGFUL_IMPROVEMENT`。阶段4.5-R新增state-aware spacing、adaptive coverage、patch route优化、surface task聚合和实际共享区间调度适配器，输出位于对应的 `_r` 目录。运行：
+
+```powershell
+python aicar_sim\scripts\check_continuous_surface_repair_profile.py
+python aicar_sim\scripts\generate_continuous_surface_path_r.py
+python aicar_sim\scripts\generate_continuous_machine_path_r.py
+python aicar_sim\scripts\generate_continuous_surface_validation_r.py
+python aicar_sim\scripts\generate_continuous_surface_report_r.py
+python aicar_sim\scripts\check_continuous_surface_report_r.py
+```
+
+当前修正版实验结果为 `ACCEPTED`。这是参考解析表面下的离线路径与多执行机构候选调度，不是CAD/点云路径，不代表真实清洗效果，不保证全局最优，也不能下发PLC或控制硬件。Stage4.5与Stage4.5-R均未合并main，Stage4冻结基线不变。

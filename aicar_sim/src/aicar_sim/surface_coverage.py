@@ -20,7 +20,7 @@ def build_surface_grid(patch: dict[str, Any], resolution_mm: float) -> dict[str,
             v = bounds["v_min_mm"] + (v_index + 0.5) * (bounds["v_max_mm"] - bounds["v_min_mm"]) / v_count
             if patch["surface_type"] == "circular_disk" and u * u + v * v > float(patch["radius_mm"]) ** 2:
                 continue
-            cells.append({"u_mm": round(u, 6), "v_mm": round(v, 6), "covered": False})
+            cells.append({"u_mm": round(u, 6), "v_mm": round(v, 6), "covered": False, "visit_count": 0})
     return {
         "patch_id": patch["patch_id"],
         "zone_id": patch["zone_id"],
@@ -38,6 +38,51 @@ def mark_scan_coverage(grid: dict[str, Any], scan_path: list[dict[str, Any]], ef
     for cell in grid["cells"]:
         cell["covered"] = any((float(cell["u_mm"]) - u) ** 2 + (float(cell["v_mm"]) - v) ** 2 <= radius_squared for u, v in samples)
     return grid
+
+
+def mark_scan_pass_visits(
+    grid: dict[str, Any],
+    scan_passes: list[dict[str, Any]],
+    effective_width_mm: float,
+) -> dict[str, Any]:
+    """Count geometric cell visits once per scan pass, preserving old boolean coverage."""
+    if effective_width_mm <= 0:
+        raise ValueError("effective nozzle width must be greater than 0")
+    radius_squared = (effective_width_mm / 2.0) ** 2
+    for scan_pass in scan_passes:
+        samples = [
+            (float(point["u_mm"]), float(point["v_mm"]))
+            for point in scan_pass.get("points", [])
+            if "u_mm" in point and "v_mm" in point
+        ]
+        for cell in grid["cells"]:
+            visited = any(
+                (float(cell["u_mm"]) - u) ** 2 + (float(cell["v_mm"]) - v) ** 2 <= radius_squared
+                for u, v in samples
+            )
+            if visited:
+                cell["covered"] = True
+                cell["visit_count"] = int(cell.get("visit_count", 0)) + 1
+    return grid
+
+
+def calculate_patch_visit_metrics(grid: dict[str, Any]) -> dict[str, Any]:
+    coverage = calculate_patch_coverage(grid)
+    visits = [int(item.get("visit_count", 0)) for item in grid["cells"]]
+    covered_visits = [value for value in visits if value > 0]
+    repeated = sum(max(0, value - 1) for value in visits)
+    overcovered_cells = sum(1 for value in visits if value > 1)
+    coverage.update(
+        {
+            "mean_surface_visit_count": round(sum(visits) / len(visits) if visits else 0.0, 3),
+            "maximum_surface_visit_count": max(visits, default=0),
+            "mean_covered_cell_visit_count": round(sum(covered_visits) / len(covered_visits) if covered_visits else 0.0, 3),
+            "repeated_coverage_cell_count": repeated,
+            "overcovered_cell_count": overcovered_cells,
+            "overcovered_cell_percent": round(overcovered_cells / len(visits) * 100.0 if visits else 0.0, 3),
+        }
+    )
+    return coverage
 
 
 def calculate_patch_coverage(grid: dict[str, Any]) -> dict[str, Any]:

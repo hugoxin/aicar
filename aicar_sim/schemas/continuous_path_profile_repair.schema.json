@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "continuous_path_profile_repair.schema.json",
+  "title": "Stage4.5-R continuous path repair profile",
+  "type": "object",
+  "required": [
+    "profile_version",
+    "profile_id",
+    "scan_mode",
+    "global",
+    "coverage_targets",
+    "pass_spacing_policy",
+    "state_scan_policies",
+    "surface_routes",
+    "task_aggregation",
+    "connection_policy",
+    "schedule_policy",
+    "targets",
+    "limitations"
+  ],
+  "properties": {
+    "profile_version": {"const": "stage4.5-r"},
+    "profile_id": {"type": "string", "minLength": 1},
+    "scan_mode": {"const": "state_aware_coverage_efficient"},
+    "global": {
+      "type": "object",
+      "required": ["preferred_standoff_mm", "hard_minimum_clearance_mm", "maximum_point_spacing_mm", "maximum_output_points", "maximum_adaptation_iterations"],
+      "properties": {
+        "preferred_standoff_mm": {"type": "number", "description": "Preferred nozzle standoff in millimetres."},
+        "hard_minimum_clearance_mm": {"type": "number", "minimum": 250, "description": "Hard vehicle clearance in millimetres."},
+        "maximum_point_spacing_mm": {"type": "number", "exclusiveMinimum": 0, "description": "Maximum trajectory sample spacing in millimetres."},
+        "maximum_output_points": {"type": "integer", "minimum": 1, "maximum": 5000},
+        "maximum_adaptation_iterations": {"type": "integer", "minimum": 1}
+      }
+    },
+    "coverage_targets": {
+      "type": "object",
+      "required": ["minimum_total_unique_coverage_percent", "minimum_zone_coverage_percent", "preferred_total_coverage_min_percent", "preferred_total_coverage_max_percent"],
+      "properties": {
+        "minimum_total_unique_coverage_percent": {"type": "number", "minimum": 92, "maximum": 100},
+        "minimum_zone_coverage_percent": {"type": "number", "minimum": 90, "maximum": 100},
+        "preferred_total_coverage_min_percent": {"type": "number", "minimum": 92, "maximum": 100},
+        "preferred_total_coverage_max_percent": {"type": "number", "minimum": 92, "maximum": 100}
+      }
+    },
+    "pass_spacing_policy": {"type": "object", "required": ["mode", "fallback_effective_width_mm"]},
+    "state_scan_policies": {
+      "type": "object",
+      "required": ["pre_rinse", "foam", "dwell", "top_clean", "side_clean", "wheel_clean", "air_dry"]
+    },
+    "surface_routes": {"type": "object", "minProperties": 5},
+    "task_aggregation": {"type": "object", "required": ["enabled", "keep_scan_passes_inside_task", "emit_scan_pass_as_independent_task"]},
+    "connection_policy": {"type": "object", "required": ["allow_cross_state_reordering", "maximum_direct_patch_distance_mm"]},
+    "schedule_policy": {"type": "object", "required": ["lock_only_actual_shared_zone_interval", "preserve_state_order"]},
+    "targets": {"type": "object"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

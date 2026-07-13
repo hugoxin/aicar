@@ -376,3 +376,16 @@ python aicar_sim\scripts\generate_continuous_surface_report.py
 ```
 
 设计说明见 [docs\STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md](docs/STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md)。当前结果如实标记 `NO_MEANINGFUL_IMPROVEMENT`：transition减少，但路径长度和周期未改善。
+
+阶段4.5-R连续表面路径修正版：
+
+```powershell
+python aicar_sim\scripts\check_continuous_surface_repair_profile.py
+python aicar_sim\scripts\generate_continuous_surface_path_r.py
+python aicar_sim\scripts\generate_continuous_machine_path_r.py
+python aicar_sim\scripts\generate_continuous_surface_validation_r.py
+python aicar_sim\scripts\generate_continuous_surface_report_r.py
+python aicar_sim\scripts\check_continuous_surface_report_r.py
+```
+
+修正版使用 state-specific spacing、喷嘴有效宽度、自适应覆盖、surface route task 聚合、安全 direct connection 和实际共享区间互锁。当前实验结果为 `ACCEPTED`，但仍只是参考解析表面下的离线候选路径。诊断与设计见 [修复诊断](docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DIAGNOSIS.md) 和 [修复计划](docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_PLAN.md)。Stage4.5首版与Stage4.5-R均未合并 `main`，Stage4冻结基线不变。

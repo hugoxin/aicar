@@ -141,10 +141,98 @@ def build_patch_connection(
     direct_safe, direct_reason = validate_surface_connection(direct_points, safety_context)
     direct_distance = _cartesian_distance(start["machine_point"], end["machine_point"])
     use_direct = direct_safe and direct_distance <= float(policy["maximum_direct_patch_distance_mm"])
+    repair_direct_points: list[dict[str, Any]] | None = None
+    repair_direct_type: str | None = None
+    if (
+        not use_direct
+        and scan_profile.get("profile_version") == "stage4.5-r"
+        and direct_distance <= float(policy["maximum_direct_patch_distance_mm"])
+    ):
+        safe = safety_context["safe_envelope"]
+        safe_z = min(
+            float(safety_context["workspace"]["z_max_mm"]),
+            float(safe["z_max_mm"])
+            + float(global_profile["hard_minimum_clearance_mm"])
+            + float(global_profile["connector_clearance_margin_mm"]),
+        )
+        middle = _interpolate_sample(start, end, 0.5)
+        candidates = [
+            (
+                "TWO_SEGMENT_SAFE_HEIGHT",
+                _sample_with_machine_point(
+                    middle,
+                    {
+                        "x_mm": middle["machine_point"]["x_mm"],
+                        "y_mm": middle["machine_point"]["y_mm"],
+                        "z_mm": max(middle["machine_point"]["z_mm"], safe_z),
+                    },
+                ),
+            ),
+            (
+                "TWO_SEGMENT_SOURCE_HEIGHT",
+                _sample_with_machine_point(
+                    middle,
+                    {
+                        "x_mm": start["machine_point"]["x_mm"],
+                        "y_mm": start["machine_point"]["y_mm"],
+                        "z_mm": max(start["machine_point"]["z_mm"], safe_z),
+                    },
+                ),
+            ),
+            (
+                "TWO_SEGMENT_TARGET_HEIGHT",
+                _sample_with_machine_point(
+                    middle,
+                    {
+                        "x_mm": end["machine_point"]["x_mm"],
+                        "y_mm": end["machine_point"]["y_mm"],
+                        "z_mm": max(end["machine_point"]["z_mm"], safe_z),
+                    },
+                ),
+            ),
+        ]
+        for candidate_type, waypoint in candidates:
+            candidate_points = _polyline_samples([start, waypoint, end], maximum_spacing)
+            candidate_safe, candidate_reason = validate_surface_connection(candidate_points, safety_context)
+            if candidate_safe:
+                repair_direct_points = candidate_points
+                repair_direct_type = candidate_type
+                break
+            direct_reason = candidate_reason or direct_reason
+        if repair_direct_points is None:
+            start_high = _sample_with_machine_point(
+                start,
+                {
+                    "x_mm": start["machine_point"]["x_mm"],
+                    "y_mm": start["machine_point"]["y_mm"],
+                    "z_mm": max(start["machine_point"]["z_mm"], safe_z),
+                },
+            )
+            end_high = _sample_with_machine_point(
+                end,
+                {
+                    "x_mm": end["machine_point"]["x_mm"],
+                    "y_mm": end["machine_point"]["y_mm"],
+                    "z_mm": max(end["machine_point"]["z_mm"], safe_z),
+                },
+            )
+            candidate_points = _polyline_samples([start, start_high, end_high, end], maximum_spacing)
+            candidate_safe, candidate_reason = validate_surface_connection(candidate_points, safety_context)
+            if candidate_safe:
+                repair_direct_points = candidate_points
+                repair_direct_type = "LOCAL_SAFE_HEIGHT"
+            else:
+                direct_reason = candidate_reason or direct_reason
 
     if use_direct:
         points = direct_points
         route_type = "DIRECT_PATCH_CONNECTION"
+        chosen_candidate_type = "DIRECT_LINE"
+        rejection_reason = None
+    elif repair_direct_points is not None:
+        points = repair_direct_points
+        route_type = "DIRECT_PATCH_CONNECTION"
+        chosen_candidate_type = repair_direct_type
         rejection_reason = None
     elif policy.get("fallback_to_safe_transition", True):
         safe = safety_context["safe_envelope"]
@@ -156,12 +244,14 @@ def build_patch_connection(
         end_high = _sample_with_machine_point(end, {"x_mm": end["machine_point"]["x_mm"], "y_mm": end["machine_point"]["y_mm"], "z_mm": max(end["machine_point"]["z_mm"], safe_z)})
         points = _polyline_samples([start, start_high, end_high, end], maximum_spacing)
         route_type = "ADAPTIVE_SAFE_CONNECTION"
+        chosen_candidate_type = "ADAPTIVE_SAFE_HEIGHT"
         valid, rejection_reason = validate_surface_connection(points, safety_context)
         if not valid:
             route_type = "REJECTED_CONNECTION"
     else:
         points = direct_points
         route_type = "REJECTED_CONNECTION"
+        chosen_candidate_type = "REJECTED_DIRECT_LINE"
         rejection_reason = direct_reason or "direct connection rejected and fallback disabled"
 
     connection_type = "REQUIRED_STATE_TRANSITION" if required_state_transition and route_type != "REJECTED_CONNECTION" else route_type
@@ -171,6 +261,7 @@ def build_patch_connection(
     return {
         "connection_type": connection_type,
         "route_type": route_type,
+        "chosen_candidate_type": chosen_candidate_type,
         "source_patch_id": start.get("patch_id"),
         "target_patch_id": end.get("patch_id"),
         "source_scan_pass_id": source_scan_pass_id,

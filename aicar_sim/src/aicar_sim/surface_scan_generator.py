@@ -5,6 +5,7 @@ from typing import Any
 
 from aicar_sim.surface_model import patch_local_bounds
 from aicar_sim.surface_patch import make_surface_sample
+from aicar_sim.surface_coverage import build_surface_grid, calculate_patch_visit_metrics, mark_scan_pass_visits
 
 
 def _distance(point_a: dict[str, Any], point_b: dict[str, Any]) -> float:
@@ -146,3 +147,88 @@ def generate_patch_scan_path(patch: dict[str, Any], scan_profile: dict[str, Any]
     if zone_profile["scan_pattern"] == "concentric_rings":
         return generate_wheel_scan(patch, zone_profile, scan_profile["global"])
     raise ValueError(f"unsupported scan pattern: {zone_profile['scan_pattern']}")
+
+
+def generate_adaptive_patch_scan(
+    patch: dict[str, Any],
+    state_policy: dict[str, Any],
+    scan_profile: dict[str, Any],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Find the sparsest configured scan that still meets state coverage."""
+    if not state_policy.get("motion_required", True):
+        return [], {
+            "initial_pass_spacing_mm": 0.0,
+            "final_pass_spacing_mm": 0.0,
+            "initial_pass_count": 0,
+            "final_pass_count": 0,
+            "coverage_percent": 0.0,
+            "adaptation_iteration_count": 0,
+            "adaptation_status": "NO_MOTION_REQUIRED",
+            "effective_width_mm": 0.0,
+            "estimated_overlap_mm": 0.0,
+            "overcoverage_warning": False,
+        }
+    spacing = float(state_policy["initial_pass_spacing_mm"])
+    initial_spacing = spacing
+    width = float(state_policy["effective_width_mm"])
+    minimum_coverage = float(state_policy["minimum_coverage_percent"])
+    preferred_maximum = float(state_policy["preferred_maximum_coverage_percent"])
+    maximum_iterations = int(scan_profile["global"].get("maximum_adaptation_iterations", 20))
+    resolution = float(scan_profile["coverage_targets"]["grid_resolution_mm"])
+    minimum_spacing = float(scan_profile["pass_spacing_policy"].get("minimum_spacing_mm", 1.0))
+    maximum_spacing = width * float(scan_profile["pass_spacing_policy"].get("maximum_spacing_to_width_ratio", 1.0))
+
+    def generate(candidate_spacing: float) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+        profile = {**scan_profile, "zone_profiles": {key: dict(value) for key, value in scan_profile["zone_profiles"].items()}}
+        zone_profile = profile["zone_profiles"][patch["zone_id"]]
+        if zone_profile["scan_pattern"] == "concentric_rings":
+            zone_profile["ring_spacing_mm"] = candidate_spacing
+        else:
+            zone_profile["pass_spacing_mm"] = candidate_spacing
+        passes = generate_patch_scan_path(patch, profile)
+        grid = build_surface_grid(patch, resolution)
+        mark_scan_pass_visits(grid, passes, width)
+        return passes, calculate_patch_visit_metrics(grid)
+
+    passes, metrics = generate(spacing)
+    initial_count = len(passes)
+    status = "ACCEPTED_INITIAL"
+    iterations = 0
+    if float(metrics["patch_coverage_percent"]) < minimum_coverage:
+        status = "SPACING_DECREASED"
+        while float(metrics["patch_coverage_percent"]) < minimum_coverage and iterations < maximum_iterations:
+            candidate = max(minimum_spacing, spacing * 0.95)
+            if abs(candidate - spacing) < 1e-6:
+                break
+            spacing = candidate
+            passes, metrics = generate(spacing)
+            iterations += 1
+    else:
+        while float(metrics["patch_coverage_percent"]) > preferred_maximum and iterations < maximum_iterations:
+            candidate = min(maximum_spacing, spacing * 1.05)
+            if abs(candidate - spacing) < 1e-6:
+                break
+            candidate_passes, candidate_metrics = generate(candidate)
+            if float(candidate_metrics["patch_coverage_percent"]) < minimum_coverage:
+                break
+            spacing, passes, metrics = candidate, candidate_passes, candidate_metrics
+            status = "SPACING_INCREASED"
+            iterations += 1
+    if float(metrics["patch_coverage_percent"]) < minimum_coverage or iterations >= maximum_iterations:
+        status = "MAX_ITERATIONS_REACHED"
+    elif float(metrics["patch_coverage_percent"]) > preferred_maximum and abs(spacing - maximum_spacing) < 1e-6:
+        status = "COVERAGE_EXACT_LIMIT"
+    result = {
+        "initial_pass_spacing_mm": round(initial_spacing, 3),
+        "final_pass_spacing_mm": round(spacing, 3),
+        "initial_pass_count": initial_count,
+        "final_pass_count": len(passes),
+        "coverage_percent": float(metrics["patch_coverage_percent"]),
+        "adaptation_iteration_count": iterations,
+        "adaptation_status": status,
+        "effective_width_mm": width,
+        "estimated_overlap_mm": round(max(0.0, width - spacing), 3),
+        "overcoverage_warning": float(metrics["patch_coverage_percent"]) > preferred_maximum,
+        "visit_metrics": metrics,
+    }
+    return passes, result
