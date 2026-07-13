@@ -227,3 +227,17 @@ python aicar_sim\scripts\check_machine_path_plan.py
 python aicar_sim\scripts\generate_motion_validation_report.py
 python aicar_sim\scripts\check_motion_validation.py
 ```
+
+生成并检查阶段4.3碰撞、安全约束和多执行机构候选调度：
+
+```powershell
+python aicar_sim\scripts\check_safety_layout.py
+python aicar_sim\scripts\generate_collision_safety_plan.py
+python aicar_sim\scripts\check_collision_safety_plan.py
+python aicar_sim\scripts\generate_multi_actuator_schedule.py
+python aicar_sim\scripts\check_multi_actuator_schedule.py
+python aicar_sim\scripts\generate_collision_safety_report.py
+python aicar_sim\scripts\check_collision_safety_validation.py
+```
+
+输出位于 `outputs\collision_safety` 和 `outputs\multi_actuator_schedule`。当前静态障碍、扫掠体、车辆曲面和三执行机构均使用参考近似；这是安全约束仿真，不是 PLC、伺服或真实硬件控制，也不能替代设备碰撞认证。

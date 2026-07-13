@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.3 Collision Safety Validation Report",
+  "type": "object",
+  "required": ["report_version", "validation_status", "safety_layout_id", "actuator_system_id", "summary", "unresolved_conflict_count", "safe_stop_points", "warnings", "violations", "limitations"],
+  "properties": {
+    "report_version": {"type": "string"},
+    "validation_status": {"enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"]},
+    "safety_layout_id": {"type": "string"},
+    "actuator_system_id": {"type": "string"},
+    "summary": {"type": "object", "required": ["warning_count", "violation_count", "safe_stop_point_count"]},
+    "unresolved_conflict_count": {"type": "integer", "minimum": 0},
+    "safe_stop_points": {"type": "array"},
+    "warnings": {"type": "array"},
+    "violations": {"type": "array"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

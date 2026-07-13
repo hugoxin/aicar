@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.3 Multi Actuator System",
+  "type": "object",
+  "required": ["system_version", "system_id", "resources", "actuators", "synchronization_rules", "interlock_rules", "limitations"],
+  "properties": {
+    "system_version": {"type": "string"},
+    "system_id": {"type": "string", "minLength": 1},
+    "resources": {"type": "array", "items": {"type": "object", "required": ["resource_id", "maximum_concurrent_actuators"], "properties": {"resource_id": {"type": "string"}, "maximum_concurrent_actuators": {"type": "integer", "minimum": 1}}}},
+    "actuators": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["actuator_id", "allowed_zones", "home_position", "end_effector", "shared_resources"],
+        "properties": {
+          "actuator_id": {"type": "string"},
+          "allowed_zones": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "home_position": {"type": "object", "description": "Cartesian home point in millimetres.", "required": ["x_mm", "y_mm", "z_mm"]},
+          "end_effector": {"type": "object", "required": ["radius_mm", "carriage_half_size_mm"]},
+          "shared_resources": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "synchronization_rules": {"type": "array"},
+    "interlock_rules": {"type": "array"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

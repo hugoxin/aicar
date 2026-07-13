@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.3 Collision Safety Plan",
+  "type": "object",
+  "required": ["plan_version", "validation_status", "safety_layout_id", "actuator_system_id", "motion_model_id", "vehicle_type", "wash_profile", "summary", "actuator_tasks", "swept_volumes", "safe_stop_points", "warnings", "violations", "limitations"],
+  "properties": {
+    "plan_version": {"type": "string"},
+    "validation_status": {"enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"]},
+    "safety_layout_id": {"type": "string"},
+    "actuator_system_id": {"type": "string"},
+    "motion_model_id": {"type": "string"},
+    "vehicle_type": {"type": "string"},
+    "wash_profile": {"type": "string"},
+    "summary": {"type": "object", "required": ["actuator_count", "task_count", "assigned_task_count", "unassigned_task_count", "swept_volume_count", "warning_count", "violation_count"]},
+    "actuator_tasks": {"type": "array"},
+    "swept_volumes": {"type": "array", "description": "Conservative AABB swept volumes in millimetres."},
+    "safe_stop_points": {"type": "array"},
+    "warnings": {"type": "array", "items": {"$ref": "#/$defs/issue"}},
+    "violations": {"type": "array", "items": {"$ref": "#/$defs/issue"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {"issue": {"type": "object", "required": ["check_id", "severity", "message"], "properties": {"check_id": {"type": "string"}, "severity": {"enum": ["INFO", "WARNING", "CRITICAL"]}, "message": {"type": "string"}}}}
+}
