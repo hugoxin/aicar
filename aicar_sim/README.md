@@ -241,3 +241,17 @@ python aicar_sim\scripts\check_collision_safety_validation.py
 ```
 
 输出位于 `outputs\collision_safety` 和 `outputs\multi_actuator_schedule`。当前静态障碍、扫掠体、车辆曲面和三执行机构均使用参考近似；这是安全约束仿真，不是 PLC、伺服或真实硬件控制，也不能替代设备碰撞认证。
+
+生成并检查阶段4.4安全优先路径与周期优化：
+
+```powershell
+python aicar_sim\scripts\check_path_optimization_profile.py
+python aicar_sim\scripts\generate_optimized_machine_path.py
+python aicar_sim\scripts\check_optimized_machine_path.py
+python aicar_sim\scripts\generate_optimized_schedule.py
+python aicar_sim\scripts\check_optimized_schedule.py
+python aicar_sim\scripts\generate_path_optimization_report.py
+python aicar_sim\scripts\check_path_optimization_report.py
+```
+
+输出位于 `outputs\path_optimization` 和 `outputs\optimized_schedule`。优化保持task集合、wash state顺序、碰撞检查、互锁、安全停机点和250 mm硬下限；报告会如实显示 `NO_IMPROVEMENT` 与 `TARGET_NOT_REACHED`。

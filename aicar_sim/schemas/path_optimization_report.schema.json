@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.4 Path Optimization Report",
+  "type": "object",
+  "required": ["report_version", "optimization_profile_id", "optimization_status", "safety_validation_status", "accepted_optimization", "baseline_metrics", "optimized_metrics", "improvement_summary", "transition_status_counts", "target_results", "safety_validation", "violation_count", "warning_count", "limitations"],
+  "properties": {
+    "report_version": {"const": "stage4.4"},
+    "optimization_profile_id": {"type": "string"},
+    "optimization_status": {"enum": ["ACCEPTED", "ACCEPTED_WITH_WARNINGS", "NO_MEANINGFUL_IMPROVEMENT", "REJECTED_SAFETY_REGRESSION", "FAILED"]},
+    "safety_validation_status": {"enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"]},
+    "accepted_optimization": {"type": "boolean"},
+    "baseline_metrics": {"type": "object"},
+    "optimized_metrics": {"type": "object"},
+    "improvement_summary": {"type": "object"},
+    "transition_status_counts": {"type": "object"},
+    "target_results": {"type": "object"},
+    "safety_validation": {"type": "object"},
+    "violation_count": {"type": "integer", "minimum": 0},
+    "warning_count": {"type": "integer", "minimum": 0},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.4 Path Optimization Profile",
+  "type": "object",
+  "required": ["profile_version", "profile_id", "optimization_mode", "geometry", "transition", "clearance", "schedule", "objective_weights", "targets", "limitations"],
+  "properties": {
+    "profile_version": {"type": "string"},
+    "profile_id": {"type": "string", "minLength": 1},
+    "optimization_mode": {"const": "safety_first"},
+    "geometry": {"type": "object", "description": "Distances are in millimetres.", "required": ["duplicate_point_tolerance_mm", "collinear_distance_tolerance_mm", "collinear_angle_tolerance_deg", "maximum_output_point_spacing_mm", "maximum_trajectory_points"]},
+    "transition": {"type": "object", "description": "Transition distances and heights are in millimetres.", "required": ["allow_reorder_across_states", "minimum_safe_height_mm", "maximum_safe_height_mm", "maximum_direct_connection_distance_mm"]},
+    "clearance": {"type": "object", "description": "Vehicle-envelope clearances are in millimetres.", "required": ["hard_minimum_mm", "warning_threshold_mm", "recommended_mm"]},
+    "schedule": {"type": "object", "description": "Schedule offsets and margins are in seconds.", "required": ["maximum_iterations", "maximum_sync_start_offset_s", "maximum_resource_lock_margin_s", "preserve_wash_state_order"]},
+    "objective_weights": {"type": "object", "required": ["safety_violation", "unresolved_conflict", "unassigned_task", "clearance_warning", "transition_count", "path_length", "schedule_duration", "total_delay"]},
+    "targets": {"type": "object"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}
