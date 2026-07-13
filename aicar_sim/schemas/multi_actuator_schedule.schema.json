@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.3 Multi Actuator Schedule",
+  "type": "object",
+  "required": ["schedule_version", "actuator_system_id", "summary", "actuator_timelines", "schedule_items", "sync_groups", "resource_locks", "conflicts_before_resolution", "conflicts_after_resolution", "deadlock_warnings", "limitations"],
+  "properties": {
+    "schedule_version": {"type": "string"},
+    "actuator_system_id": {"type": "string"},
+    "summary": {"type": "object", "required": ["actuator_count", "task_count", "parallel_group_count", "synchronized_group_count", "conflict_count_before_resolution", "conflict_count_after_resolution", "total_schedule_duration_s", "total_delay_s"]},
+    "actuator_timelines": {"type": "object"},
+    "schedule_items": {"type": "array"},
+    "sync_groups": {"type": "array", "items": {"type": "object", "required": ["sync_group_id", "sync_status"], "properties": {"sync_status": {"enum": ["SYNCHRONIZED", "DEGRADED", "BLOCKED_BY_INTERLOCK", "NOT_APPLICABLE"]}}}},
+    "resource_locks": {"type": "array", "description": "Lock intervals use seconds."},
+    "conflicts_before_resolution": {"type": "array"},
+    "conflicts_after_resolution": {"type": "array"},
+    "deadlock_warnings": {"type": "array"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

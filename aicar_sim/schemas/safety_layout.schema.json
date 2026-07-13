@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.3 Safety Layout",
+  "type": "object",
+  "required": ["layout_version", "layout_id", "coordinate_system", "vehicle_clearance_policy", "static_obstacles", "safety_zones", "limitations"],
+  "properties": {
+    "layout_version": {"type": "string"},
+    "layout_id": {"type": "string", "minLength": 1},
+    "coordinate_system": {"type": "object", "required": ["origin", "unit"], "properties": {"origin": {"type": "string"}, "unit": {"const": "mm"}}},
+    "vehicle_clearance_policy": {"type": "object", "description": "Clearance thresholds in millimetres.", "required": ["hard_minimum_mm", "warning_threshold_mm", "recommended_mm"], "properties": {"hard_minimum_mm": {"type": "number", "exclusiveMinimum": 0}, "warning_threshold_mm": {"type": "number", "exclusiveMinimum": 0}, "recommended_mm": {"type": "number", "exclusiveMinimum": 0}}},
+    "static_obstacles": {"type": "array", "items": {"$ref": "#/$defs/obstacle"}},
+    "safety_zones": {"type": "array", "items": {"$ref": "#/$defs/zone"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "bounds": {"type": "object", "description": "AABB coordinates in millimetres.", "required": ["x_min_mm", "x_max_mm", "y_min_mm", "y_max_mm", "z_min_mm", "z_max_mm"], "additionalProperties": {"type": "number"}},
+    "obstacle": {"type": "object", "required": ["obstacle_id", "obstacle_type", "shape", "bounds"], "properties": {"obstacle_id": {"type": "string"}, "obstacle_type": {"type": "string"}, "shape": {"const": "aabb"}, "bounds": {"$ref": "#/$defs/bounds"}}},
+    "zone": {"type": "object", "required": ["zone_id", "zone_type"], "properties": {"zone_id": {"type": "string"}, "zone_type": {"enum": ["forbidden", "slow", "shared_interlock", "safe_stop"]}, "shape": {"type": "string"}, "bounds": {"$ref": "#/$defs/bounds"}, "source": {"type": "string"}}}
+  }
+}

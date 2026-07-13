@@ -1,0 +1,74 @@
+{
+  "layout_version": "stage4.3",
+  "layout_id": "demo_wash_bay_safety_layout",
+  "coordinate_system": {
+    "origin": "wash_bay_center_floor",
+    "unit": "mm"
+  },
+  "vehicle_clearance_policy": {
+    "hard_minimum_mm": 250,
+    "warning_threshold_mm": 300,
+    "recommended_mm": 350
+  },
+  "swept_volume_margin_mm": 25,
+  "static_obstacles": [
+    {
+      "obstacle_id": "left_wall",
+      "obstacle_type": "wall",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": -1800, "x_max_mm": -1700, "y_min_mm": -4000, "y_max_mm": 4000, "z_min_mm": 0, "z_max_mm": 3000}
+    },
+    {
+      "obstacle_id": "right_wall",
+      "obstacle_type": "wall",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": 1700, "x_max_mm": 1800, "y_min_mm": -4000, "y_max_mm": 4000, "z_min_mm": 0, "z_max_mm": 3000}
+    },
+    {
+      "obstacle_id": "front_service_column",
+      "obstacle_type": "column",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": -1650, "x_max_mm": -1350, "y_min_mm": 3300, "y_max_mm": 3700, "z_min_mm": 0, "z_max_mm": 2800}
+    },
+    {
+      "obstacle_id": "rear_service_column",
+      "obstacle_type": "column",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": 1350, "x_max_mm": 1650, "y_min_mm": -3700, "y_max_mm": -3300, "z_min_mm": 0, "z_max_mm": 2800}
+    }
+  ],
+  "safety_zones": [
+    {"zone_id": "vehicle_forbidden_zone", "zone_type": "forbidden", "source": "vehicle_safe_envelope"},
+    {"zone_id": "vehicle_warning_band", "zone_type": "slow", "source": "vehicle_safe_envelope", "inner_margin_mm": 250, "outer_margin_mm": 350},
+    {
+      "zone_id": "center_shared_space",
+      "zone_type": "shared_interlock",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": -500, "x_max_mm": 500, "y_min_mm": -3000, "y_max_mm": 3000, "z_min_mm": 300, "z_max_mm": 2800}
+    },
+    {
+      "zone_id": "left_safe_stop_zone",
+      "zone_type": "safe_stop",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": -1650, "x_max_mm": -1200, "y_min_mm": -3000, "y_max_mm": 3000, "z_min_mm": 1800, "z_max_mm": 2700}
+    },
+    {
+      "zone_id": "right_safe_stop_zone",
+      "zone_type": "safe_stop",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": 1200, "x_max_mm": 1650, "y_min_mm": -3000, "y_max_mm": 3000, "z_min_mm": 1800, "z_max_mm": 2700}
+    },
+    {
+      "zone_id": "top_safe_stop_zone",
+      "zone_type": "safe_stop",
+      "shape": "aabb",
+      "bounds": {"x_min_mm": -600, "x_max_mm": 600, "y_min_mm": -3200, "y_max_mm": 3200, "z_min_mm": 2500, "z_max_mm": 2750}
+    }
+  ],
+  "limitations": [
+    "Reference safety layout only",
+    "Static obstacles use AABB approximation",
+    "Vehicle geometry uses envelope approximation",
+    "Not measured from a real wash bay"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "system_version": "stage4.3",
+  "system_id": "demo_multi_actuator_system",
+  "resources": [
+    {"resource_id": "center_shared_space", "maximum_concurrent_actuators": 1},
+    {"resource_id": "front_rear_crossing", "maximum_concurrent_actuators": 1},
+    {"resource_id": "top_rail", "maximum_concurrent_actuators": 1},
+    {"resource_id": "left_rail", "maximum_concurrent_actuators": 1},
+    {"resource_id": "right_rail", "maximum_concurrent_actuators": 1}
+  ],
+  "actuators": [
+    {
+      "actuator_id": "top_actuator",
+      "display_name": "Top Gantry Actuator",
+      "allowed_zones": ["roof", "front", "rear"],
+      "preferred_zones": ["roof"],
+      "home_position": {"x_mm": 0, "y_mm": -3400, "z_mm": 2650},
+      "end_effector": {"radius_mm": 90, "carriage_half_size_mm": {"x": 180, "y": 180, "z": 140}},
+      "shared_resources": ["center_shared_space", "top_rail"]
+    },
+    {
+      "actuator_id": "left_side_actuator",
+      "display_name": "Left Side Actuator",
+      "allowed_zones": ["left_side", "front", "rear", "wheels"],
+      "preferred_zones": ["left_side"],
+      "home_position": {"x_mm": -1500, "y_mm": -3300, "z_mm": 2200},
+      "end_effector": {"radius_mm": 90, "carriage_half_size_mm": {"x": 160, "y": 180, "z": 160}},
+      "shared_resources": ["center_shared_space", "left_rail"]
+    },
+    {
+      "actuator_id": "right_side_actuator",
+      "display_name": "Right Side Actuator",
+      "allowed_zones": ["right_side", "front", "rear", "wheels"],
+      "preferred_zones": ["right_side"],
+      "home_position": {"x_mm": 1500, "y_mm": -3200, "z_mm": 2200},
+      "end_effector": {"radius_mm": 90, "carriage_half_size_mm": {"x": 160, "y": 180, "z": 160}},
+      "shared_resources": ["center_shared_space", "right_rail"]
+    }
+  ],
+  "synchronization_rules": [
+    {"rule_id": "left_right_side_sync", "actuator_ids": ["left_side_actuator", "right_side_actuator"], "state_ids": ["side_clean", "air_dry"], "mode": "preferred_parallel", "maximum_start_offset_s": 1.0}
+  ],
+  "interlock_rules": [
+    {"rule_id": "center_space_exclusive", "resource_id": "center_shared_space", "maximum_concurrent_actuators": 1},
+    {"rule_id": "front_rear_crossing_exclusive", "resource_id": "front_rear_crossing", "maximum_concurrent_actuators": 1}
+  ],
+  "limitations": [
+    "Reference multi-actuator system",
+    "No real actuator dimensions",
+    "No real controller timing",
+    "No PLC communication"
+  ]
+}

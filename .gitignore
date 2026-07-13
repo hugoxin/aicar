@@ -87,6 +87,12 @@ aicar_sim/outputs/motion_validation/*.json
 aicar_sim/outputs/motion_validation/*.html
 demos/stage4_motion_constraint_demo/demo_outputs/json/*.json
 demos/stage4_motion_constraint_demo/demo_outputs/reports/*.html
+aicar_sim/outputs/collision_safety/*.json
+aicar_sim/outputs/collision_safety/*.html
+aicar_sim/outputs/multi_actuator_schedule/*.json
+aicar_sim/outputs/multi_actuator_schedule/*.html
+demos/stage4_collision_safety_demo/demo_outputs/json/*.json
+demos/stage4_collision_safety_demo/demo_outputs/reports/*.html
 business_docs/stage3_customer_materials/outputs/*.pptx
 business_docs/stage3_customer_materials/outputs/*.pdf
 business_docs/stage3_customer_materials/outputs/*.html
@@ -140,6 +146,10 @@ business_docs/stage3_customer_materials/outputs/*.html
 !aicar_sim/outputs/machine_path/.gitkeep
 !aicar_sim/outputs/motion_validation/
 !aicar_sim/outputs/motion_validation/.gitkeep
+!aicar_sim/outputs/collision_safety/
+!aicar_sim/outputs/collision_safety/.gitkeep
+!aicar_sim/outputs/multi_actuator_schedule/
+!aicar_sim/outputs/multi_actuator_schedule/.gitkeep
 !vehicle_type_lab/outputs/
 !vehicle_type_lab/outputs/predictions/
 !vehicle_type_lab/outputs/predictions/.gitkeep

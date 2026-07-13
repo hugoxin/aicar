@@ -81,6 +81,8 @@
 - [Stage3 Customer Materials](../business_docs/stage3_customer_materials/README.md)
 - [Stage4 Motion Constraint Demo README](../demos/stage4_motion_constraint_demo/README.md)
 - [Stage4 Motion Constraint Demo Explanation](../demos/stage4_motion_constraint_demo/docs/STAGE4_MOTION_CONSTRAINT_DEMO_EXPLANATION.md)
+- [Stage4 Collision Safety Demo README](../demos/stage4_collision_safety_demo/README.md)
+- [Stage4 Collision Safety Demo Explanation](../demos/stage4_collision_safety_demo/docs/STAGE4_COLLISION_SAFETY_DEMO_EXPLANATION.md)
 
 ## 9. 阶段2策略层
 
@@ -120,7 +122,13 @@
 - [Stage4 Motion Constraint Demo README](../demos/stage4_motion_constraint_demo/README.md)
 - [Stage4 Motion Constraint Demo Explanation](../demos/stage4_motion_constraint_demo/docs/STAGE4_MOTION_CONSTRAINT_DEMO_EXPLANATION.md)
 
-## 13. 后续整理建议
+## 13. 阶段4碰撞与安全约束
+
+- [STAGE4_COLLISION_AND_SAFETY_PLAN.md](STAGE4_COLLISION_AND_SAFETY_PLAN.md)
+- [STAGE4_MULTI_ACTUATOR_CONSTRAINTS.md](STAGE4_MULTI_ACTUATOR_CONSTRAINTS.md)
+- [Stage4 Collision Safety Demo README](../demos/stage4_collision_safety_demo/README.md)
+
+## 14. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。

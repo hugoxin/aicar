@@ -315,3 +315,25 @@ python scripts\run_stage4_motion_constraint_demo.py --open-report
 ```
 
 输出只能称为机械可行候选轨迹或运动约束仿真结果，不是已验证真实设备轨迹，也不能直接控制 PLC、伺服或硬件。
+
+阶段 4.3 碰撞、安全约束和多执行机构候选调度：
+
+```powershell
+python aicar_sim\scripts\check_safety_layout.py
+python aicar_sim\scripts\generate_collision_safety_plan.py
+python aicar_sim\scripts\check_collision_safety_plan.py
+python aicar_sim\scripts\generate_multi_actuator_schedule.py
+python aicar_sim\scripts\check_multi_actuator_schedule.py
+python aicar_sim\scripts\generate_collision_safety_report.py
+python aicar_sim\scripts\check_collision_safety_validation.py
+```
+
+Demo：
+
+```powershell
+Set-Location F:\aicar\demos\stage4_collision_safety_demo
+python scripts\check_stage4_collision_safety_demo.py
+python scripts\run_stage4_collision_safety_demo.py --open-report
+```
+
+当前使用参考洗车房、三执行机构模型和保守 AABB，不是实际设备碰撞认证，不能直接下发 PLC。
