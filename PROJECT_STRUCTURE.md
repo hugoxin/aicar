@@ -216,3 +216,5 @@ business_docs\stage3_customer_materials
 阶段 1 已冻结为车辆识别小闭环：图片输入、YOLO 检测、车辆裁切、三分类推理、JSON 输出、`aicar_sim` 车辆模型选择链路已经跑通。后续阶段 2 再进入洗车策略与喷嘴路径仿真。
 
 阶段4.3在 `aicar_sim\data\safety_models` 和 `data\actuator_systems` 保存参考安全布局与三执行机构配置，在 `src\aicar_sim` 保存碰撞、扫掠体、任务分配、互锁调度和安全停机模块。生成的 JSON/HTML 位于 `aicar_sim\outputs\collision_safety`、`outputs\multi_actuator_schedule` 和 `demos\stage4_collision_safety_demo\demo_outputs`，均不进入 Git；目录只保留 `.gitkeep`。
+
+阶段4.4在 `aicar_sim\data\optimization_profiles` 保存安全优先优化参数，在 `src\aicar_sim` 保存路径指标、简化、transition、clearance-aware、任务顺序和调度优化模块。生成结果位于 `outputs\path_optimization`、`outputs\optimized_schedule` 和 `demos\stage4_path_optimization_demo\demo_outputs`，均由 `.gitignore` 排除。

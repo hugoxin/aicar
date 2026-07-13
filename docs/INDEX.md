@@ -83,6 +83,8 @@
 - [Stage4 Motion Constraint Demo Explanation](../demos/stage4_motion_constraint_demo/docs/STAGE4_MOTION_CONSTRAINT_DEMO_EXPLANATION.md)
 - [Stage4 Collision Safety Demo README](../demos/stage4_collision_safety_demo/README.md)
 - [Stage4 Collision Safety Demo Explanation](../demos/stage4_collision_safety_demo/docs/STAGE4_COLLISION_SAFETY_DEMO_EXPLANATION.md)
+- [Stage4 Path Optimization Demo README](../demos/stage4_path_optimization_demo/README.md)
+- [Stage4 Path Optimization Demo Explanation](../demos/stage4_path_optimization_demo/docs/STAGE4_PATH_OPTIMIZATION_DEMO_EXPLANATION.md)
 
 ## 9. 阶段2策略层
 
@@ -128,7 +130,13 @@
 - [STAGE4_MULTI_ACTUATOR_CONSTRAINTS.md](STAGE4_MULTI_ACTUATOR_CONSTRAINTS.md)
 - [Stage4 Collision Safety Demo README](../demos/stage4_collision_safety_demo/README.md)
 
-## 14. 后续整理建议
+## 14. 阶段4路径与周期优化
+
+- [STAGE4_PATH_OPTIMIZATION_PLAN.md](STAGE4_PATH_OPTIMIZATION_PLAN.md)
+- [STAGE4_CYCLE_TIME_OPTIMIZATION.md](STAGE4_CYCLE_TIME_OPTIMIZATION.md)
+- [Stage4 Path Optimization Demo README](../demos/stage4_path_optimization_demo/README.md)
+
+## 15. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。

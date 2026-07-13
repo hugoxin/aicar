@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.4 Optimized Multi Actuator Schedule",
+  "type": "object",
+  "required": ["schedule_version", "optimization_profile_id", "optimization_status", "baseline_summary", "optimized_summary", "actuator_timelines", "schedule_items", "sync_groups", "resource_locks", "adjustments", "rejected_adjustments", "conflicts_before_resolution", "conflicts_after_resolution", "safety_validation", "limitations"],
+  "properties": {
+    "schedule_version": {"const": "stage4.4"},
+    "optimization_profile_id": {"type": "string"},
+    "optimization_status": {"enum": ["ACCEPTED", "ACCEPTED_WITH_WARNINGS", "NO_MEANINGFUL_IMPROVEMENT", "REJECTED_SAFETY_REGRESSION", "FAILED"]},
+    "baseline_summary": {"type": "object"},
+    "optimized_summary": {"type": "object"},
+    "actuator_timelines": {"type": "object"},
+    "schedule_items": {"type": "array"},
+    "sync_groups": {"type": "array"},
+    "resource_locks": {"type": "array", "description": "Resource lock intervals are in seconds."},
+    "adjustments": {"type": "array"},
+    "rejected_adjustments": {"type": "array"},
+    "conflicts_before_resolution": {"type": "array"},
+    "conflicts_after_resolution": {"type": "array"},
+    "safety_validation": {"type": "object"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

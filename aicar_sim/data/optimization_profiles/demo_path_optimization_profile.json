@@ -1,0 +1,67 @@
+{
+  "profile_version": "stage4.4",
+  "profile_id": "demo_path_optimization_profile",
+  "optimization_mode": "safety_first",
+  "geometry": {
+    "duplicate_point_tolerance_mm": 1.0,
+    "collinear_distance_tolerance_mm": 5.0,
+    "collinear_angle_tolerance_deg": 3.0,
+    "maximum_output_point_spacing_mm": 150.0,
+    "minimum_meaningful_segment_length_mm": 20.0,
+    "maximum_trajectory_points": 5000
+  },
+  "transition": {
+    "allow_merge_same_state": true,
+    "allow_merge_same_zone": true,
+    "allow_merge_same_nozzle": true,
+    "allow_reorder_within_state": true,
+    "allow_reorder_across_states": false,
+    "use_adaptive_safe_height": true,
+    "minimum_safe_height_mm": 1900,
+    "maximum_safe_height_mm": 2700,
+    "safe_height_margin_mm": 150,
+    "transition_clearance_margin_mm": 50,
+    "maximum_direct_connection_distance_mm": 900,
+    "maximum_transition_search_candidates": 20
+  },
+  "clearance": {
+    "hard_minimum_mm": 250,
+    "warning_threshold_mm": 300,
+    "recommended_mm": 350,
+    "reject_if_minimum_clearance_decreases": true,
+    "reject_if_clearance_warning_count_increases": true
+  },
+  "schedule": {
+    "maximum_iterations": 500,
+    "allow_local_task_swap": true,
+    "allow_parallel_disjoint_tasks": true,
+    "allow_sync_start_adjustment": true,
+    "maximum_sync_start_offset_s": 1.0,
+    "maximum_resource_lock_margin_s": 0.5,
+    "preserve_wash_state_order": true,
+    "preserve_same_actuator_task_order_when_required": true
+  },
+  "objective_weights": {
+    "safety_violation": 1000000,
+    "unresolved_conflict": 100000,
+    "unassigned_task": 100000,
+    "clearance_warning": 1000,
+    "transition_count": 100,
+    "path_length": 1.0,
+    "schedule_duration": 10.0,
+    "total_delay": 0.1
+  },
+  "targets": {
+    "preferred_path_length_reduction_percent": 15,
+    "preferred_motion_duration_reduction_percent": 15,
+    "preferred_schedule_duration_reduction_percent": 10,
+    "preferred_transition_reduction_percent": 20,
+    "preferred_total_delay_reduction_percent": 20
+  },
+  "limitations": [
+    "Heuristic optimization only",
+    "No global optimum guarantee",
+    "No real machine calibration",
+    "No PLC or hardware output"
+  ]
+}

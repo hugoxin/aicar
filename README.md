@@ -337,3 +337,17 @@ python scripts\run_stage4_collision_safety_demo.py --open-report
 ```
 
 当前使用参考洗车房、三执行机构模型和保守 AABB，不是实际设备碰撞认证，不能直接下发 PLC。
+
+阶段 4.4 安全优先的路径与周期优化：
+
+```powershell
+python aicar_sim\scripts\check_path_optimization_profile.py
+python aicar_sim\scripts\generate_optimized_machine_path.py
+python aicar_sim\scripts\check_optimized_machine_path.py
+python aicar_sim\scripts\generate_optimized_schedule.py
+python aicar_sim\scripts\check_optimized_schedule.py
+python aicar_sim\scripts\generate_path_optimization_report.py
+python aicar_sim\scripts\check_path_optimization_report.py
+```
+
+Demo 位于 `demos\stage4_path_optimization_demo`。优化不删除任务、不跨 wash state 重排、不降低250 mm硬安全下限；未达到的目标在报告中明确标记 `TARGET_NOT_REACHED`。
