@@ -1,0 +1,109 @@
+{
+  "model_version": "stage4.5",
+  "surface_model_id": "demo_sedan_surface_model",
+  "vehicle_type": "sedan",
+  "coordinate_system": {
+    "origin": "vehicle_center_floor",
+    "unit": "mm",
+    "axes": {
+      "x": "vehicle_width",
+      "y": "vehicle_length",
+      "z": "height"
+    }
+  },
+  "reference_dimensions": {
+    "length_mm": 4700,
+    "width_mm": 1800,
+    "height_mm": 1450,
+    "wheelbase_mm": 2800,
+    "wheel_radius_mm": 330
+  },
+  "surface_patches": [
+    {
+      "patch_id": "roof_main",
+      "zone_id": "roof",
+      "surface_type": "arched_rectangle",
+      "local_origin": {"x_mm": 0, "y_mm": -1400, "z_mm": 1380},
+      "dimensions": {"width_mm": 1450, "length_mm": 2800, "arch_height_mm": 70},
+      "normal_direction": "outward_up",
+      "allowed_scan_directions": ["longitudinal", "lateral"]
+    },
+    {
+      "patch_id": "left_side_main",
+      "zone_id": "left_side",
+      "surface_type": "vertical_rectangle",
+      "local_origin": {"x_mm": -900, "y_mm": -2100, "z_mm": 350},
+      "dimensions": {"length_mm": 4200, "height_mm": 950},
+      "normal_direction": "outward_left",
+      "allowed_scan_directions": ["longitudinal", "vertical"]
+    },
+    {
+      "patch_id": "right_side_main",
+      "zone_id": "right_side",
+      "surface_type": "vertical_rectangle",
+      "local_origin": {"x_mm": 900, "y_mm": -2100, "z_mm": 350},
+      "dimensions": {"length_mm": 4200, "height_mm": 950},
+      "normal_direction": "outward_right",
+      "allowed_scan_directions": ["longitudinal", "vertical"]
+    },
+    {
+      "patch_id": "front_main",
+      "zone_id": "front",
+      "surface_type": "vertical_rectangle",
+      "local_origin": {"x_mm": -750, "y_mm": 2350, "z_mm": 350},
+      "dimensions": {"width_mm": 1500, "height_mm": 900},
+      "normal_direction": "outward_front",
+      "allowed_scan_directions": ["horizontal", "vertical"]
+    },
+    {
+      "patch_id": "rear_main",
+      "zone_id": "rear",
+      "surface_type": "vertical_rectangle",
+      "local_origin": {"x_mm": -750, "y_mm": -2350, "z_mm": 350},
+      "dimensions": {"width_mm": 1500, "height_mm": 900},
+      "normal_direction": "outward_rear",
+      "allowed_scan_directions": ["horizontal", "vertical"]
+    }
+  ],
+  "wheel_patches": [
+    {
+      "patch_id": "left_front_wheel",
+      "zone_id": "wheels",
+      "surface_type": "circular_disk",
+      "center": {"x_mm": -910, "y_mm": 1400, "z_mm": 330},
+      "radius_mm": 330,
+      "normal_direction": "outward_left"
+    },
+    {
+      "patch_id": "left_rear_wheel",
+      "zone_id": "wheels",
+      "surface_type": "circular_disk",
+      "center": {"x_mm": -910, "y_mm": -1400, "z_mm": 330},
+      "radius_mm": 330,
+      "normal_direction": "outward_left"
+    },
+    {
+      "patch_id": "right_front_wheel",
+      "zone_id": "wheels",
+      "surface_type": "circular_disk",
+      "center": {"x_mm": 910, "y_mm": 1400, "z_mm": 330},
+      "radius_mm": 330,
+      "normal_direction": "outward_right"
+    },
+    {
+      "patch_id": "right_rear_wheel",
+      "zone_id": "wheels",
+      "surface_type": "circular_disk",
+      "center": {"x_mm": 910, "y_mm": -1400, "z_mm": 330},
+      "radius_mm": 330,
+      "normal_direction": "outward_right"
+    }
+  ],
+  "limitations": [
+    "Reference analytic surface model only",
+    "Not reconstructed from CAD or point cloud",
+    "No real vehicle surface normals",
+    "No mirrors, handles, spoilers or detailed geometry",
+    "Not suitable for direct hardware control"
+  ]
+}

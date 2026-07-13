@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.5 Reference Analytic Vehicle Surface Model",
+  "type": "object",
+  "required": ["model_version", "surface_model_id", "vehicle_type", "coordinate_system", "reference_dimensions", "surface_patches", "wheel_patches", "limitations"],
+  "properties": {
+    "model_version": {"type": "string"},
+    "surface_model_id": {"type": "string"},
+    "vehicle_type": {"type": "string"},
+    "coordinate_system": {"type": "object", "description": "Vehicle-centered Cartesian coordinates in millimeters."},
+    "reference_dimensions": {"type": "object"},
+    "surface_patches": {"type": "array", "minItems": 5, "items": {"$ref": "#/$defs/patch"}},
+    "wheel_patches": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/patch"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "patch": {
+      "type": "object",
+      "required": ["patch_id", "zone_id", "surface_type", "normal_direction"],
+      "properties": {
+        "patch_id": {"type": "string"},
+        "zone_id": {"enum": ["roof", "left_side", "right_side", "front", "rear", "wheels"]},
+        "surface_type": {"enum": ["vertical_rectangle", "arched_rectangle", "circular_disk"]},
+        "normal_direction": {"type": "string"}
+      }
+    }
+  }
+}

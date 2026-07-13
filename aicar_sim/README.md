@@ -264,3 +264,20 @@ python aicar_sim\scripts\check_path_optimization_report.py
 4. 运行三个 Stage4 Demo 的 check 和 run 脚本。
 
 该基线使用通用三轴参考参数、AABB/safe envelope近似和启发式调度。它不是PLC或伺服程序，不能直接控制设备，也不能替代真实机械动力学验证或安全认证。
+
+阶段4.5连续清洗面路径重构：
+
+```powershell
+python aicar_sim\scripts\check_surface_model.py
+python aicar_sim\scripts\check_continuous_path_profile.py
+python aicar_sim\scripts\generate_continuous_surface_path.py
+python aicar_sim\scripts\check_continuous_surface_path.py
+python aicar_sim\scripts\generate_continuous_machine_path.py
+python aicar_sim\scripts\check_continuous_machine_path.py
+python aicar_sim\scripts\generate_continuous_surface_validation.py
+python aicar_sim\scripts\check_continuous_surface_validation.py
+python aicar_sim\scripts\generate_continuous_surface_report.py
+python aicar_sim\scripts\check_continuous_surface_report.py
+```
+
+输入为参考解析sedan surface model和continuous scan profile，输出位于 `outputs\continuous_surface_path`、`continuous_machine_path`、`continuous_collision_safety`、`continuous_schedule` 与 `continuous_surface_validation`。所有输出均为离线候选和近似验证，不连接PLC、伺服、SDK或真实硬件。

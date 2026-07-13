@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.5 Continuous Surface Baseline Comparison Report",
+  "type": "object",
+  "required": ["report_version", "reconstruction_status", "surface_validation_status", "motion_validation_status", "collision_validation_status", "vehicle_type", "surface_model_id", "scan_profile_id", "baseline_metrics", "continuous_metrics", "improvement_summary", "target_results", "coverage_summary", "safety_summary", "warning_count", "violation_count", "warnings", "violations", "limitations"],
+  "properties": {
+    "report_version": {"const": "stage4.5"},
+    "reconstruction_status": {"enum": ["ACCEPTED", "ACCEPTED_WITH_WARNINGS", "NO_MEANINGFUL_IMPROVEMENT", "REJECTED_SAFETY_REGRESSION", "FAILED"]},
+    "surface_validation_status": {"type": "string"},
+    "motion_validation_status": {"type": "string"},
+    "collision_validation_status": {"type": "string"},
+    "baseline_metrics": {"type": "object"},
+    "continuous_metrics": {"type": "object"},
+    "improvement_summary": {"type": "object"},
+    "target_results": {"type": "object"},
+    "coverage_summary": {"type": "object"},
+    "safety_summary": {"type": "object"},
+    "warning_count": {"type": "integer", "minimum": 0},
+    "violation_count": {"type": "integer", "minimum": 0},
+    "warnings": {"type": "array"},
+    "violations": {"type": "array"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}
