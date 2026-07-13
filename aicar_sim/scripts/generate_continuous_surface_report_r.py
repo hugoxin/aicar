@@ -20,6 +20,7 @@ DEFAULTS = {
     "first_machine": PROJECT_ROOT / "outputs/continuous_machine_path/continuous_machine_path_plan.json",
     "first_schedule": PROJECT_ROOT / "outputs/continuous_schedule/continuous_multi_actuator_schedule.json",
     "baseline_report": PROJECT_ROOT / "outputs/path_optimization/path_optimization_report.json",
+    "baseline_schedule": PROJECT_ROOT / "outputs/optimized_schedule/optimized_multi_actuator_schedule.json",
     "json_output": PROJECT_ROOT / "outputs/continuous_surface_validation_r/continuous_surface_repair_report.json",
     "html_output": PROJECT_ROOT / "outputs/continuous_surface_validation_r/stage4_continuous_surface_path_repair_report.html",
 }
@@ -52,6 +53,7 @@ def main() -> None:
         load_json(paths["first_machine"]),
         load_json(paths["first_schedule"]),
         load_json(paths["baseline_report"]),
+        load_json(paths["baseline_schedule"]),
     )
     paths["json_output"].parent.mkdir(parents=True, exist_ok=True)
     paths["html_output"].parent.mkdir(parents=True, exist_ok=True)

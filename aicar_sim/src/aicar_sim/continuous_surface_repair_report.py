@@ -23,12 +23,16 @@ def _table(headers: list[str], rows: list[list[Any]]) -> str:
     return f"<div class='table-wrap'><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>"
 
 
-def _baseline_metrics(path_report: dict[str, Any]) -> dict[str, Any]:
+def _baseline_metrics(
+    path_report: dict[str, Any],
+    schedule: dict[str, Any],
+) -> dict[str, Any]:
     source = path_report["optimized_metrics"]
+    schedule_summary = schedule["summary"]
     return {
         "scan_pass_count": None,
         "surface_task_count": 22,
-        "downstream_task_count": int(source["task_count"]),
+        "downstream_task_count": int(schedule_summary["task_count"]),
         "trajectory_point_count": int(source["trajectory_point_count"]),
         "transition_count": int(source["transition_segment_count"]),
         "source_path_length_mm": None,
@@ -36,10 +40,13 @@ def _baseline_metrics(path_report: dict[str, Any]) -> dict[str, Any]:
         "motion_duration_s": float(source["estimated_motion_duration_s"]),
         "schedule_duration_s": float(source["total_schedule_duration_s"]),
         "total_delay_s": float(source["total_delay_s"]),
-        "parallel_group_count": int(source.get("parallel_group_count", 18)),
-        "synchronized_group_count": int(source.get("synchronized_group_count", 0)),
-        "blocked_sync_group_count": int(source.get("blocked_sync_group_count", 0)),
-        "resource_lock_count": None,
+        "parallel_group_count": int(schedule_summary["parallel_group_count"]),
+        "synchronized_group_count": int(schedule_summary["synchronized_group_count"]),
+        "blocked_sync_group_count": sum(1 for item in schedule.get("sync_groups", []) if item.get("sync_status") == "BLOCKED_BY_INTERLOCK"),
+        "resource_lock_count": len(schedule.get("resource_locks", [])),
+        "conflict_count_before_resolution": int(schedule_summary["conflict_count_before_resolution"]),
+        "conflict_count_after_resolution": int(schedule_summary["conflict_count_after_resolution"]),
+        "unresolved_conflict_count": int(schedule_summary["unresolved_conflict_count"]),
         "clearance_warning_count": int(source["clearance_warning_count"]),
         "minimum_clearance_mm": float(source["minimum_vehicle_clearance_mm"]),
     }
@@ -67,6 +74,9 @@ def _first_attempt_metrics(
         "synchronized_group_count": summary["synchronized_group_count"],
         "blocked_sync_group_count": sum(1 for item in schedule.get("sync_groups", []) if item.get("sync_status") == "BLOCKED_BY_INTERLOCK"),
         "resource_lock_count": len(schedule.get("resource_locks", [])),
+        "conflict_count_before_resolution": summary["conflict_count_before_resolution"],
+        "conflict_count_after_resolution": summary["conflict_count_after_resolution"],
+        "unresolved_conflict_count": summary["unresolved_conflict_count"],
         "clearance_warning_count": 45,
         "minimum_clearance_mm": 300.0,
         "path_length_breakdown": diagnosis["path_length_breakdown"],
@@ -94,6 +104,9 @@ def _repair_metrics(
         "synchronized_group_count": summary["synchronized_group_count"],
         "blocked_sync_group_count": summary["blocked_sync_group_count"],
         "resource_lock_count": summary["resource_lock_count"],
+        "conflict_count_before_resolution": summary["conflict_count_before_resolution"],
+        "conflict_count_after_resolution": summary["conflict_count_after_resolution"],
+        "unresolved_conflict_count": summary["unresolved_conflict_count"],
         "clearance_warning_count": summary["clearance_warning_count"],
         "minimum_clearance_mm": summary["minimum_clearance_mm"],
         "path_length_breakdown": machine["path_length_breakdown"],
@@ -136,9 +149,10 @@ def build_continuous_surface_repair_report(
     first_machine: dict[str, Any],
     first_schedule: dict[str, Any],
     baseline_report: dict[str, Any],
+    baseline_schedule: dict[str, Any],
 ) -> tuple[dict[str, Any], str]:
     diagnosis = repair_plan["first_attempt_diagnosis"]
-    baseline = _baseline_metrics(baseline_report)
+    baseline = _baseline_metrics(baseline_report, baseline_schedule)
     first = _first_attempt_metrics(first_plan, first_machine, first_schedule, diagnosis)
     repair = _repair_metrics(repair_plan, repair_machine, repair_validation)
     status = _status(baseline, first, repair, repair_validation)
