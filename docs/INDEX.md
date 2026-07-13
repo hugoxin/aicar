@@ -79,6 +79,8 @@
 - [Stage3 Customer Showcase Demo README](../demos/stage3_customer_showcase_demo/README.md)
 - [Stage3 Customer Showcase Demo Explanation](../demos/stage3_customer_showcase_demo/docs/STAGE3_CUSTOMER_SHOWCASE_DEMO_EXPLANATION.md)
 - [Stage3 Customer Materials](../business_docs/stage3_customer_materials/README.md)
+- [Stage4 Motion Constraint Demo README](../demos/stage4_motion_constraint_demo/README.md)
+- [Stage4 Motion Constraint Demo Explanation](../demos/stage4_motion_constraint_demo/docs/STAGE4_MOTION_CONSTRAINT_DEMO_EXPLANATION.md)
 
 ## 9. 阶段2策略层
 
@@ -111,7 +113,14 @@
 - [Next Stage Roadmap](../business_docs/stage3_customer_materials/NEXT_STAGE_ROADMAP.md)
 - [PPT Generation Plan](../business_docs/stage3_customer_materials/PPT_GENERATION_PLAN.md)
 
-## 12. 后续整理建议
+## 12. 阶段4运动约束
+
+- [STAGE4_MOTION_CONSTRAINTS_PLAN.md](STAGE4_MOTION_CONSTRAINTS_PLAN.md)
+- [STAGE4_MACHINE_FEASIBLE_PATH_PLAN.md](STAGE4_MACHINE_FEASIBLE_PATH_PLAN.md)
+- [Stage4 Motion Constraint Demo README](../demos/stage4_motion_constraint_demo/README.md)
+- [Stage4 Motion Constraint Demo Explanation](../demos/stage4_motion_constraint_demo/docs/STAGE4_MOTION_CONSTRAINT_DEMO_EXPLANATION.md)
+
+## 13. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。

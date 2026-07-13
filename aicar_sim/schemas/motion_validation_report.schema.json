@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4 Motion Validation Report",
+  "type": "object",
+  "required": ["report_version", "validation_status", "motion_model_id", "vehicle_type", "summary", "violation_count", "warning_count", "violations", "warnings", "metric_summary", "zone_summary", "state_summary", "limitations"],
+  "properties": {
+    "report_version": {"type": "string"},
+    "validation_status": {"type": "string", "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"]},
+    "motion_model_id": {"type": "string"},
+    "vehicle_type": {"type": "string"},
+    "summary": {"type": "object"},
+    "violation_count": {"type": "integer", "minimum": 0},
+    "warning_count": {"type": "integer", "minimum": 0},
+    "violations": {"type": "array", "items": {"type": "object"}},
+    "warnings": {"type": "array", "items": {"type": "object"}},
+    "metric_summary": {"type": "object"},
+    "zone_summary": {"type": "array", "items": {"type": "object"}},
+    "state_summary": {"type": "array", "items": {"type": "object"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

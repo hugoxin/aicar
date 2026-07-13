@@ -47,6 +47,13 @@ docs\STAGE3_CUSTOMER_SHOWCASE_PLAN.md
 docs\STAGE3_CUSTOMER_MATERIALS_PLAN.md
 ```
 
+阶段 4 运动约束与候选路径计划：
+
+```text
+docs\STAGE4_MOTION_CONSTRAINTS_PLAN.md
+docs\STAGE4_MACHINE_FEASIBLE_PATH_PLAN.md
+```
+
 ## demos
 
 `demos` 保存项目展示层内容。阶段 1.D 已创建：
@@ -91,6 +98,14 @@ demos\stage3_customer_showcase_demo
 
 该 Demo 用于把阶段1车辆识别、阶段2仿真链路和阶段3可视化结果包装成一页式客户展示页，面向项目组、客户、领导、合作方和申报材料沟通。它不是新算法、不是 3D、不是真实路径规划、不是 PLC 或硬件控制。`demo_outputs` 中的 HTML 和 JSON 默认不进入 Git。
 
+阶段 4.1 / 4.2 已创建：
+
+```text
+demos\stage4_motion_constraint_demo
+```
+
+该 Demo 把阶段2抽象路径转换为满足通用三轴参考模型基础约束的机械可行候选轨迹，并检查工作空间、速度、加速度、连续性、时间戳和安全距离。它不代表真实设备轨迹，不生成 PLC 或伺服指令，也不控制硬件。
+
 ## aicar_sim
 
 `aicar_sim` 是主仿真框架项目。它负责无人洗车纯仿真、路径规划占位、洗车状态机占位、VirtualPLC 占位、喷嘴控制占位、日志、输出和配置。
@@ -122,6 +137,8 @@ docs\STAGE2_SIMULATION_BASELINE_SUMMARY.md
 阶段 3.2 中，`aicar_sim` 新增 `timeline_animation.py`、`generate_timeline_animation_report.py` 和 `outputs\timeline_animation\stage3_timeline_animation_report.html` 输出。该阶段只做轻量时间轴动画展示，不做 3D、复杂动画引擎、真实运动控制、PLC 或硬件控制。
 
 阶段 3.3 中，`aicar_sim` 新增 `customer_showcase.py`、`generate_customer_showcase_report.py` 和 `outputs\customer_showcase\stage3_customer_showcase_report.html` 输出。该阶段只做客户展示页包装，不改变阶段1识别、阶段2仿真或阶段3可视化核心逻辑。
+
+阶段 4.1 / 4.2 中，`aicar_sim` 新增通用三轴 motion model、线性插值、时间参数化、候选路径规划、运动验证和单文件 HTML 报告。运行输出位于 `outputs\machine_path` 和 `outputs\motion_validation`，默认不进入 Git。
 
 阶段 3.F 中，阶段3已形成 visual baseline。冻结总结文档位于：
 
