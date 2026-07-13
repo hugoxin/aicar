@@ -52,6 +52,11 @@ docs\STAGE3_CUSTOMER_MATERIALS_PLAN.md
 ```text
 docs\STAGE4_MOTION_CONSTRAINTS_PLAN.md
 docs\STAGE4_MACHINE_FEASIBLE_PATH_PLAN.md
+docs\STAGE4_COLLISION_AND_SAFETY_PLAN.md
+docs\STAGE4_MULTI_ACTUATOR_CONSTRAINTS.md
+docs\STAGE4_PATH_OPTIMIZATION_PLAN.md
+docs\STAGE4_CYCLE_TIME_OPTIMIZATION.md
+docs\STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md
 ```
 
 ## demos
@@ -218,3 +223,5 @@ business_docs\stage3_customer_materials
 阶段4.3在 `aicar_sim\data\safety_models` 和 `data\actuator_systems` 保存参考安全布局与三执行机构配置，在 `src\aicar_sim` 保存碰撞、扫掠体、任务分配、互锁调度和安全停机模块。生成的 JSON/HTML 位于 `aicar_sim\outputs\collision_safety`、`outputs\multi_actuator_schedule` 和 `demos\stage4_collision_safety_demo\demo_outputs`，均不进入 Git；目录只保留 `.gitkeep`。
 
 阶段4.4在 `aicar_sim\data\optimization_profiles` 保存安全优先优化参数，在 `src\aicar_sim` 保存路径指标、简化、transition、clearance-aware、任务顺序和调度优化模块。生成结果位于 `outputs\path_optimization`、`outputs\optimized_schedule` 和 `demos\stage4_path_optimization_demo\demo_outputs`，均由 `.gitignore` 排除。
+
+阶段4.1至4.4的冻结范围、基线指标、已知限制和后续路线统一记录在 `docs\STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md`。冻结 tag 为 `stage4-motion-safety-baseline`；这不是可直接下发PLC或伺服的真实控制基线。

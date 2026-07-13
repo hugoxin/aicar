@@ -255,3 +255,12 @@ python aicar_sim\scripts\check_path_optimization_report.py
 ```
 
 输出位于 `outputs\path_optimization` 和 `outputs\optimized_schedule`。优化保持task集合、wash state顺序、碰撞检查、互锁、安全停机点和250 mm硬下限；报告会如实显示 `NO_IMPROVEMENT` 与 `TARGET_NOT_REACHED`。
+
+阶段4.1至4.4已形成 motion and safety baseline，冻结 tag 为 `stage4-motion-safety-baseline`，总说明见 `docs\STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md`。完整运行入口依次为：
+
+1. 生成并检查 machine path 与 motion validation。
+2. 生成并检查 collision safety plan 与 multi-actuator schedule。
+3. 生成并检查 optimized path、optimized schedule 与 optimization report。
+4. 运行三个 Stage4 Demo 的 check 和 run 脚本。
+
+该基线使用通用三轴参考参数、AABB/safe envelope近似和启发式调度。它不是PLC或伺服程序，不能直接控制设备，也不能替代真实机械动力学验证或安全认证。

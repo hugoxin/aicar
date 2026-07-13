@@ -51,6 +51,7 @@ REQUIRED_PATHS = [
     "docs/STAGE4_MULTI_ACTUATOR_CONSTRAINTS.md",
     "docs/STAGE4_PATH_OPTIMIZATION_PLAN.md",
     "docs/STAGE4_CYCLE_TIME_OPTIMIZATION.md",
+    "docs/STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md",
     "aicar_sim/README.md",
     "aicar_sim/requirements.txt",
     "aicar_sim/pyproject.toml",

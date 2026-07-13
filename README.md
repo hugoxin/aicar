@@ -21,6 +21,9 @@
 - 阶段3.4：客户演示材料整理已开始，当前只整理 Markdown/文本材料，不生成 PPTX，不修改核心代码。
 - 阶段4.1：运动约束模型已开始，当前使用通用三轴参考模型，不连接真实硬件。
 - 阶段4.2：机械可行候选路径生成与验证已开始，当前输出不能直接下发 PLC 或伺服。
+- 阶段4.3：碰撞安全与多执行机构约束已完成，当前使用保守几何近似和共享空间互锁。
+- 阶段4.4：安全优先路径与周期优化已完成，未达到的优化目标保留为 `TARGET_NOT_REACHED`。
+- 阶段4.F：Stage4 motion and safety baseline completed，冻结 tag 为 `stage4-motion-safety-baseline`。当前是候选轨迹和安全约束仿真，不是真实设备控制。
 
 阶段1最终链路：
 
@@ -61,6 +64,8 @@ test_car.jpg
 - `demos\stage3_customer_showcase_demo`：阶段3.3 客户展示页 Demo。它把阶段1/2/3结果整理成客户、领导和项目组能快速理解的一页式 HTML。
 - `business_docs\stage3_customer_materials`：阶段3.4 客户演示材料包，包含一页介绍、演示话术、PPT大纲、FAQ、价值主张、技术边界和后续路线图。
 - `demos\stage4_motion_constraint_demo`：阶段4运动约束 Demo，把抽象路径转换为机械可行候选轨迹，并生成约束验证 JSON/HTML。
+- `demos\stage4_collision_safety_demo`：阶段4碰撞安全与多执行机构约束 Demo。
+- `demos\stage4_path_optimization_demo`：阶段4安全优先路径与周期优化 Demo。
 - `external_repos`：开源参考项目存放区，只做参考，不把第三方源码复制进主项目。
 - `datasets`：统一数据目录，当前只预留结构，不下载大数据集。
 - `models`：统一模型目录，当前只预留结构，不下载大模型。
@@ -351,3 +356,9 @@ python aicar_sim\scripts\check_path_optimization_report.py
 ```
 
 Demo 位于 `demos\stage4_path_optimization_demo`。优化不删除任务、不跨 wash state 重排、不降低250 mm硬安全下限；未达到的目标在报告中明确标记 `TARGET_NOT_REACHED`。
+
+阶段4运动与安全基线已冻结，完整结果、限制和后续路线见：
+
+- [docs\STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md](docs/STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md)
+
+冻结 tag 为 `stage4-motion-safety-baseline`。该基线只表示通用参考模型下的候选轨迹与安全约束链路可重复、可检查，不代表真实设备控制、机械安全认证或最优路径规划。
