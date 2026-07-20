@@ -401,6 +401,8 @@ REQUIRED_PATHS = [
     "aicar_sim/scripts/check_continuous_surface_repair_profile.py",
     "aicar_sim/scripts/check_state_scan_policy.py",
     "aicar_sim/scripts/check_surface_task_aggregation.py",
+    "aicar_sim/scripts/check_surface_schedule_adapter_safety.py",
+    "aicar_sim/scripts/check_first_attempt_metric_source.py",
     "aicar_sim/scripts/check_continuous_surface_path_r.py",
     "aicar_sim/scripts/check_continuous_machine_path_r.py",
     "aicar_sim/scripts/check_continuous_surface_validation_r.py",

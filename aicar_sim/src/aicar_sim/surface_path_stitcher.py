@@ -255,12 +255,17 @@ def build_patch_connection(
         rejection_reason = direct_reason or "direct connection rejected and fallback disabled"
 
     connection_type = "REQUIRED_STATE_TRANSITION" if required_state_transition and route_type != "REJECTED_CONNECTION" else route_type
+    if route_type in {"ADAPTIVE_SAFE_CONNECTION", "REJECTED_CONNECTION"}:
+        direct_rejection_category = "safety" if not direct_safe else "distance_policy"
+    else:
+        direct_rejection_category = None
     for point in points:
         point["critical_point_type"] = "STATE_BOUNDARY" if required_state_transition else "PATCH_CONNECTION"
         point["scan_pass_id"] = target_scan_pass_id
     return {
         "connection_type": connection_type,
         "route_type": route_type,
+        "direct_rejection_category": direct_rejection_category,
         "chosen_candidate_type": chosen_candidate_type,
         "source_patch_id": start.get("patch_id"),
         "target_patch_id": end.get("patch_id"),

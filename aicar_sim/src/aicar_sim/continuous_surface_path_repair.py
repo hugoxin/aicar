@@ -525,7 +525,12 @@ def build_continuous_surface_path_repair(
         [item["patch_id"] for item in patches],
     )
     connection_counts = Counter(item["connection_type"] for item in all_connections)
-    direct_rejected = sum(1 for item in all_connections if item.get("route_type") == "ADAPTIVE_SAFE_CONNECTION")
+    adaptive_fallbacks = [item for item in all_connections if item.get("route_type") == "ADAPTIVE_SAFE_CONNECTION"]
+    direct_rejected = len(adaptive_fallbacks)
+    safety_rejected = sum(1 for item in adaptive_fallbacks if item.get("direct_rejection_category") == "safety")
+    distance_policy_rejected = sum(
+        1 for item in adaptive_fallbacks if item.get("direct_rejection_category") == "distance_policy"
+    )
     reversed_patches = sorted({patch for task in surface_tasks for patch, direction in task["patch_directions"].items() if direction == "reverse"})
     source_breakdown = _path_breakdown(path_segments, trajectory, "nozzle_point")
     summary = {
@@ -545,6 +550,8 @@ def build_continuous_surface_path_repair(
         "required_state_transition_count": connection_counts["REQUIRED_STATE_TRANSITION"],
         "rejected_connection_count": connection_counts["REJECTED_CONNECTION"],
         "direct_candidate_rejected_count": direct_rejected,
+        "safety_rejected_direct_candidate_count": safety_rejected,
+        "distance_policy_rejected_direct_candidate_count": distance_policy_rejected,
         "unique_geometric_coverage_percent": coverage["unique_geometric_coverage_percent"],
         "mean_surface_visit_count": coverage["mean_surface_visit_count"],
     }
@@ -589,6 +596,8 @@ def build_continuous_surface_path_repair(
             ]},
             "reversed_patch_ids": reversed_patches,
             "direct_candidate_rejected_count": direct_rejected,
+            "safety_rejected_direct_candidate_count": safety_rejected,
+            "distance_policy_rejected_direct_candidate_count": distance_policy_rejected,
             "primary_rejection_reasons": sorted({str(item.get("rejection_reason")) for item in all_connections if item.get("rejection_reason")}),
         },
         "first_attempt_diagnosis": first_attempt_diagnosis or {},

@@ -20,6 +20,9 @@ def main() -> None:
     plan = json.loads(OUTPUT.read_text(encoding="utf-8"))
     summary = plan["summary"]
     validation = plan["validation"]
+    safety_rejected = summary["safety_rejected_direct_candidate_count"]
+    distance_rejected = summary["distance_policy_rejected_direct_candidate_count"]
+    total_rejected = summary["direct_candidate_rejected_count"]
     seen_states = {item["state_id"] for item in plan["states"]}
     seen_zones = {zone for task in plan["surface_tasks"] for zone in task["zone_ids"]}
     seen_patches = {patch for task in plan["surface_tasks"] for patch in task["patch_ids"]}
@@ -34,6 +37,8 @@ def main() -> None:
         plan["coverage_summary"]["unique_geometric_coverage_percent"] >= 92,
         min(item["standoff_mm"] for item in plan["trajectory_points"]) >= 250,
         validation["violation_count"] == 0,
+        safety_rejected + distance_rejected == total_rejected,
+        summary["direct_patch_connection_count"] >= 0,
     ]
     if not all(checks):
         raise SystemExit("repaired continuous surface path semantic or safety check failed")

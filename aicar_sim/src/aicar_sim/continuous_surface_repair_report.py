@@ -52,13 +52,34 @@ def _baseline_metrics(
     }
 
 
+def extract_first_attempt_clearance_metrics(
+    validation_report: dict[str, Any],
+    source: str,
+) -> tuple[float, int]:
+    """Read the first-attempt clearance metrics from its validation report JSON."""
+    summary = validation_report.get("summary")
+    if not isinstance(summary, dict):
+        raise ValueError(f"first-attempt validation report has no summary object: {source}")
+    missing = [key for key in ("minimum_clearance_mm", "clearance_warning_count") if key not in summary]
+    if missing:
+        raise ValueError(
+            f"first-attempt validation report is missing clearance fields {missing}: {source}"
+        )
+    return float(summary["minimum_clearance_mm"]), int(summary["clearance_warning_count"])
+
+
 def _first_attempt_metrics(
     plan: dict[str, Any],
     machine: dict[str, Any],
     schedule: dict[str, Any],
     diagnosis: dict[str, Any],
+    validation_report: dict[str, Any],
+    validation_source: str,
 ) -> dict[str, Any]:
     summary = schedule["summary"]
+    minimum_clearance, clearance_warnings = extract_first_attempt_clearance_metrics(
+        validation_report, validation_source
+    )
     return {
         "scan_pass_count": plan["summary"]["scan_pass_count"],
         "surface_task_count": len(plan["surface_tasks"]),
@@ -77,8 +98,9 @@ def _first_attempt_metrics(
         "conflict_count_before_resolution": summary["conflict_count_before_resolution"],
         "conflict_count_after_resolution": summary["conflict_count_after_resolution"],
         "unresolved_conflict_count": summary["unresolved_conflict_count"],
-        "clearance_warning_count": 45,
-        "minimum_clearance_mm": 300.0,
+        "clearance_warning_count": clearance_warnings,
+        "minimum_clearance_mm": minimum_clearance,
+        "clearance_metric_source": validation_source,
         "path_length_breakdown": diagnosis["path_length_breakdown"],
     }
 
@@ -148,12 +170,16 @@ def build_continuous_surface_repair_report(
     first_plan: dict[str, Any],
     first_machine: dict[str, Any],
     first_schedule: dict[str, Any],
+    first_validation: dict[str, Any],
     baseline_report: dict[str, Any],
     baseline_schedule: dict[str, Any],
+    first_validation_source: str = "continuous_surface_validation/continuous_collision_safety_validation_report.json",
 ) -> tuple[dict[str, Any], str]:
     diagnosis = repair_plan["first_attempt_diagnosis"]
     baseline = _baseline_metrics(baseline_report, baseline_schedule)
-    first = _first_attempt_metrics(first_plan, first_machine, first_schedule, diagnosis)
+    first = _first_attempt_metrics(
+        first_plan, first_machine, first_schedule, diagnosis, first_validation, first_validation_source
+    )
     repair = _repair_metrics(repair_plan, repair_machine, repair_validation)
     status = _status(baseline, first, repair, repair_validation)
     compare_keys = ("machine_path_length_mm", "motion_duration_s", "schedule_duration_s", "total_delay_s")
@@ -227,7 +253,7 @@ def build_continuous_surface_repair_report(
         "aggregation_summary": repair_plan["aggregation_summary"],
         "connection_summary": {
             key: repair_plan["summary"][key]
-            for key in ("local_u_turn_count", "direct_patch_connection_count", "adaptive_safe_connection_count", "required_state_transition_count", "rejected_connection_count", "direct_candidate_rejected_count")
+            for key in ("local_u_turn_count", "direct_patch_connection_count", "adaptive_safe_connection_count", "required_state_transition_count", "rejected_connection_count", "direct_candidate_rejected_count", "safety_rejected_direct_candidate_count", "distance_policy_rejected_direct_candidate_count")
         },
         "route_optimization_summary": repair_plan["route_optimization_summary"],
         "path_length_breakdown": {
@@ -310,7 +336,7 @@ def render_continuous_surface_repair_html(report: dict[str, Any]) -> str:
 <section><h2>First-attempt diagnosis and path composition</h2><p>Scan, local U-turn, patch connection, and state transition distances are separated using machine trajectory segment and critical-point semantics.</p>{_table(['Component','First attempt mm','Repair mm'], [[key, report['path_length_breakdown']['first_attempt'].get(key), report['path_length_breakdown']['repair'].get(key)] for key in ('surface_scan_length_mm','local_u_turn_length_mm','patch_connection_length_mm','required_state_transition_length_mm','total_path_length_mm')])}</section>
 <section><h2>State scan policy, spacing, and nozzle effective width</h2>{_table(['State','Patch','Nozzle','Width mm','Width source','Initial spacing','Final spacing','Initial passes','Final passes','Coverage %','Adaptation'], state_rows)}</section>
 <section><h2>Surface route task aggregation and patch direction</h2><p>Scan passes remain inside route tasks; they are not emitted as independent scheduler tasks. Aggregation validation: {html.escape(report['aggregation_summary']['validation_status'])}.</p>{_table(['State','Route','Actuator','Nozzle','Patch access order','Directions','Candidates'], route_rows)}</section>
-<section><h2>Connection optimization</h2><div class="grid"><div class="metric">Local U-turns<b>{connection['local_u_turn_count']}</b></div><div class="metric">Direct patch<b>{connection['direct_patch_connection_count']}</b></div><div class="metric">Adaptive safe<b>{connection['adaptive_safe_connection_count']}</b></div><div class="metric">State transitions<b>{connection['required_state_transition_count']}</b></div></div></section>
+<section><h2>Connection optimization</h2><div class="grid"><div class="metric">Local U-turns<b>{connection['local_u_turn_count']}</b></div><div class="metric">Direct patch<b>{connection['direct_patch_connection_count']}</b></div><div class="metric">Adaptive safe<b>{connection['adaptive_safe_connection_count']}</b></div><div class="metric">State transitions<b>{connection['required_state_transition_count']}</b></div><div class="metric">Direct rejected: safety<b>{connection['safety_rejected_direct_candidate_count']}</b></div><div class="metric">Direct rejected: distance policy<b>{connection['distance_policy_rejected_direct_candidate_count']}</b></div></div><p>Of {connection['direct_candidate_rejected_count']} rejected direct candidates, {connection['safety_rejected_direct_candidate_count']} failed the vehicle hard-clearance or obstacle safety checks and {connection['distance_policy_rejected_direct_candidate_count']} only exceeded the maximum direct patch distance policy.</p></section>
 <section><h2>Coverage and overcoverage</h2><p>Unique geometric coverage: {coverage['unique_geometric_coverage_percent']}%; mean visits: {coverage['mean_surface_visit_count']}; maximum visits: {coverage['maximum_surface_visit_count']}; within-state overcovered cells: {coverage['overcovered_cell_percent']}%; repeated surface scan length: {coverage['repeated_surface_scan_length_mm']} mm.</p>{_table(['State','Patch','Zone','Coverage %','Mean visits','Overcovered %','Scan mm'], coverage_rows)}</section>
 <section><h2>Motion, schedule, collision, interlock, and safe stop</h2><p>motion: {html.escape(report['motion_validation_status'])}; collision: {html.escape(report['collision_validation_status'])}; schedule tasks: {safety['schedule_task_count']}; resource locks: {safety['resource_lock_count']}; static collision: {safety['static_collision_count']}; vehicle collision: {safety['vehicle_collision_count']}; forbidden entry: {safety['forbidden_zone_entry_count']}; conflict after resolution: {safety['conflict_count_after_resolution']}; safe-stop points: {safety['safe_stop_point_count']}.</p></section>
 <section><h2>Schedule timeline comparison</h2>{_table(['Plan','Tasks','Parallel groups','Schedule duration s','Total delay s'], schedule_rows)}</section>

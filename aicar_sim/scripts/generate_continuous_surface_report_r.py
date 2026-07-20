@@ -19,6 +19,7 @@ DEFAULTS = {
     "first_plan": PROJECT_ROOT / "outputs/continuous_surface_path/continuous_surface_path_plan.json",
     "first_machine": PROJECT_ROOT / "outputs/continuous_machine_path/continuous_machine_path_plan.json",
     "first_schedule": PROJECT_ROOT / "outputs/continuous_schedule/continuous_multi_actuator_schedule.json",
+    "first_validation": PROJECT_ROOT / "outputs/continuous_surface_validation/continuous_collision_safety_validation_report.json",
     "baseline_report": PROJECT_ROOT / "outputs/path_optimization/path_optimization_report.json",
     "baseline_schedule": PROJECT_ROOT / "outputs/optimized_schedule/optimized_multi_actuator_schedule.json",
     "json_output": PROJECT_ROOT / "outputs/continuous_surface_validation_r/continuous_surface_repair_report.json",
@@ -45,6 +46,12 @@ def main() -> None:
         completed = subprocess.run([sys.executable, str(PROJECT_ROOT / "scripts/generate_continuous_surface_validation_r.py")], cwd=WORKSPACE_ROOT)
         if completed.returncode:
             raise SystemExit(completed.returncode)
+    if not paths["first_validation"].exists():
+        completed = subprocess.run([sys.executable, str(PROJECT_ROOT / "scripts/generate_continuous_surface_validation.py")], cwd=WORKSPACE_ROOT)
+        if completed.returncode:
+            raise SystemExit(completed.returncode)
+    if not paths["first_validation"].exists():
+        raise SystemExit(f"first-attempt validation report is missing and could not be generated: {paths['first_validation']}")
     report, html_text = build_continuous_surface_repair_report(
         load_json(paths["repair_plan"]),
         load_json(paths["repair_machine"]),
@@ -52,8 +59,10 @@ def main() -> None:
         load_json(paths["first_plan"]),
         load_json(paths["first_machine"]),
         load_json(paths["first_schedule"]),
+        load_json(paths["first_validation"]),
         load_json(paths["baseline_report"]),
         load_json(paths["baseline_schedule"]),
+        first_validation_source=str(paths["first_validation"].relative_to(WORKSPACE_ROOT)).replace("\\", "/"),
     )
     paths["json_output"].parent.mkdir(parents=True, exist_ok=True)
     paths["html_output"].parent.mkdir(parents=True, exist_ok=True)

@@ -34,6 +34,7 @@ def build_continuous_surface_repair_validation(
     collision_plan["plan_version"] = "stage4.5-r"
     collision_plan["multi_actuator_schedule"] = schedule
     collision_plan["warnings"] = [item for item in collision_plan["warnings"] if item.get("check_id") != "sync_degraded"]
+    collision_plan["warnings"].extend(schedule.get("interval_mapping_warnings", []))
     for group in schedule["sync_groups"]:
         if group["sync_status"] in {"DEGRADED", "BLOCKED_BY_INTERLOCK"}:
             collision_plan["warnings"].append(
