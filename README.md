@@ -24,7 +24,7 @@
 - 阶段4.3：碰撞安全与多执行机构约束已完成，当前使用保守几何近似和共享空间互锁。
 - 阶段4.4：安全优先路径与周期优化已完成，未达到的优化目标保留为 `TARGET_NOT_REACHED`。
 - 阶段4.F：Stage4 motion and safety baseline completed，冻结 tag 为 `stage4-motion-safety-baseline`。当前是候选轨迹和安全约束仿真，不是真实设备控制。
-- 阶段4.5：连续清洗面路径重构已开始，使用参考解析表面生成扫描线并重新执行运动、碰撞、互锁和调度验证；当前不是CAD、点云或真实设备路径。
+- 阶段4.5：连续清洗面路径重构已完成。首版实验为 `NO_MEANINGFUL_IMPROVEMENT`，Stage4.5-R 最终修正版为 `ACCEPTED`；最终基线仍是参考解析表面下的离线候选路径，不是 CAD、点云或真实设备路径。
 
 阶段1最终链路：
 
@@ -375,7 +375,7 @@ python aicar_sim\scripts\generate_continuous_surface_validation.py
 python aicar_sim\scripts\generate_continuous_surface_report.py
 ```
 
-设计说明见 [docs\STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md](docs/STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md)。当前结果如实标记 `NO_MEANINGFUL_IMPROVEMENT`：transition减少，但路径长度和周期未改善。
+设计说明见 [docs\STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md](docs/STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md)。该首版实验如实标记 `NO_MEANINGFUL_IMPROVEMENT`：transition 减少，但路径长度和周期未改善，历史分支继续保留。
 
 阶段4.5-R连续表面路径修正版：
 
@@ -388,4 +388,4 @@ python aicar_sim\scripts\generate_continuous_surface_report_r.py
 python aicar_sim\scripts\check_continuous_surface_report_r.py
 ```
 
-修正版使用 state-specific spacing、喷嘴有效宽度、自适应覆盖、surface route task 聚合、安全 direct connection 和实际共享区间互锁。当前实验结果为 `ACCEPTED`，但仍只是参考解析表面下的离线候选路径。诊断与设计见 [修复诊断](docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DIAGNOSIS.md) 和 [修复计划](docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_PLAN.md)。Stage4.5首版与Stage4.5-R均未合并 `main`，Stage4冻结基线不变。
+修正版使用 state-specific spacing、喷嘴有效宽度、自适应覆盖、surface route task 聚合、安全 direct connection、实际共享区间互锁和 source span 比例时间映射。最终结果为 `ACCEPTED`：machine path `328502.099 mm`、motion `2571.102629 s`、schedule `2036.403 s`、delay `10202.551 s`、parallel groups 10、conflict `14 -> 0`、minimum clearance `300 mm`、violations 0。Stage4.5 首版与 Stage4.5-R 的完整历史已通过 no-ff merge 纳入 `main`；冻结说明见 [Stage4.5 连续清洗面路径基线冻结说明](docs/STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md)。Stage4.6 尚未开始。

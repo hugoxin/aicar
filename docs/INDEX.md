@@ -32,6 +32,7 @@
 - [STAGE3_TIMELINE_ANIMATION_PLAN.md](STAGE3_TIMELINE_ANIMATION_PLAN.md)
 - [STAGE3_VISUAL_BASELINE_SUMMARY.md](STAGE3_VISUAL_BASELINE_SUMMARY.md)
 - [STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md](STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md)
+- [STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md](STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md)
 - [STAGE3_CUSTOMER_SHOWCASE_PLAN.md](STAGE3_CUSTOMER_SHOWCASE_PLAN.md)
 - [STAGE3_CUSTOMER_MATERIALS_PLAN.md](STAGE3_CUSTOMER_MATERIALS_PLAN.md)
 
@@ -151,10 +152,11 @@
 - [Stage4 Continuous Surface Path Demo Explanation](../demos/stage4_continuous_surface_path_demo/docs/STAGE4_CONTINUOUS_SURFACE_PATH_DEMO_EXPLANATION.md)
 - [STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DIAGNOSIS.md](STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DIAGNOSIS.md)
 - [STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_PLAN.md](STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_PLAN.md)
+- [STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md](STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md)
 - [Stage4 Continuous Surface Path Repair Demo README](../demos/stage4_continuous_surface_path_repair_demo/README.md)
 - [Stage4 Continuous Surface Path Repair Demo Explanation](../demos/stage4_continuous_surface_path_repair_demo/docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DEMO_EXPLANATION.md)
 
-Stage4.5第一次实验结论为 `NO_MEANINGFUL_IMPROVEMENT`；Stage4.5-R为当前修正版实验。两者均未合并 `main`，`stage4-motion-safety-baseline` 保持不变。
+Stage4.5 第一次实验结论为 `NO_MEANINGFUL_IMPROVEMENT`；Stage4.5-R 最终修正版为 `ACCEPTED`。两条分支的完整历史已通过 no-ff merge 纳入 `main`，最终 schedule duration 为 `2036.403 s`、total delay 为 `10202.551 s`。Stage4.5 冻结说明记录最新安全修复数据和离线仿真边界；Stage4.6 尚未开始，`stage4-motion-safety-baseline` 保持不变。
 
 ## 17. 后续整理建议
 

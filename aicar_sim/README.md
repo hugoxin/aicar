@@ -293,4 +293,4 @@ python aicar_sim\scripts\generate_continuous_surface_report_r.py
 python aicar_sim\scripts\check_continuous_surface_report_r.py
 ```
 
-当前修正版实验结果为 `ACCEPTED`。这是参考解析表面下的离线路径与多执行机构候选调度，不是CAD/点云路径，不代表真实清洗效果，不保证全局最优，也不能下发PLC或控制硬件。Stage4.5与Stage4.5-R均未合并main，Stage4冻结基线不变。
+Stage4.5 首版实验结果为 `NO_MEANINGFUL_IMPROVEMENT`，Stage4.5-R 最终修正版为 `ACCEPTED`。最终 machine path 为 `328502.099 mm`、motion duration 为 `2571.102629 s`、schedule duration 为 `2036.403 s`、total delay 为 `10202.551 s`，44 个资源锁将 conflict 从 14 消解到 0，minimum clearance 为 `300 mm`，violations 为 0。两条分支历史已通过 no-ff merge 纳入 `main`，详情见 `docs\STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md`。这是参考解析表面下的离线路径与多执行机构候选调度，不是 CAD/点云路径，不代表真实清洗效果，不保证全局最优，也不能下发 PLC 或控制硬件。Stage4.6 尚未开始。
