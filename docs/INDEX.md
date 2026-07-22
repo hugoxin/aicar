@@ -143,7 +143,20 @@
 
 冻结 tag：`stage4-motion-safety-baseline`。该文档汇总阶段4.1至4.4的参考模型、候选轨迹、安全验证、调度优化、未达到目标和真实设备边界。
 
-## 16. 后续整理建议
+## 16. 阶段4连续清洗面路径
+
+- [STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md](STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md)
+- [STAGE4_SURFACE_MODEL_AND_SCAN_STRATEGY.md](STAGE4_SURFACE_MODEL_AND_SCAN_STRATEGY.md)
+- [Stage4 Continuous Surface Path Demo README](../demos/stage4_continuous_surface_path_demo/README.md)
+- [Stage4 Continuous Surface Path Demo Explanation](../demos/stage4_continuous_surface_path_demo/docs/STAGE4_CONTINUOUS_SURFACE_PATH_DEMO_EXPLANATION.md)
+- [STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DIAGNOSIS.md](STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DIAGNOSIS.md)
+- [STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_PLAN.md](STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_PLAN.md)
+- [Stage4 Continuous Surface Path Repair Demo README](../demos/stage4_continuous_surface_path_repair_demo/README.md)
+- [Stage4 Continuous Surface Path Repair Demo Explanation](../demos/stage4_continuous_surface_path_repair_demo/docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DEMO_EXPLANATION.md)
+
+Stage4.5第一次实验结论为 `NO_MEANINGFUL_IMPROVEMENT`；Stage4.5-R为当前修正版实验。两者均未合并 `main`，`stage4-motion-safety-baseline` 保持不变。
+
+## 17. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.5 Continuous Surface Scan Profile",
+  "type": "object",
+  "required": ["profile_version", "profile_id", "scan_mode", "global", "zone_profiles", "connection_policy", "coverage", "targets", "limitations"],
+  "properties": {
+    "profile_version": {"type": "string"},
+    "profile_id": {"type": "string"},
+    "scan_mode": {"const": "safety_first_continuous_surface"},
+    "global": {
+      "type": "object",
+      "required": ["preferred_standoff_mm", "hard_minimum_clearance_mm", "warning_clearance_mm", "maximum_standoff_mm", "maximum_point_spacing_mm", "maximum_output_points"]
+    },
+    "zone_profiles": {"type": "object", "required": ["roof", "left_side", "right_side", "front", "rear", "wheels"]},
+    "connection_policy": {"type": "object", "required": ["allow_cross_state_reordering", "fallback_to_safe_transition"]},
+    "coverage": {"type": "object", "required": ["grid_resolution_mm", "minimum_zone_coverage_percent", "minimum_total_coverage_percent"]},
+    "targets": {"type": "object"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

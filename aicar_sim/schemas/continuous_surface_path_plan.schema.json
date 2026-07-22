@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage4.5 Continuous Surface Candidate Path Plan",
+  "type": "object",
+  "required": ["plan_version", "surface_model_id", "scan_profile_id", "vehicle_type", "wash_profile", "summary", "states", "surface_tasks", "scan_passes", "connections", "path_segments", "trajectory_points", "coverage_summary", "validation", "warnings", "limitations"],
+  "properties": {
+    "plan_version": {"const": "stage4.5"},
+    "surface_model_id": {"type": "string"},
+    "scan_profile_id": {"type": "string"},
+    "vehicle_type": {"type": "string"},
+    "wash_profile": {"type": "string"},
+    "summary": {"type": "object", "required": ["state_count", "zone_count", "surface_patch_count", "scan_pass_count", "connection_count", "trajectory_point_count", "path_length_mm", "estimated_surface_coverage_percent"]},
+    "states": {"type": "array", "minItems": 7},
+    "surface_tasks": {"type": "array", "minItems": 1},
+    "scan_passes": {"type": "array", "minItems": 1},
+    "connections": {"type": "array", "minItems": 1},
+    "path_segments": {"type": "array", "minItems": 1},
+    "trajectory_points": {"type": "array", "minItems": 1, "maxItems": 5000},
+    "coverage_summary": {"type": "object"},
+    "validation": {"type": "object"},
+    "warnings": {"type": "array"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "profile_version": "stage4.5-r",
+  "profile_id": "demo_continuous_surface_scan_profile_r",
+  "scan_mode": "state_aware_coverage_efficient",
+  "global": {
+    "preferred_standoff_mm": 350,
+    "hard_minimum_clearance_mm": 250,
+    "warning_clearance_mm": 300,
+    "maximum_standoff_mm": 650,
+    "lead_in_length_mm": 100,
+    "lead_out_length_mm": 100,
+    "turn_radius_mm": 120,
+    "connector_clearance_margin_mm": 50,
+    "maximum_point_spacing_mm": 140,
+    "maximum_output_points": 5000,
+    "maximum_adaptation_iterations": 20
+  },
+  "coverage_targets": {
+    "grid_resolution_mm": 50,
+    "minimum_total_unique_coverage_percent": 92,
+    "minimum_zone_coverage_percent": 90,
+    "preferred_total_coverage_min_percent": 92,
+    "preferred_total_coverage_max_percent": 96,
+    "overcoverage_warning_percent": 97
+  },
+  "pass_spacing_policy": {
+    "mode": "nozzle_effective_width",
+    "minimum_spacing_mm": 80,
+    "maximum_spacing_to_width_ratio": 1.0,
+    "fallback_effective_width_mm": {
+      "pre_rinse": 450,
+      "foam": 550,
+      "top_clean": 300,
+      "side_clean": 300,
+      "wheel_clean": 180,
+      "air_dry": 500
+    }
+  },
+  "state_scan_policies": {
+    "pre_rinse": {"spacing_factor": 0.88, "minimum_state_zone_coverage_percent": 90, "maximum_preferred_coverage_percent": 95, "allow_sparse_scan": true},
+    "foam": {"spacing_factor": 0.92, "minimum_state_zone_coverage_percent": 90, "maximum_preferred_coverage_percent": 95, "allow_sparse_scan": true},
+    "dwell": {"motion_required": false},
+    "top_clean": {"spacing_factor": 0.72, "minimum_state_zone_coverage_percent": 92, "maximum_preferred_coverage_percent": 97, "allow_sparse_scan": false},
+    "side_clean": {"spacing_factor": 0.72, "minimum_state_zone_coverage_percent": 92, "maximum_preferred_coverage_percent": 97, "allow_sparse_scan": false},
+    "wheel_clean": {"spacing_factor": 0.68, "minimum_state_zone_coverage_percent": 92, "maximum_preferred_coverage_percent": 97, "allow_sparse_scan": false},
+    "air_dry": {"spacing_factor": 0.88, "minimum_state_zone_coverage_percent": 90, "maximum_preferred_coverage_percent": 95, "allow_sparse_scan": true}
+  },
+  "zone_profiles": {
+    "roof": {"scan_pattern": "boustrophedon", "scan_direction": "longitudinal", "overscan_margin_mm": 50, "preferred_actuator_id": "top_actuator"},
+    "left_side": {"scan_pattern": "boustrophedon", "scan_direction": "longitudinal", "overscan_margin_mm": 40, "preferred_actuator_id": "left_side_actuator"},
+    "right_side": {"scan_pattern": "boustrophedon", "scan_direction": "longitudinal", "overscan_margin_mm": 40, "preferred_actuator_id": "right_side_actuator"},
+    "front": {"scan_pattern": "boustrophedon", "scan_direction": "horizontal", "overscan_margin_mm": 30, "preferred_actuator_id": "top_actuator"},
+    "rear": {"scan_pattern": "boustrophedon", "scan_direction": "horizontal", "overscan_margin_mm": 30, "preferred_actuator_id": "top_actuator"},
+    "wheels": {"scan_pattern": "concentric_rings", "angular_step_deg": 24, "preferred_actuator_selection": "by_side"}
+  },
+  "surface_routes": {
+    "top_body_route": {"actuator_id": "top_actuator", "patch_ids": ["front_main", "roof_main", "rear_main"], "allow_reverse_patch_path": true},
+    "left_body_route": {"actuator_id": "left_side_actuator", "patch_ids": ["left_side_main"], "allow_reverse_patch_path": true},
+    "right_body_route": {"actuator_id": "right_side_actuator", "patch_ids": ["right_side_main"], "allow_reverse_patch_path": true},
+    "left_wheel_route": {"actuator_id": "left_side_actuator", "patch_ids": ["left_front_wheel", "left_rear_wheel"], "allow_reverse_patch_path": true},
+    "right_wheel_route": {"actuator_id": "right_side_actuator", "patch_ids": ["right_front_wheel", "right_rear_wheel"], "allow_reverse_patch_path": true}
+  },
+  "task_aggregation": {
+    "enabled": true,
+    "group_by": ["state_id", "surface_route_id", "actuator_id", "nozzle_id"],
+    "keep_scan_passes_inside_task": true,
+    "emit_scan_pass_as_independent_task": false,
+    "maximum_preferred_schedule_tasks": 20,
+    "maximum_warning_schedule_tasks": 25
+  },
+  "connection_policy": {
+    "connect_adjacent_passes_locally": true,
+    "prefer_u_turn_connection": true,
+    "allow_direct_patch_connection": true,
+    "allow_reverse_patch_scan_order": true,
+    "allow_reverse_route_order": true,
+    "allow_state_internal_reordering": true,
+    "allow_cross_state_reordering": false,
+    "fallback_to_safe_transition": true,
+    "fallback_to_adaptive_safe_connection": true,
+    "maximum_direct_patch_distance_mm": 1600,
+    "maximum_direct_connection_candidates": 30
+  },
+  "schedule_policy": {
+    "allow_parallel_actuator_routes": true,
+    "lock_only_actual_shared_zone_interval": true,
+    "allow_left_right_parallel_body_scan": true,
+    "allow_left_right_parallel_wheel_scan": true,
+    "preserve_state_order": true
+  },
+  "targets": {
+    "preferred_path_length_reduction_vs_stage4_percent": 10,
+    "preferred_motion_duration_reduction_vs_stage4_percent": 10,
+    "preferred_schedule_duration_reduction_vs_stage4_percent": 10,
+    "maximum_transition_count": 5,
+    "preferred_path_reduction_vs_first_attempt_percent": 25,
+    "preferred_schedule_reduction_vs_first_attempt_percent": 25
+  },
+  "limitations": [
+    "Reference analytic surface model",
+    "Heuristic route and spacing optimization",
+    "No CAD or point cloud",
+    "No global optimum guarantee",
+    "No real hardware control"
+  ]
+}

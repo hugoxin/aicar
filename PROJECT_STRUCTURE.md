@@ -57,6 +57,8 @@ docs\STAGE4_MULTI_ACTUATOR_CONSTRAINTS.md
 docs\STAGE4_PATH_OPTIMIZATION_PLAN.md
 docs\STAGE4_CYCLE_TIME_OPTIMIZATION.md
 docs\STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md
+docs\STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md
+docs\STAGE4_SURFACE_MODEL_AND_SCAN_STRATEGY.md
 ```
 
 ## demos
@@ -225,3 +227,7 @@ business_docs\stage3_customer_materials
 阶段4.4在 `aicar_sim\data\optimization_profiles` 保存安全优先优化参数，在 `src\aicar_sim` 保存路径指标、简化、transition、clearance-aware、任务顺序和调度优化模块。生成结果位于 `outputs\path_optimization`、`outputs\optimized_schedule` 和 `demos\stage4_path_optimization_demo\demo_outputs`，均由 `.gitignore` 排除。
 
 阶段4.1至4.4的冻结范围、基线指标、已知限制和后续路线统一记录在 `docs\STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md`。冻结 tag 为 `stage4-motion-safety-baseline`；这不是可直接下发PLC或伺服的真实控制基线。
+
+阶段4.5在 `aicar_sim\data\surface_models` 和 `data\continuous_path_profiles` 保存参考解析表面与扫描参数，在 `src\aicar_sim` 保存surface patch、scan、stitch、coverage、validation和report模块。生成JSON/HTML位于 `outputs\continuous_*` 与 `demos\stage4_continuous_surface_path_demo\demo_outputs`，均不进入Git；目录仅保留 `.gitkeep`。
+
+阶段4.5-R在独立修复分支中新增 `state_scan_policy.py`、`patch_route_optimizer.py`、`surface_task_aggregator.py`、`surface_schedule_adapter.py` 和 `continuous_surface_*repair*.py` 适配层。修正版输出目录统一使用 `_r` 后缀，Demo 位于 `demos\stage4_continuous_surface_path_repair_demo`。生成JSON/HTML均被忽略，只提交源码、配置、schema、文档、检查脚本和 `.gitkeep`。首版状态为 `NO_MEANINGFUL_IMPROVEMENT`，修正版为当前实验；两者均未合并 `main`，Stage4冻结基线不变。

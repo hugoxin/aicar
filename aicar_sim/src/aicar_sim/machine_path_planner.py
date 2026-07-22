@@ -325,3 +325,104 @@ def build_machine_feasible_path_plan(
             "No actuator dynamics, inverse kinematics, PLC output, or hardware control is included.",
         ],
     }
+
+
+def build_prepositioned_machine_path_plan(
+    path_segments: list[dict[str, Any]],
+    motion_model: dict[str, Any],
+    *,
+    vehicle_type: str,
+    wash_profile: str,
+    source_summary: dict[str, Any],
+) -> dict[str, Any]:
+    """Time-parameterize Stage4.5 waypoints that already include safety offsets."""
+    if not path_segments:
+        raise ValueError("prepositioned machine path requires path_segments")
+    constraints = motion_model["path_constraints"]
+    maximum_spacing = min(140.0, float(constraints["maximum_segment_gap_mm"]))
+    velocity_limits = get_axis_velocity_limits(motion_model)
+    transition_speed = min(velocity_limits.values()) * float(constraints["transition_velocity_scale"])
+    machine_segments: list[dict[str, Any]] = []
+    flat_points: list[dict[str, Any]] = []
+
+    for source_segment in path_segments:
+        segment_type = str(source_segment.get("segment_type", "process"))
+        normalized = []
+        for source_index, point in enumerate(source_segment.get("points", [])):
+            machine = point.get("machine_point")
+            if not machine:
+                raise ValueError(f"segment {source_segment.get('segment_id')} point missing machine_point")
+            item = dict(point)
+            item.update(
+                {
+                    "x_mm": float(machine["x_mm"]),
+                    "y_mm": float(machine["y_mm"]),
+                    "z_mm": float(machine["z_mm"]),
+                    "segment_id": source_segment["segment_id"],
+                    "state_id": source_segment["state_id"],
+                    "zone_id": source_segment["zone_id"],
+                    "nozzle_id": source_segment["nozzle_id"],
+                    "source_point_index": source_index,
+                    "is_transition": segment_type != "process" or point.get("critical_point_type") in {"PATCH_CONNECTION", "STATE_BOUNDARY"},
+                    "target_speed_mm_s": transition_speed if segment_type != "process" else float(point.get("target_speed_mm_s", 200.0)),
+                }
+            )
+            normalized.append(item)
+        points = interpolate_segment(_deduplicate_waypoints(normalized), maximum_spacing)
+        if flat_points and points and calculate_point_distance(flat_points[-1], points[0]) < 1e-9:
+            points = points[1:]
+        start_index = len(flat_points)
+        flat_points.extend(points)
+        machine_segments.append(
+            {
+                "segment_id": source_segment["segment_id"],
+                "state_id": source_segment["state_id"],
+                "zone_id": source_segment["zone_id"],
+                "nozzle_id": source_segment["nozzle_id"],
+                "segment_type": segment_type,
+                "requires_transition": segment_type == "transition",
+                "point_start_index": start_index,
+                "point_end_index": len(flat_points) - 1,
+                "point_count": len(points),
+                "source_point_count": len(source_segment.get("points", [])),
+            }
+        )
+
+    if len(flat_points) >= 5000:
+        raise ValueError(f"continuous machine trajectory exceeds limit before stop point: {len(flat_points)}")
+    trajectory_points = parameterize_trajectory(flat_points, motion_model)
+    if machine_segments:
+        machine_segments[-1]["point_end_index"] = len(trajectory_points) - 1
+        machine_segments[-1]["point_count"] += 1
+    path_length = _path_length(trajectory_points)
+    return {
+        "plan_version": "stage4.5",
+        "motion_model_id": motion_model["motion_model_id"],
+        "vehicle_type": vehicle_type,
+        "wash_profile": wash_profile,
+        "coordinate_system": {
+            **motion_model["coordinate_system"],
+            "source_assumption": "Reference analytic vehicle surface is aligned with wash_bay_center_floor.",
+        },
+        "summary": {
+            "source_segment_count": len([item for item in machine_segments if item["segment_type"] == "process"]),
+            "source_point_count": int(source_summary.get("trajectory_point_count", len(flat_points))),
+            "trajectory_point_count": len(trajectory_points),
+            "transition_segment_count": len([item for item in machine_segments if item["segment_type"] == "transition"]),
+            "estimated_motion_duration_s": round(float(trajectory_points[-1]["timestamp_s"]), 3),
+            "path_length_mm": round(path_length, 3),
+            "maximum_velocity_mm_s": round(max(float(point["velocity_mm_s"]) for point in trajectory_points), 3),
+            "maximum_acceleration_mm_s2": round(max(float(point["acceleration_mm_s2"]) for point in trajectory_points), 3),
+            "interpolation_spacing_mm": maximum_spacing,
+            "warning_count": 0,
+        },
+        "trajectory_points": trajectory_points,
+        "segments": machine_segments,
+        "source_path_segments": path_segments,
+        "warnings": [],
+        "limitations": [
+            "Continuous-surface machine candidate only; not a real-machine trajectory.",
+            "Safety offsets are based on analytic surface normals and an axis-aligned vehicle envelope.",
+            "No actuator dynamics, calibrated kinematics, PLC output, servo command, or hardware control is included.",
+        ],
+    }

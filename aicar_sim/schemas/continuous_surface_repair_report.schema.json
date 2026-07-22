@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "continuous_surface_repair_report.schema.json",
+  "title": "Stage4.5-R continuous surface repair comparison report",
+  "type": "object",
+  "required": [
+    "report_version",
+    "repair_status",
+    "stage4_baseline_metrics",
+    "stage4_5_first_attempt_metrics",
+    "stage4_5_r_metrics",
+    "improvement_summary",
+    "target_results",
+    "path_length_breakdown",
+    "coverage_summary",
+    "aggregation_summary",
+    "connection_summary",
+    "schedule_summary",
+    "safety_summary",
+    "warnings",
+    "violations",
+    "limitations"
+  ],
+  "properties": {
+    "repair_status": {"enum": ["ACCEPTED", "ACCEPTED_WITH_WARNINGS", "NO_MEANINGFUL_IMPROVEMENT", "REJECTED_SAFETY_REGRESSION", "FAILED"]},
+    "stage4_baseline_metrics": {"$ref": "#/$defs/metrics"},
+    "stage4_5_first_attempt_metrics": {"$ref": "#/$defs/metrics"},
+    "stage4_5_r_metrics": {"$ref": "#/$defs/metrics"},
+    "coverage_summary": {"type": "object", "required": ["unique_geometric_coverage_percent", "per_state_zone_coverage", "per_state_patch_coverage"]},
+    "path_length_breakdown": {"type": "object", "description": "Surface, connector, transition and total lengths in millimetres."},
+    "aggregation_summary": {"type": "object"},
+    "connection_summary": {"type": "object"},
+    "schedule_summary": {"type": "object", "description": "Schedule durations are expressed in seconds."},
+    "safety_summary": {"type": "object"},
+    "warnings": {"type": "array"},
+    "violations": {"type": "array"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "metrics": {
+      "type": "object",
+      "required": ["machine_path_length_mm", "motion_duration_s", "schedule_duration_s", "total_delay_s", "transition_count"]
+    }
+  }
+}

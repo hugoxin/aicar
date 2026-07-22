@@ -1,0 +1,51 @@
+{
+  "profile_version": "stage4.5",
+  "profile_id": "demo_continuous_surface_scan_profile",
+  "scan_mode": "safety_first_continuous_surface",
+  "global": {
+    "preferred_standoff_mm": 350,
+    "hard_minimum_clearance_mm": 250,
+    "warning_clearance_mm": 300,
+    "maximum_standoff_mm": 650,
+    "lead_in_length_mm": 200,
+    "lead_out_length_mm": 200,
+    "turn_radius_mm": 150,
+    "connector_clearance_margin_mm": 50,
+    "maximum_point_spacing_mm": 120,
+    "maximum_output_points": 5000
+  },
+  "zone_profiles": {
+    "roof": {"scan_pattern": "boustrophedon", "scan_direction": "longitudinal", "pass_spacing_mm": 220, "overscan_margin_mm": 100, "preferred_actuator_id": "top_actuator"},
+    "left_side": {"scan_pattern": "boustrophedon", "scan_direction": "longitudinal", "pass_spacing_mm": 200, "overscan_margin_mm": 80, "preferred_actuator_id": "left_side_actuator"},
+    "right_side": {"scan_pattern": "boustrophedon", "scan_direction": "longitudinal", "pass_spacing_mm": 200, "overscan_margin_mm": 80, "preferred_actuator_id": "right_side_actuator"},
+    "front": {"scan_pattern": "boustrophedon", "scan_direction": "horizontal", "pass_spacing_mm": 180, "overscan_margin_mm": 60, "preferred_actuator_id": "top_actuator"},
+    "rear": {"scan_pattern": "boustrophedon", "scan_direction": "horizontal", "pass_spacing_mm": 180, "overscan_margin_mm": 60, "preferred_actuator_id": "top_actuator"},
+    "wheels": {"scan_pattern": "concentric_rings", "ring_spacing_mm": 90, "angular_step_deg": 20, "preferred_actuator_selection": "by_side"}
+  },
+  "connection_policy": {
+    "connect_adjacent_passes_locally": true,
+    "prefer_u_turn_connection": true,
+    "allow_direct_patch_connection": true,
+    "allow_state_internal_reordering": true,
+    "allow_cross_state_reordering": false,
+    "fallback_to_safe_transition": true,
+    "maximum_direct_patch_distance_mm": 1000
+  },
+  "coverage": {
+    "grid_resolution_mm": 50,
+    "minimum_zone_coverage_percent": 90,
+    "minimum_total_coverage_percent": 92
+  },
+  "targets": {
+    "preferred_path_length_reduction_percent": 20,
+    "preferred_transition_reduction_percent": 30,
+    "preferred_motion_duration_reduction_percent": 15,
+    "preferred_schedule_duration_reduction_percent": 10
+  },
+  "limitations": [
+    "Heuristic continuous scan generation",
+    "No CAD or point cloud geometry",
+    "No global optimum guarantee",
+    "No real nozzle orientation control"
+  ]
+}
