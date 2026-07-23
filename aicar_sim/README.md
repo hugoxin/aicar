@@ -293,4 +293,14 @@ python aicar_sim\scripts\generate_continuous_surface_report_r.py
 python aicar_sim\scripts\check_continuous_surface_report_r.py
 ```
 
-Stage4.5 首版实验结果为 `NO_MEANINGFUL_IMPROVEMENT`，Stage4.5-R 最终修正版为 `ACCEPTED`。最终 machine path 为 `328502.099 mm`、motion duration 为 `2571.102629 s`、schedule duration 为 `2036.403 s`、total delay 为 `10202.551 s`，44 个资源锁将 conflict 从 14 消解到 0，minimum clearance 为 `300 mm`，violations 为 0。两条分支历史已通过 no-ff merge 纳入 `main`，详情见 `docs\STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md`。这是参考解析表面下的离线路径与多执行机构候选调度，不是 CAD/点云路径，不代表真实清洗效果，不保证全局最优，也不能下发 PLC 或控制硬件。Stage4.6 尚未开始。
+Stage4.5 首版实验结果为 `NO_MEANINGFUL_IMPROVEMENT`，Stage4.5-R 最终修正版为 `ACCEPTED`。最终 machine path 为 `328502.099 mm`、motion duration 为 `2571.102629 s`、schedule duration 为 `2036.403 s`、total delay 为 `10202.551 s`，44 个资源锁将 conflict 从 14 消解到 0，minimum clearance 为 `300 mm`，violations 为 0。两条分支历史已通过 no-ff merge 纳入 `main`，详情见 `docs\STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md`。这是参考解析表面下的离线路径与多执行机构候选调度，不是 CAD/点云路径，不代表真实清洗效果，不保证全局最优，也不能下发 PLC 或控制硬件。
+
+Stage4.6 在独立分支 `stage4-geometry-pose-interface` 开发统一几何与喷嘴姿态接口。支持解析参考、ASCII OBJ/STL 和 ASCII PLY/XYZ/CSV，使用独立 4800 x 1880 x 1450 mm 参考尺寸 profile，生成外向法向、350 mm standoff 和 normalized quaternion，并把 Stage4.5-R 路径重新送入运动、碰撞、互锁、调度与 safe-stop 验证。
+
+```powershell
+python aicar_sim\scripts\generate_demo_geometry_fixtures.py
+python aicar_sim\scripts\generate_geometry_pose_report.py
+python demos\stage4_geometry_pose_demo\scripts\run_stage4_geometry_pose_demo.py --source all
+```
+
+生成 fixture 来自解析参考，不是实际 CAD 或点云扫描；没有原生 STEP/IGES、点云拼接、相机标定、机器人逆解、PLC、伺服或硬件控制。Stage4.6 尚未合并 `main`。

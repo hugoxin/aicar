@@ -1,0 +1,42 @@
+{
+  "map_version": "stage4.6",
+  "semantic_map_id": "demo_sedan_semantic_map",
+  "mapping_priority": ["EXPLICIT_LABEL", "DIMENSION_HEURISTIC"],
+  "required_patches": [
+    "roof",
+    "left_side",
+    "right_side",
+    "front",
+    "rear",
+    "left_front_wheel",
+    "left_rear_wheel",
+    "right_front_wheel",
+    "right_rear_wheel"
+  ],
+  "explicit_labels": {
+    "roof": ["roof", "roof_main"],
+    "left_side": ["left_side", "left_side_main"],
+    "right_side": ["right_side", "right_side_main"],
+    "front": ["front", "front_main"],
+    "rear": ["rear", "rear_main"],
+    "left_front_wheel": ["left_front_wheel", "front_left_wheel"],
+    "left_rear_wheel": ["left_rear_wheel", "rear_left_wheel"],
+    "right_front_wheel": ["right_front_wheel", "front_right_wheel"],
+    "right_rear_wheel": ["right_rear_wheel", "rear_right_wheel"]
+  },
+  "stage4_5_patch_aliases": {
+    "roof_main": "roof",
+    "left_side_main": "left_side",
+    "right_side_main": "right_side",
+    "front_main": "front",
+    "rear_main": "rear",
+    "front_left_wheel": "left_front_wheel",
+    "rear_left_wheel": "left_rear_wheel",
+    "front_right_wheel": "right_front_wheel",
+    "rear_right_wheel": "right_rear_wheel"
+  },
+  "heuristic_warning": "HEURISTIC_SEMANTIC_SEGMENTATION",
+  "limitations": [
+    "Dimension heuristics are demo-only and are not AI semantic segmentation."
+  ]
+}

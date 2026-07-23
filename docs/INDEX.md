@@ -156,9 +156,17 @@
 - [Stage4 Continuous Surface Path Repair Demo README](../demos/stage4_continuous_surface_path_repair_demo/README.md)
 - [Stage4 Continuous Surface Path Repair Demo Explanation](../demos/stage4_continuous_surface_path_repair_demo/docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DEMO_EXPLANATION.md)
 
-Stage4.5 第一次实验结论为 `NO_MEANINGFUL_IMPROVEMENT`；Stage4.5-R 最终修正版为 `ACCEPTED`。两条分支的完整历史已通过 no-ff merge 纳入 `main`，最终 schedule duration 为 `2036.403 s`、total delay 为 `10202.551 s`。Stage4.5 冻结说明记录最新安全修复数据和离线仿真边界；Stage4.6 尚未开始，`stage4-motion-safety-baseline` 保持不变。
+Stage4.5 第一次实验结论为 `NO_MEANINGFUL_IMPROVEMENT`；Stage4.5-R 最终修正版为 `ACCEPTED`。两条分支的完整历史已通过 no-ff merge 纳入 `main`，最终 schedule duration 为 `2036.403 s`、total delay 为 `10202.551 s`。Stage4.5 冻结说明记录最新安全修复数据和离线仿真边界；Stage4.6 在独立分支开发，五个冻结 tag 保持不变。
 
-## 17. 后续整理建议
+## 17. Stage4.6 几何与喷嘴姿态接口
+
+- [STAGE4_GEOMETRY_POSE_INTERFACE_PLAN.md](STAGE4_GEOMETRY_POSE_INTERFACE_PLAN.md)
+- [STAGE4_CAD_POINT_CLOUD_BOUNDARIES.md](STAGE4_CAD_POINT_CLOUD_BOUNDARIES.md)
+- [STAGE4_SURFACE_NORMAL_AND_NOZZLE_POSE.md](STAGE4_SURFACE_NORMAL_AND_NOZZLE_POSE.md)
+- [Stage4.6 Geometry Pose Demo README](../demos/stage4_geometry_pose_demo/README.md)
+- [Stage4.6 Demo Explanation](../demos/stage4_geometry_pose_demo/docs/STAGE4_GEOMETRY_POSE_DEMO_EXPLANATION.md)
+
+## 18. 后续整理建议
 
 - docs 当前仍以平铺为主。
 - 后续文档数量继续增加时，可以考虑 `docs\stage1\` 子目录归档。

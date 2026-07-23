@@ -1,0 +1,42 @@
+{
+  "profile_version": "stage4.6",
+  "geometry_profile_id": "demo_geometry_import_profile",
+  "supported_sources": ["ANALYTIC_REFERENCE", "CAD_MESH", "POINT_CLOUD"],
+  "mesh": {
+    "supported_formats": ["obj_ascii", "stl_ascii"],
+    "triangulate_polygon_faces": true,
+    "merge_duplicate_vertices": true,
+    "duplicate_vertex_tolerance_mm": 0.01,
+    "reject_non_finite_values": true,
+    "maximum_vertices": 100000,
+    "maximum_triangles": 200000
+  },
+  "point_cloud": {
+    "supported_formats": ["ply_ascii", "xyz", "csv"],
+    "maximum_points": 100000,
+    "downsample_voxel_mm": 25,
+    "normal_neighbor_count": 12,
+    "minimum_neighbor_count": 4,
+    "outlier_distance_warning_mm": 100
+  },
+  "normalization": {
+    "target_unit": "mm",
+    "allowed_input_units": ["mm", "cm", "m"],
+    "auto_center_xy": true,
+    "align_ground_plane_to_z0": true,
+    "allow_axis_remap": true,
+    "reject_left_handed_coordinate_system": true
+  },
+  "dimension_policy": {
+    "authority": "PROFILE_WITH_GEOMETRY_CROSS_CHECK",
+    "allow_uniform_scale": true,
+    "allow_non_uniform_scale_for_analytic_only": true,
+    "reject_large_geometry_dimension_mismatch": true
+  },
+  "limitations": [
+    "No native STEP or IGES parser",
+    "No CAD assembly semantics",
+    "No point-cloud registration",
+    "No real sensor calibration"
+  ]
+}

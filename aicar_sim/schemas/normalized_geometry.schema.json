@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["geometry_source_id","geometry_source_type","unit","coordinate_system","vertices","triangles","points","point_normals","semantic_patches","bounding_box","dimension_summary","normal_summary","normalization","warnings","limitations"]}

@@ -1,0 +1,40 @@
+{
+  "profile_version": "stage4.6",
+  "pose_profile_id": "demo_nozzle_pose_profile",
+  "position": {
+    "preferred_standoff_mm": 350,
+    "hard_minimum_clearance_mm": 250,
+    "maximum_standoff_mm": 650
+  },
+  "orientation": {
+    "nozzle_axis": "local_negative_z",
+    "target_direction": "toward_surface",
+    "maximum_incidence_angle_deg": 15,
+    "preferred_incidence_angle_deg": 0,
+    "maximum_orientation_step_deg": 12,
+    "maximum_roll_change_deg": 20,
+    "travel_direction_alignment": true,
+    "singularity_reference_axis": [0, 0, 1],
+    "fallback_reference_axis": [1, 0, 0]
+  },
+  "normal": {
+    "minimum_norm": 0.99,
+    "maximum_norm": 1.01,
+    "orient_outward_from_vehicle_center": true,
+    "normal_smoothing_window": 5,
+    "maximum_neighbor_normal_difference_deg": 35
+  },
+  "acceptance": {
+    "maximum_invalid_normal_count": 0,
+    "maximum_invalid_pose_count": 0,
+    "maximum_pose_discontinuity_count": 0,
+    "maximum_unresolved_orientation_flip_count": 0
+  },
+  "limitations": [
+    "Candidate geometric nozzle pose only",
+    "No robot inverse kinematics",
+    "No wrist joint limits",
+    "No hose torsion model",
+    "No real nozzle dynamics"
+  ]
+}

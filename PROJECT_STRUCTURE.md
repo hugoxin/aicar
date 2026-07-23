@@ -60,6 +60,9 @@ docs\STAGE4_MOTION_SAFETY_BASELINE_SUMMARY.md
 docs\STAGE4_CONTINUOUS_SURFACE_PATH_PLAN.md
 docs\STAGE4_SURFACE_MODEL_AND_SCAN_STRATEGY.md
 docs\STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md
+docs\STAGE4_GEOMETRY_POSE_INTERFACE_PLAN.md
+docs\STAGE4_CAD_POINT_CLOUD_BOUNDARIES.md
+docs\STAGE4_SURFACE_NORMAL_AND_NOZZLE_POSE.md
 ```
 
 ## demos
@@ -113,6 +116,14 @@ demos\stage4_motion_constraint_demo
 ```
 
 该 Demo 把阶段2抽象路径转换为满足通用三轴参考模型基础约束的机械可行候选轨迹，并检查工作空间、速度、加速度、连续性、时间戳和安全距离。它不代表真实设备轨迹，不生成 PLC 或伺服指令，也不控制硬件。
+
+阶段 4.6 开发分支新增：
+
+```text
+demos\stage4_geometry_pose_demo
+```
+
+该 Demo 在运行时从解析参考生成轻量 ASCII OBJ/STL/PLY/XYZ/CSV fixture，验证统一几何接口、参考尺寸替换、九个语义 patch、外向法向、喷嘴 quaternion 姿态和 Stage4.5-R 下游安全链路。fixture 不是实际 CAD 或点云扫描，姿态不是机器人逆解，不连接硬件。
 
 ## aicar_sim
 

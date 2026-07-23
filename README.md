@@ -25,6 +25,7 @@
 - 阶段4.4：安全优先路径与周期优化已完成，未达到的优化目标保留为 `TARGET_NOT_REACHED`。
 - 阶段4.F：Stage4 motion and safety baseline completed，冻结 tag 为 `stage4-motion-safety-baseline`。当前是候选轨迹和安全约束仿真，不是真实设备控制。
 - 阶段4.5：连续清洗面路径重构已完成。首版实验为 `NO_MEANINGFUL_IMPROVEMENT`，Stage4.5-R 最终修正版为 `ACCEPTED`；最终基线仍是参考解析表面下的离线候选路径，不是 CAD、点云或真实设备路径。
+- 阶段4.6：正在独立分支 `stage4-geometry-pose-interface` 开发统一解析几何、ASCII OBJ/STL 和 ASCII PLY/XYZ/CSV 接口，加入参考尺寸替换、曲面法向、喷嘴 quaternion 姿态及完整安全回归；尚未合并 `main`，不控制硬件。
 
 阶段1最终链路：
 
@@ -67,6 +68,7 @@ test_car.jpg
 - `demos\stage4_motion_constraint_demo`：阶段4运动约束 Demo，把抽象路径转换为机械可行候选轨迹，并生成约束验证 JSON/HTML。
 - `demos\stage4_collision_safety_demo`：阶段4碰撞安全与多执行机构约束 Demo。
 - `demos\stage4_path_optimization_demo`：阶段4安全优先路径与周期优化 Demo。
+- `demos\stage4_geometry_pose_demo`：阶段4.6统一几何、法向、喷嘴姿态和尺寸替换离线 Demo；fixture 不是实际 CAD 或点云扫描。
 - `external_repos`：开源参考项目存放区，只做参考，不把第三方源码复制进主项目。
 - `datasets`：统一数据目录，当前只预留结构，不下载大数据集。
 - `models`：统一模型目录，当前只预留结构，不下载大模型。

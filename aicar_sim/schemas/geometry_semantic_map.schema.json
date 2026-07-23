@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["map_version","semantic_map_id","required_patches","explicit_labels","stage4_5_patch_aliases"]}

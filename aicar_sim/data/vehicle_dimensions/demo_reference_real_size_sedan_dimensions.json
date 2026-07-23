@@ -1,0 +1,35 @@
+{
+  "profile_version": "stage4.6",
+  "dimension_profile_id": "demo_reference_real_size_sedan_dimensions",
+  "vehicle_class": "sedan",
+  "dimension_authority": "PROFILE_WITH_GEOMETRY_CROSS_CHECK",
+  "dimensions": {
+    "length_mm": 4800,
+    "width_mm": 1880,
+    "height_mm": 1450,
+    "wheelbase_mm": 2850,
+    "front_track_mm": 1610,
+    "rear_track_mm": 1610,
+    "wheel_radius_mm": 335,
+    "wheel_width_mm": 225,
+    "ground_clearance_mm": 145
+  },
+  "coordinate_reference": {
+    "origin": "vehicle_center_floor",
+    "x_axis": "vehicle_width_positive_right",
+    "y_axis": "vehicle_length_positive_front",
+    "z_axis": "up"
+  },
+  "geometry_tolerance": {
+    "dimension_warning_ratio": 0.05,
+    "dimension_reject_ratio": 0.20,
+    "ground_plane_tolerance_mm": 20,
+    "center_tolerance_mm": 50
+  },
+  "limitations": [
+    "Reference real-size passenger-car dimensions",
+    "Not manufacturer-specific",
+    "Not homologation or production data",
+    "Must be replaced by measured or authorized data for real deployment"
+  ]
+}

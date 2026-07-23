@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["profile_version","geometry_profile_id","supported_sources","mesh","point_cloud","normalization","dimension_policy"],"properties":{"profile_version":{"const":"stage4.6"},"supported_sources":{"type":"array","minItems":3}}}
