@@ -62,6 +62,18 @@ docs\STAGE4_SURFACE_MODEL_AND_SCAN_STRATEGY.md
 docs\STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md
 ```
 
+## showcase_apps
+
+`showcase_apps` 保存与底层算法解耦的独立交互展示应用。当前独立支线：
+
+```text
+showcase_apps\stage4_3d_path_viewer
+```
+
+该应用使用 Vite、Three.js 和原生 JavaScript，读取由 Python 导出的 Stage4.5-R `viewer_scene.json`，显示品牌无关的通用 MPV、三维路径和扫描点动画。生成 JSON、`node_modules`、`dist`、截图和录屏不进入 Git。
+
+Stage4.5 已冻结，Stage4.6 仍在独立开发分支。3D Viewer 不属于底层控制链路，尚未合并 `main`，不构成新的路径或安全基线。
+
 ## demos
 
 `demos` 保存项目展示层内容。阶段 1.D 已创建：

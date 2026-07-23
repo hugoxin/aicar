@@ -1,0 +1,29 @@
+{
+  "profile_version": "viewer-v1",
+  "vehicle_profile_id": "generic_mpv_display_profile",
+  "vehicle_type": "mpv",
+  "display_only": true,
+  "dimensions": {
+    "length_mm": 5000,
+    "width_mm": 1950,
+    "height_mm": 1800,
+    "wheelbase_mm": 3000,
+    "wheel_radius_mm": 360,
+    "ground_clearance_mm": 160
+  },
+  "body_proportions": {
+    "lower_body_height_ratio": 0.42,
+    "cabin_length_ratio": 0.68,
+    "cabin_width_ratio": 0.88,
+    "cabin_height_ratio": 0.52,
+    "hood_length_ratio": 0.16,
+    "front_overhang_ratio": 0.12,
+    "rear_overhang_ratio": 0.16
+  },
+  "limitations": [
+    "Generic MPV display geometry",
+    "Not manufacturer specific",
+    "Not CAD or measured vehicle data",
+    "Used only for visualization"
+  ]
+}

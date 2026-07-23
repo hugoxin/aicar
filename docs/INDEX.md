@@ -87,6 +87,10 @@
 - [Stage4 Collision Safety Demo Explanation](../demos/stage4_collision_safety_demo/docs/STAGE4_COLLISION_SAFETY_DEMO_EXPLANATION.md)
 - [Stage4 Path Optimization Demo README](../demos/stage4_path_optimization_demo/README.md)
 - [Stage4 Path Optimization Demo Explanation](../demos/stage4_path_optimization_demo/docs/STAGE4_PATH_OPTIMIZATION_DEMO_EXPLANATION.md)
+- [Stage4 3D Path Viewer README](../showcase_apps/stage4_3d_path_viewer/README.md)
+- [Stage4 3D Path Viewer Plan](../showcase_apps/stage4_3d_path_viewer/docs/STAGE4_3D_PATH_VIEWER_PLAN.md)
+- [Viewer Scene Data Contract](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_DATA_CONTRACT.md)
+- [Viewer Boundaries](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_BOUNDARIES.md)
 
 ## 9. 阶段2策略层
 

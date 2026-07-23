@@ -239,3 +239,19 @@ demos/stage4_continuous_surface_path_repair_demo/demo_outputs/reports/*.html
 !models/trained/.gitkeep
 !models/exported/
 !models/exported/.gitkeep
+
+# Standalone Stage4 3D path viewer generated files
+showcase_apps/stage4_3d_path_viewer/node_modules/
+showcase_apps/stage4_3d_path_viewer/dist/
+showcase_apps/stage4_3d_path_viewer/public/data/*.json
+!showcase_apps/stage4_3d_path_viewer/outputs/
+showcase_apps/stage4_3d_path_viewer/outputs/*
+showcase_apps/stage4_3d_path_viewer/**/*.log
+showcase_apps/stage4_3d_path_viewer/**/*.png
+showcase_apps/stage4_3d_path_viewer/**/*.jpg
+showcase_apps/stage4_3d_path_viewer/**/*.jpeg
+showcase_apps/stage4_3d_path_viewer/**/*.webp
+showcase_apps/stage4_3d_path_viewer/**/*.mp4
+showcase_apps/stage4_3d_path_viewer/**/*.webm
+!showcase_apps/stage4_3d_path_viewer/outputs/.gitkeep
+!showcase_apps/stage4_3d_path_viewer/public/data/.gitkeep

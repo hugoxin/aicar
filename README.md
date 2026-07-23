@@ -389,3 +389,16 @@ python aicar_sim\scripts\check_continuous_surface_report_r.py
 ```
 
 修正版使用 state-specific spacing、喷嘴有效宽度、自适应覆盖、surface route task 聚合、安全 direct connection、实际共享区间互锁和 source span 比例时间映射。最终结果为 `ACCEPTED`：machine path `328502.099 mm`、motion `2571.102629 s`、schedule `2036.403 s`、delay `10202.551 s`、parallel groups 10、conflict `14 -> 0`、minimum clearance `300 mm`、violations 0。Stage4.5 首版与 Stage4.5-R 的完整历史已通过 no-ff merge 纳入 `main`；冻结说明见 [Stage4.5 连续清洗面路径基线冻结说明](docs/STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md)。Stage4.6 尚未开始。
+
+## Stage4 独立三维展示支线
+
+`showcase_apps\stage4_3d_path_viewer` 是从 Stage4.5 冻结 `main` 创建的独立 Three.js 展示应用。它通过 Python 把冻结的 Stage4.5-R 路径导出为 `viewer_scene.json`，显示通用 MPV、完整状态路径、发光扫描点、尾迹和时间轴播放。
+
+```powershell
+Set-Location F:\aicar\showcase_apps\stage4_3d_path_viewer
+python tools\export_viewer_scene.py
+npm.cmd install
+npm.cmd run dev
+```
+
+也可以直接双击 `start_viewer.bat`。该 Viewer 不属于底层控制链路，不修改路径算法，不重新做安全验证，不连接真实设备。Stage4.5 已冻结；Stage4.6 仍在独立分支；Viewer 当前也在独立展示分支，尚未合并 `main`，不能写成新的正式安全基线。

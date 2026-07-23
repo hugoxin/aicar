@@ -1,0 +1,32 @@
+{
+  "profile_version": "viewer-v1",
+  "default_playback_speed": 2,
+  "available_playback_speeds": [0.5, 1, 2, 4, 8],
+  "scanner_point_radius": 45,
+  "trail_point_count": 80,
+  "vehicle_opacity": 0.42,
+  "path_opacity": 0.72,
+  "path_line_width": 1,
+  "maximum_viewer_points": 5000,
+  "default_camera": "isometric",
+  "show_grid": true,
+  "show_axes": false,
+  "show_full_path": true,
+  "show_executed_path": true,
+  "show_trail": true,
+  "show_point_label": true,
+  "loop_playback": false,
+  "play_by_timestamp": true,
+  "colors": {
+    "pre_rinse": "#36a3ff",
+    "foam": "#54d68b",
+    "dwell": "#9aa4ad",
+    "top_clean": "#ffad3d",
+    "side_clean": "#b978ff",
+    "wheel_clean": "#ff5d68",
+    "air_dry": "#32d7d0",
+    "transition": "#e8edf2",
+    "executed": "#fff27a",
+    "scanner": "#fff7b2"
+  }
+}

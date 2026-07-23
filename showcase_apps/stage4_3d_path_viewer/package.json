@@ -1,0 +1,19 @@
+{
+  "name": "aicar-stage4-3d-path-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "check": "node scripts/check_viewer_scene.mjs",
+    "export-data": "python tools/export_viewer_scene.py"
+  },
+  "dependencies": {
+    "three": "0.177.0"
+  },
+  "devDependencies": {
+    "vite": "6.3.5"
+  }
+}
