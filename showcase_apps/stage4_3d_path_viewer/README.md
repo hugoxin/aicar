@@ -1,8 +1,8 @@
-# AI无人洗车三维轨迹可视化网页 V1.0.1
+# AI无人洗车三维轨迹可视化网页 V1.0.2
 
 这是独立于底层路径算法的离线 Three.js 展示应用。它读取冻结的 Stage4.5-R 连续机器路径，通过 Python 导出统一 `viewer_scene.json`，再显示通用 MPV、完整轨迹、发光扫描点和时间轴动画。
 
-V1.0.1 强化了扫描点、当前执行段、状态聚焦和尾迹，并把辅助连接线降噪；右侧信息改为中文演示信息与默认折叠的技术详情。修补说明见 [docs/VIEWER_V1_0_1_VISUAL_PATCH.md](docs/VIEWER_V1_0_1_VISUAL_PATCH.md)。
+V1.0.1 强化了扫描点、当前执行段、状态聚焦和尾迹，并把辅助连接线降噪。V1.0.2 进一步统一活动段、路径角色和展示上下文，明确区分正式扫描、辅助移动、状态切换和未知角色。语义修复说明见 [docs/VIEWER_V1_0_2_SEMANTIC_CONSISTENCY_FIX.md](docs/VIEWER_V1_0_2_SEMANTIC_CONSISTENCY_FIX.md)。
 
 ## 最简启动
 
@@ -32,6 +32,7 @@ npm.cmd run dev
 ```powershell
 python tools\check_stage4_3d_viewer.py
 npm.cmd run check
+npm.cmd run check:semantics
 npm.cmd run build
 ```
 

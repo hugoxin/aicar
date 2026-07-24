@@ -92,6 +92,7 @@
 - [Viewer Scene Data Contract](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_DATA_CONTRACT.md)
 - [Viewer Boundaries](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_BOUNDARIES.md)
 - [Viewer V1.0.1 Visual Patch](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_V1_0_1_VISUAL_PATCH.md)
+- [Viewer V1.0.2 Semantic Consistency Fix](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_V1_0_2_SEMANTIC_CONSISTENCY_FIX.md)
 
 ## 9. 阶段2策略层
 

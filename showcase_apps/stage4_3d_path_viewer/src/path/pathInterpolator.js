@@ -24,21 +24,33 @@ export function createPathInterpolator(points) {
       if (points[middle].relative_time_s <= time) low = middle;
       else high = middle - 1;
     }
-    const index = Math.min(low, points.length - 2);
-    const current = points[index];
-    const next = points[index + 1];
+    const fromIndex = Math.min(low, points.length - 2);
+    const toIndex = fromIndex + 1;
+    const current = points[fromIndex];
+    const next = points[toIndex];
     const span = next.relative_time_s - current.relative_time_s;
     const alpha = span > 0 ? Math.min(1, (time - current.relative_time_s) / span) : 0;
     return {
       time,
       progress: time / duration,
-      index,
-      nextIndex: index + 1,
+      index: fromIndex,
+      nextIndex: toIndex,
+      fromIndex,
+      toIndex,
       alpha,
-      point: alpha >= 0.5 ? next : current,
-      position: vectors[index].clone().lerp(vectors[index + 1], alpha),
-      fromPosition: vectors[index],
-      toPosition: vectors[index + 1],
+      point: time >= duration ? next : current,
+      fromPoint: current,
+      toPoint: next,
+      position: vectors[fromIndex].clone().lerp(vectors[toIndex], alpha),
+      fromPosition: vectors[fromIndex],
+      toPosition: vectors[toIndex],
+      activeSegment: {
+        fromIndex,
+        toIndex,
+        alpha,
+        fromPoint: current,
+        toPoint: next,
+      },
     };
   }
 

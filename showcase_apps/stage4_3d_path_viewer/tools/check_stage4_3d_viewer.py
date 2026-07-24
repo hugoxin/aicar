@@ -37,6 +37,9 @@ def git_ignored(root: Path, relative_path: str) -> bool:
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+
     app = Path(__file__).resolve().parents[1]
     root = app.parents[1]
     required = [
@@ -50,9 +53,14 @@ def main() -> int:
         "tools/export_viewer_scene.py",
         "tools/generate_demo_mpv_scene.py",
         "scripts/check_viewer_scene.mjs",
+        "scripts/check_viewer_semantics.mjs",
         "src/main.js",
         "src/styles.css",
+        "src/path/pathRoleClassifier.js",
+        "src/path/presentationContext.js",
+        "src/path/pathInterpolator.js",
         "docs/VIEWER_V1_0_1_VISUAL_PATCH.md",
+        "docs/VIEWER_V1_0_2_SEMANTIC_CONSISTENCY_FIX.md",
         "public/data/.gitkeep",
         "outputs/.gitkeep",
     ]
@@ -99,7 +107,7 @@ def main() -> int:
     }
     require(
         required_display_keys <= display.keys(),
-        "Viewer V1.0.1 display profile keys are incomplete.",
+        "Viewer display profile keys are incomplete.",
     )
     require(
         display["current_segment_opacity"]
@@ -122,15 +130,29 @@ def main() -> int:
     )
     require(
         display["trail_point_count"] <= 120,
-        "Trail point count exceeds the V1.0.1 limit.",
+        "Trail point count exceeds the V1 limit.",
     )
 
     index_text = (app / "index.html").read_text(encoding="utf-8")
     controls_text = (app / "src" / "ui" / "createControlPanel.js").read_text(
         encoding="utf-8"
     )
+    main_text = (app / "src" / "main.js").read_text(encoding="utf-8")
+    info_text = (app / "src" / "ui" / "createInfoPanel.js").read_text(
+        encoding="utf-8"
+    )
+    scanner_text = (app / "src" / "path" / "createScannerPoint.js").read_text(
+        encoding="utf-8"
+    )
+    path_lines_text = (app / "src" / "path" / "createPathLines.js").read_text(
+        encoding="utf-8"
+    )
+    semantics_text = (
+        app / "scripts" / "check_viewer_semantics.mjs"
+    ).read_text(encoding="utf-8")
     require("阶段4 · 离线轨迹展示" in index_text, "Chinese-first title is missing.")
     require("当前正在执行" in index_text, "Current execution sentence is missing.")
+    require("当前动作" in index_text, "Current action field is missing.")
     require("技术详情" in index_text, "Technical details panel is missing.")
     require(
         "辅助连接线表示不同扫描区域之间的移动，不代表持续喷洗" in controls_text,
@@ -139,6 +161,42 @@ def main() -> int:
     require(
         "不连接PLC或真实设备" in index_text,
         "Real-device boundary notice is missing.",
+    )
+    require(
+        "presentationResolver.contextFor(lastSample)" in main_text,
+        "Main UI does not resolve one presentation context.",
+    )
+    require(
+        "pathLines.update(lastSample, lastPresentation)" in main_text,
+        "Path highlighter does not receive presentation context.",
+    )
+    require(
+        "scanner.update(lastSample.position, elapsed, lastPresentation)" in main_text,
+        "Scanner does not receive presentation context.",
+    )
+    require(
+        "infoPanel.update(lastSample, lastPresentation, playback.playing)" in main_text,
+        "Info panel does not receive presentation context.",
+    )
+    require(
+        "presentationContext.executionDescriptionZh" in info_text,
+        "Info panel does not use presentation context description.",
+    )
+    require(
+        "scannerColor(presentationContext)" in scanner_text,
+        "Scanner color does not use presentation context.",
+    )
+    require(
+        "[sample.fromPosition, sample.toPosition]" in path_lines_text,
+        "Current highlighter is not the exact active segment.",
+    )
+    require(
+        'scenario("B_34_8_PERCENT", 0.348)' in semantics_text,
+        "34.8 percent semantic scenario is missing.",
+    )
+    require(
+        "transitionRuns" in semantics_text,
+        "State transition boundary checks are missing.",
     )
 
     exporter = app / "tools" / "export_viewer_scene.py"
@@ -168,6 +226,7 @@ def main() -> int:
         math.isclose(summary.get("duration_s", 0), 2570.902629, abs_tol=0.001),
         "Frozen duration changed.",
     )
+    require(len(scene.get("warnings") or []) == 0, "Export warnings changed.")
     require(len(points) > 1, "Path points are missing.")
     require(
         [point.get("point_index") for point in points] == list(range(len(points))),
@@ -206,8 +265,14 @@ def main() -> int:
         EXPECTED_PRESETS <= scene.get("camera_presets", {}).keys(),
         "Camera presets are incomplete.",
     )
-    require(scene.get("vehicle", {}).get("vehicle_type") == "mpv", "Scene vehicle is not mpv.")
-    require(scene.get("vehicle", {}).get("display_only") is True, "Scene vehicle is not display-only.")
+    require(
+        scene.get("vehicle", {}).get("vehicle_type") == "mpv",
+        "Scene vehicle is not mpv.",
+    )
+    require(
+        scene.get("vehicle", {}).get("display_only") is True,
+        "Scene vehicle is not display-only.",
+    )
     limitations = " ".join(scene.get("limitations") or []).lower()
     require(
         "display transform" in limitations and "safety" in limitations,
@@ -228,7 +293,25 @@ def main() -> int:
         "viewer outputs are not ignored.",
     )
 
+    semantic_result = subprocess.run(
+        ["node", "scripts/check_viewer_semantics.mjs"],
+        cwd=app,
+        check=False,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    print(semantic_result.stdout, end="")
+    if semantic_result.stderr:
+        print(semantic_result.stderr, end="")
+    require(semantic_result.returncode == 0, "Node semantic check failed.")
+
     print("PASS stage4 3d path viewer")
+    print("PASS source/viewer points: 2503 / 2503")
+    print("PASS states/zones: 7 / 6")
+    print("PASS path length: 328.502099 m")
+    print("PASS duration: 2570.902629 s")
+    print("PASS export warnings: 0")
     print("AI car stage4 3d path viewer check OK")
     return 0
 

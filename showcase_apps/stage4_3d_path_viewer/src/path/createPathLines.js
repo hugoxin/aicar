@@ -1,47 +1,7 @@
 import * as THREE from "three";
 import { stateColor, VIEWER_COLORS } from "../config/colors.js";
 import { displayPositionToVector } from "./pathInterpolator.js";
-
-export const DISPLAY_ROLES = Object.freeze({
-  MAIN_SCAN: "MAIN_SCAN",
-  AUXILIARY_CONNECTION: "AUXILIARY_CONNECTION",
-  UNKNOWN_PATH_ROLE: "UNKNOWN_PATH_ROLE",
-});
-
-const AUXILIARY_ID_PATTERN = /(transition|connection|connector|patch_link|local_link)/i;
-
-function hasValue(value) {
-  return typeof value === "string" && value.trim().length > 0;
-}
-
-export function classifyDisplayRole(previous, current) {
-  const identifiers = [
-    previous.segment_id,
-    current.segment_id,
-    previous.surface_task_id,
-    current.surface_task_id,
-  ].filter(Boolean);
-  if (
-    previous.is_transition
-    || current.is_transition
-    || identifiers.some((value) => AUXILIARY_ID_PATTERN.test(value))
-    || previous.critical_point_type === "STATE_BOUNDARY"
-    || current.critical_point_type === "STATE_BOUNDARY"
-  ) {
-    return DISPLAY_ROLES.AUXILIARY_CONNECTION;
-  }
-  if (
-    hasValue(previous.scan_pass_id)
-    && previous.scan_pass_id === current.scan_pass_id
-    && previous.state_id === current.state_id
-  ) {
-    return DISPLAY_ROLES.MAIN_SCAN;
-  }
-  if (hasValue(previous.scan_pass_id) && hasValue(current.scan_pass_id)) {
-    return DISPLAY_ROLES.AUXILIARY_CONNECTION;
-  }
-  return DISPLAY_ROLES.UNKNOWN_PATH_ROLE;
-}
+import { classifyPathSegment, PATH_ROLES } from "./pathRoleClassifier.js";
 
 function lineMaterial(color, opacity, options = {}) {
   return new THREE.LineBasicMaterial({
@@ -86,6 +46,38 @@ function makeStateEntry(stateId, profile) {
   };
 }
 
+function roleStyle(role, profile) {
+  if (role === PATH_ROLES.STATE_TRANSITION) {
+    return {
+      color: VIEWER_COLORS.stateTransition,
+      opacity: profile.auxiliary_path_opacity * 1.15,
+    };
+  }
+  if (role === PATH_ROLES.AUXILIARY_CONNECTION) {
+    return {
+      color: VIEWER_COLORS.auxiliary,
+      opacity: profile.auxiliary_path_opacity,
+    };
+  }
+  return {
+    color: VIEWER_COLORS.unknown,
+    opacity: profile.future_path_opacity * 0.72,
+  };
+}
+
+function currentRoleColor(context) {
+  if (context.role === PATH_ROLES.MAIN_SCAN) {
+    return stateColor(context.processStateId);
+  }
+  if (context.role === PATH_ROLES.AUXILIARY_CONNECTION) {
+    return VIEWER_COLORS.auxiliaryHighlight;
+  }
+  if (context.role === PATH_ROLES.STATE_TRANSITION) {
+    return VIEWER_COLORS.stateTransition;
+  }
+  return VIEWER_COLORS.unknownWarning;
+}
+
 export function createPathLines(pathPoints, profile) {
   const group = new THREE.Group();
   group.name = "stage4-path-lines";
@@ -94,11 +86,21 @@ export function createPathLines(pathPoints, profile) {
   );
   const stateEntries = new Map();
   const stateGroups = new Map();
-  const auxiliaryGroup = new THREE.Group();
-  auxiliaryGroup.name = "path-auxiliary-connections";
-  auxiliaryGroup.userData.enabled = profile.show_auxiliary_paths_default;
-  const unknownGroup = new THREE.Group();
-  unknownGroup.name = "path-unknown-role";
+  const connectionGroup = new THREE.Group();
+  connectionGroup.name = "path-connections";
+  connectionGroup.userData.enabled = profile.show_auxiliary_paths_default;
+  const roleGroups = new Map(
+    [
+      PATH_ROLES.AUXILIARY_CONNECTION,
+      PATH_ROLES.STATE_TRANSITION,
+      PATH_ROLES.UNKNOWN_PATH_ROLE,
+    ].map((role) => {
+      const roleGroup = new THREE.Group();
+      roleGroup.name = `path-${role.toLowerCase()}`;
+      connectionGroup.add(roleGroup);
+      return [role, roleGroup];
+    }),
+  );
 
   function stateEntry(stateId) {
     if (!stateEntries.has(stateId)) {
@@ -113,15 +115,13 @@ export function createPathLines(pathPoints, profile) {
   const roleRuns = [];
   let activeRun = null;
   for (let index = 1; index < pathPoints.length; index += 1) {
-    const previous = pathPoints[index - 1];
-    const current = pathPoints[index];
-    const role = classifyDisplayRole(previous, current);
-    const stateId = current.state_id || previous.state_id || "unknown";
-    const key = `${role}|${stateId}`;
+    const roleInfo = classifyPathSegment(pathPoints[index - 1], pathPoints[index]);
+    const stateId = pathPoints[index - 1].state_id || "unknown";
+    const key = `${roleInfo.role}|${stateId}`;
     if (!activeRun || activeRun.key !== key) {
       activeRun = {
         key,
-        role,
+        role: roleInfo.role,
         stateId,
         points: [vectors[index - 1], vectors[index]],
       };
@@ -132,54 +132,69 @@ export function createPathLines(pathPoints, profile) {
   }
 
   roleRuns.forEach((run) => {
-    let color = stateColor(run.stateId);
-    let opacity = profile.future_path_opacity;
-    let parent = stateEntry(run.stateId).group;
-    if (run.role === DISPLAY_ROLES.AUXILIARY_CONNECTION) {
-      color = VIEWER_COLORS.auxiliary;
-      opacity = profile.auxiliary_path_opacity;
-      parent = auxiliaryGroup;
-    } else if (run.role === DISPLAY_ROLES.UNKNOWN_PATH_ROLE) {
-      color = VIEWER_COLORS.unknown;
-      opacity = profile.future_path_opacity * 0.72;
-      parent = unknownGroup;
+    let parent;
+    let material;
+    if (run.role === PATH_ROLES.MAIN_SCAN) {
+      const entry = stateEntry(run.stateId);
+      parent = entry.group;
+      material = lineMaterial(stateColor(run.stateId), profile.future_path_opacity);
+      entry.futureMaterials.push(material);
+    } else {
+      const style = roleStyle(run.role, profile);
+      parent = roleGroups.get(run.role);
+      material = lineMaterial(style.color, style.opacity);
     }
-    const material = lineMaterial(color, opacity);
-    material.userData.baseOpacity = opacity;
+    material.userData.baseOpacity = material.opacity;
     material.userData.stateId = run.stateId;
     material.userData.role = run.role;
     const line = createLine(run.points, material);
-    line.renderOrder = run.role === DISPLAY_ROLES.MAIN_SCAN ? 3 : 2;
+    line.renderOrder = run.role === PATH_ROLES.MAIN_SCAN ? 3 : 2;
     parent.add(line);
-    if (run.role === DISPLAY_ROLES.MAIN_SCAN) {
-      stateEntry(run.stateId).futureMaterials.push(material);
-    }
   });
 
-  group.add(auxiliaryGroup, unknownGroup);
-  stateGroups.set("transition", auxiliaryGroup);
+  group.add(connectionGroup);
+  stateGroups.set("transition", connectionGroup);
 
-  const auxiliaryExecutedPositions = [];
-  const auxiliaryExecutedCountAtIndex = new Uint32Array(pathPoints.length);
+  const roleExecuted = new Map();
+  for (const role of [
+    PATH_ROLES.AUXILIARY_CONNECTION,
+    PATH_ROLES.STATE_TRANSITION,
+    PATH_ROLES.UNKNOWN_PATH_ROLE,
+  ]) {
+    const style = roleStyle(role, profile);
+    roleExecuted.set(role, {
+      positions: [],
+      countAtIndex: new Uint32Array(pathPoints.length),
+      material: lineMaterial(
+        style.color,
+        Math.min(profile.executed_path_opacity, style.opacity * 1.45),
+        { depthTest: false },
+      ),
+      line: null,
+    });
+  }
+
   pathPoints.forEach((point) => stateEntry(point.state_id || "unknown"));
   stateEntries.forEach((entry) => {
     entry.executedCountAtIndex = new Uint32Array(pathPoints.length);
   });
 
   for (let index = 1; index < pathPoints.length; index += 1) {
-    const previous = pathPoints[index - 1];
-    const current = pathPoints[index];
-    const role = classifyDisplayRole(previous, current);
-    const stateId = current.state_id || previous.state_id || "unknown";
-    if (role === DISPLAY_ROLES.MAIN_SCAN) {
+    const roleInfo = classifyPathSegment(pathPoints[index - 1], pathPoints[index]);
+    const stateId = pathPoints[index - 1].state_id || "unknown";
+    if (roleInfo.role === PATH_ROLES.MAIN_SCAN) {
       stateEntry(stateId).executedPositions.push(vectors[index - 1], vectors[index]);
-    } else if (role === DISPLAY_ROLES.AUXILIARY_CONNECTION) {
-      auxiliaryExecutedPositions.push(vectors[index - 1], vectors[index]);
+    } else {
+      roleExecuted
+        .get(roleInfo.role)
+        .positions.push(vectors[index - 1], vectors[index]);
     }
     stateEntries.forEach((entry) => {
       entry.executedCountAtIndex[index] = entry.executedPositions.length;
     });
-    auxiliaryExecutedCountAtIndex[index] = auxiliaryExecutedPositions.length;
+    roleExecuted.forEach((entry) => {
+      entry.countAtIndex[index] = entry.positions.length;
+    });
   }
 
   stateEntries.forEach((entry) => {
@@ -191,19 +206,14 @@ export function createPathLines(pathPoints, profile) {
     entry.executedLine.renderOrder = 7;
     entry.group.add(entry.executedLine);
   });
-  const auxiliaryExecutedMaterial = lineMaterial(
-    VIEWER_COLORS.auxiliary,
-    Math.min(profile.executed_path_opacity, profile.auxiliary_path_opacity * 1.45),
-    { depthTest: false },
-  );
-  const auxiliaryExecutedLine = createLineSegments(
-    auxiliaryExecutedPositions,
-    auxiliaryExecutedMaterial,
-  );
-  auxiliaryExecutedLine.renderOrder = 6;
-  auxiliaryGroup.add(auxiliaryExecutedLine);
+  roleExecuted.forEach((entry, role) => {
+    entry.line = createLineSegments(entry.positions, entry.material);
+    entry.line.name = `executed-${role.toLowerCase()}`;
+    entry.line.renderOrder = 6;
+    roleGroups.get(role).add(entry.line);
+  });
 
-  const currentCapacity = 10;
+  const currentCapacity = 2;
   const currentPositions = new Float32Array(currentCapacity * 3);
   const currentGeometry = new THREE.BufferGeometry();
   currentGeometry.setAttribute(
@@ -238,7 +248,7 @@ export function createPathLines(pathPoints, profile) {
       const enabled = entry.group.userData.enabled !== false;
       entry.group.visible = enabled && (fullPathVisible || executedVisible);
       const stateRatio =
-        focusCurrentState && entry.stateId !== currentStateId
+        focusCurrentState && currentStateId && entry.stateId !== currentStateId
           ? profile.inactive_state_opacity_ratio
           : 1;
       entry.futureMaterials.forEach((material) => {
@@ -246,54 +256,58 @@ export function createPathLines(pathPoints, profile) {
       });
       entry.executedMaterial.opacity =
         profile.executed_path_opacity * stateRatio;
-      if (entry.executedLine) entry.executedLine.visible = executedVisible;
+      entry.executedLine.visible = executedVisible;
       entry.group.children.forEach((child) => {
         if (child !== entry.executedLine) child.visible = fullPathVisible;
       });
     });
-    auxiliaryGroup.visible = auxiliaryVisible && fullPathVisible;
-    auxiliaryExecutedLine.visible = auxiliaryVisible && executedVisible;
-    unknownGroup.visible = fullPathVisible;
+    connectionGroup.visible =
+      auxiliaryVisible && (fullPathVisible || executedVisible);
+    roleExecuted.forEach((entry) => {
+      entry.line.visible = auxiliaryVisible && executedVisible;
+    });
+    roleGroups.forEach((roleGroup) => {
+      roleGroup.children.forEach((child) => {
+        if (!child.name.startsWith("executed-")) {
+          child.visible = auxiliaryVisible && fullPathVisible;
+        }
+      });
+    });
   }
 
-  function updateCurrentWindow(sample) {
-    const start = Math.max(0, sample.index - 3);
-    const end = Math.min(vectors.length - 1, sample.index + 5);
-    const points = [];
-    for (let index = start; index <= sample.index; index += 1) {
-      points.push(vectors[index]);
-    }
-    points.push(sample.position);
-    for (let index = sample.nextIndex; index <= end; index += 1) {
-      points.push(vectors[index]);
-    }
-    points.slice(0, currentCapacity).forEach((point, index) => {
+  function updateCurrentSegment(sample) {
+    [sample.fromPosition, sample.toPosition].forEach((point, index) => {
       point.toArray(currentPositions, index * 3);
     });
     currentGeometry.attributes.position.needsUpdate = true;
-    currentGeometry.setDrawRange(0, Math.min(points.length, currentCapacity));
+    currentGeometry.setDrawRange(0, currentCapacity);
   }
 
-  function update(sample) {
-    currentStateId = sample.point.state_id;
-    const executedIndex = sample.progress >= 1 ? sample.nextIndex : sample.index;
+  function update(sample, presentationContext) {
+    currentStateId =
+      presentationContext.processStateId
+      || presentationContext.originStateId
+      || null;
+    const executedIndex = sample.progress >= 1 ? sample.toIndex : sample.fromIndex;
     stateEntries.forEach((entry) => {
       entry.executedLine.geometry.setDrawRange(
         0,
         entry.executedCountAtIndex[executedIndex] || 0,
       );
     });
-    auxiliaryExecutedLine.geometry.setDrawRange(
-      0,
-      auxiliaryExecutedCountAtIndex[executedIndex] || 0,
-    );
-    const color = new THREE.Color(stateColor(currentStateId)).lerp(
+    roleExecuted.forEach((entry) => {
+      entry.line.geometry.setDrawRange(
+        0,
+        entry.countAtIndex[executedIndex] || 0,
+      );
+    });
+    const color = new THREE.Color(currentRoleColor(presentationContext)).lerp(
       new THREE.Color(VIEWER_COLORS.current),
-      0.2,
+      presentationContext.role === PATH_ROLES.MAIN_SCAN ? 0.2 : 0.05,
     );
     currentMaterial.color.copy(color);
     currentGlowMaterial.color.copy(color);
-    updateCurrentWindow(sample);
+    updateCurrentSegment(sample);
     applyPresentation();
   }
 
@@ -324,7 +338,7 @@ export function createPathLines(pathPoints, profile) {
     },
     setAuxiliaryVisible(enabled) {
       auxiliaryVisible = enabled;
-      auxiliaryGroup.userData.enabled = enabled;
+      connectionGroup.userData.enabled = enabled;
       applyPresentation();
     },
   };

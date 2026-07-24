@@ -1,5 +1,4 @@
 import { formatTime } from "../animation/timeline.js";
-import { stateLabel, zoneLabel } from "../config/labels.js";
 
 function text(id, value, withTitle = false) {
   const element = document.getElementById(id);
@@ -10,6 +9,16 @@ function text(id, value, withTitle = false) {
 
 function available(value) {
   return value ?? "未提供";
+}
+
+function interpolatedDisplayPosition(sample) {
+  const from = sample.fromPoint.display_position_mm;
+  const to = sample.toPoint.display_position_mm;
+  return {
+    x_mm: from.x_mm + (to.x_mm - from.x_mm) * sample.alpha,
+    y_mm: from.y_mm + (to.y_mm - from.y_mm) * sample.alpha,
+    z_mm: from.z_mm + (to.z_mm - from.z_mm) * sample.alpha,
+  };
 }
 
 export function createInfoPanel(sceneData, profile) {
@@ -41,32 +50,30 @@ export function createInfoPanel(sceneData, profile) {
   const technicalDetails = document.getElementById("technical-details");
   technicalDetails.open = profile.technical_details_expanded_default;
 
-  function update(sample, playing) {
+  function update(sample, presentationContext, playing) {
     const point = sample.point;
-    const position = point.display_position_mm;
-    const currentState = point.state_label_zh || stateLabel(point.state_id);
-    const currentZone = point.zone_label_zh || zoneLabel(point.zone_id);
+    const fromPoint = sample.fromPoint;
+    const toPoint = sample.toPoint;
+    const position = interpolatedDisplayPosition(sample);
     text(
       "playback-state",
       playing ? "播放中" : sample.progress >= 1 ? "已结束" : "已暂停",
     );
-    text("current-state", currentState);
-    text("current-zone", currentZone);
+    text("current-state", presentationContext.processStateLabelZh);
+    text("current-zone", presentationContext.regionLabelZh);
+    text("current-action", presentationContext.actionLabelZh);
     text(
       "current-point",
-      `${Math.min((point.point_index ?? sample.index) + 1, summary.point_count)} / ${summary.point_count}`,
+      `${Math.min((point.point_index ?? sample.fromIndex) + 1, summary.point_count)} / ${summary.point_count}`,
     );
     text("current-progress", `${(sample.progress * 100).toFixed(1)}%`);
     text(
       "current-speed",
-      Number.isFinite(point.speed_mm_s)
-        ? `${point.speed_mm_s.toFixed(1)} mm/s`
+      Number.isFinite(fromPoint.speed_mm_s)
+        ? `${fromPoint.speed_mm_s.toFixed(1)} mm/s`
         : "未提供",
     );
-    text(
-      "current-execution",
-      `当前正在执行：正在对【${currentZone}】进行【${currentState}】。`,
-    );
+    text("current-execution", presentationContext.executionDescriptionZh);
 
     text(
       "current-coordinate",
@@ -91,9 +98,40 @@ export function createInfoPanel(sceneData, profile) {
         : "未提供",
       true,
     );
+    text("active-from-index", String(sample.fromIndex), true);
+    text("active-to-index", String(sample.toIndex), true);
+    text("interpolation-alpha", sample.alpha.toFixed(6), true);
+    text("display-role", presentationContext.role, true);
+    text(
+      "role-confidence",
+      presentationContext.roleConfidence.toFixed(3),
+      true,
+    );
+    text(
+      "role-reasons",
+      presentationContext.roleReasons.join(", ") || "none",
+      true,
+    );
+    text("raw-from-state", available(fromPoint.state_id), true);
+    text("raw-to-state", available(toPoint.state_id), true);
+    text("raw-from-zone", available(fromPoint.zone_id), true);
+    text("raw-to-zone", available(toPoint.zone_id), true);
+    text(
+      "presentation-state",
+      `${presentationContext.processStateLabelZh} (${available(presentationContext.processStateId)})`,
+      true,
+    );
+    text("presentation-region", presentationContext.regionLabelZh, true);
+    text("origin-region", available(presentationContext.originRegionLabelZh), true);
+    text("target-region", available(presentationContext.targetRegionLabelZh), true);
+    text(
+      "presentation-warnings",
+      presentationContext.warnings.join(", ") || "none",
+      true,
+    );
     text("current-time", formatTime(sample.time));
-    text("point-label-state", currentState);
-    text("point-label-zone", currentZone);
+    text("point-label-state", presentationContext.scannerLabelPrimary);
+    text("point-label-zone", presentationContext.scannerLabelSecondary);
   }
 
   return { update };

@@ -8,6 +8,7 @@ import { createPathLines } from "./path/createPathLines.js";
 import { createScannerPoint } from "./path/createScannerPoint.js";
 import { createTrail } from "./path/createTrail.js";
 import { createPathInterpolator } from "./path/pathInterpolator.js";
+import { createPresentationContextResolver } from "./path/presentationContext.js";
 import { createPlaybackController } from "./animation/playbackController.js";
 import { adjacentStateTime, stateStartTimes } from "./animation/timeline.js";
 import { createInfoPanel } from "./ui/createInfoPanel.js";
@@ -45,6 +46,9 @@ async function bootstrap() {
   stage.scene.add(mpv.group);
 
   const interpolator = createPathInterpolator(sceneData.path_points);
+  const presentationResolver = createPresentationContextResolver(
+    sceneData.path_points,
+  );
   const pathLines = createPathLines(sceneData.path_points, profile);
   const scanner = createScannerPoint(profile);
   const trail = createTrail(sceneData.path_points, interpolator.vectors, profile);
@@ -136,14 +140,16 @@ async function bootstrap() {
   });
 
   let lastSample = interpolator.sample(0);
+  let lastPresentation = presentationResolver.contextFor(lastSample);
   let elapsed = 0;
   const clock = new THREE.Clock();
   function updateFrame() {
     lastSample = interpolator.sample(playback.time);
-    pathLines.update(lastSample);
-    scanner.update(lastSample.position, elapsed, lastSample.point.state_id);
+    lastPresentation = presentationResolver.contextFor(lastSample);
+    pathLines.update(lastSample, lastPresentation);
+    scanner.update(lastSample.position, elapsed, lastPresentation);
     trail.rebuild(lastSample);
-    infoPanel.update(lastSample, playback.playing);
+    infoPanel.update(lastSample, lastPresentation, playback.playing);
     statusBar.update(lastSample.progress);
   }
 

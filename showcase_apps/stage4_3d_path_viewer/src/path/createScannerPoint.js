@@ -1,5 +1,19 @@
 import * as THREE from "three";
 import { stateColor, VIEWER_COLORS } from "../config/colors.js";
+import { PATH_ROLES } from "./pathRoleClassifier.js";
+
+function scannerColor(presentationContext) {
+  if (presentationContext.role === PATH_ROLES.MAIN_SCAN) {
+    return stateColor(presentationContext.processStateId);
+  }
+  if (presentationContext.role === PATH_ROLES.AUXILIARY_CONNECTION) {
+    return VIEWER_COLORS.auxiliaryHighlight;
+  }
+  if (presentationContext.role === PATH_ROLES.STATE_TRANSITION) {
+    return VIEWER_COLORS.stateTransition;
+  }
+  return VIEWER_COLORS.unknownWarning;
+}
 
 function createCrosshairTexture() {
   const canvas = document.createElement("canvas");
@@ -72,9 +86,9 @@ export function createScannerPoint(profile) {
 
   return {
     group,
-    update(position, elapsed, stateId) {
+    update(position, elapsed, presentationContext) {
       group.position.copy(position);
-      const color = new THREE.Color(stateColor(stateId));
+      const color = new THREE.Color(scannerColor(presentationContext));
       const highlighted = color.clone().lerp(new THREE.Color("#ffffff"), 0.34);
       sphereMaterial.color.copy(highlighted);
       sphereMaterial.emissive.copy(highlighted);
