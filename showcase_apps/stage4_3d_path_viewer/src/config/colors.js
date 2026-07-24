@@ -10,9 +10,16 @@ export const STATE_COLORS = Object.freeze({
 });
 
 export const VIEWER_COLORS = Object.freeze({
-  executed: "#fff27a",
+  current: "#ffffff",
+  executed: "#dcebf5",
+  future: "#9fb5c3",
+  auxiliary: "#83929d",
+  unknown: "#a8b2ba",
   scanner: "#fff7b2",
+  scannerHalo: "#ffffff",
   currentSegment: "#ffffff",
+  labelText: "#edf6fa",
+  labelBackground: "#111a20",
   body: "#6d8294",
   bodyWire: "#b6c7d6",
   windows: "#1f3947",
@@ -24,6 +31,10 @@ export const VIEWER_COLORS = Object.freeze({
 
 export function pathColor(stateId, isTransition = false) {
   return isTransition
-    ? STATE_COLORS.transition
-    : STATE_COLORS[stateId] ?? "#ffffff";
+    ? VIEWER_COLORS.auxiliary
+    : STATE_COLORS[stateId] ?? VIEWER_COLORS.unknown;
+}
+
+export function stateColor(stateId) {
+  return STATE_COLORS[stateId] ?? VIEWER_COLORS.unknown;
 }

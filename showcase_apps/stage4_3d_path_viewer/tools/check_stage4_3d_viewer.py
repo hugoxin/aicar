@@ -52,6 +52,7 @@ def main() -> int:
         "scripts/check_viewer_scene.mjs",
         "src/main.js",
         "src/styles.css",
+        "docs/VIEWER_V1_0_1_VISUAL_PATCH.md",
         "public/data/.gitkeep",
         "outputs/.gitkeep",
     ]
@@ -75,6 +76,70 @@ def main() -> int:
         display.get("maximum_viewer_points", 0) >= 2500,
         "maximum_viewer_points is too small for the frozen Stage4.5-R path.",
     )
+    required_display_keys = {
+        "scanner_point_radius",
+        "scanner_point_pulse_scale",
+        "scanner_point_pulse_duration_s",
+        "scanner_halo_radius_ratio",
+        "scanner_halo_opacity",
+        "scanner_crosshair_enabled",
+        "current_segment_opacity",
+        "executed_path_opacity",
+        "future_path_opacity",
+        "auxiliary_path_opacity",
+        "inactive_state_opacity_ratio",
+        "focus_current_state_default",
+        "show_auxiliary_paths_default",
+        "trail_point_count",
+        "trail_start_opacity",
+        "trail_end_opacity",
+        "vehicle_body_opacity",
+        "vehicle_wireframe_opacity",
+        "technical_details_expanded_default",
+    }
+    require(
+        required_display_keys <= display.keys(),
+        "Viewer V1.0.1 display profile keys are incomplete.",
+    )
+    require(
+        display["current_segment_opacity"]
+        > display["executed_path_opacity"]
+        > display["future_path_opacity"]
+        > display["auxiliary_path_opacity"],
+        "Path opacity hierarchy must be current > executed > future > auxiliary.",
+    )
+    require(
+        display["focus_current_state_default"] is True,
+        "Current-state focus must be enabled by default.",
+    )
+    require(
+        display["show_auxiliary_paths_default"] is False,
+        "Auxiliary paths must be hidden by default.",
+    )
+    require(
+        display["technical_details_expanded_default"] is False,
+        "Technical details must be collapsed by default.",
+    )
+    require(
+        display["trail_point_count"] <= 120,
+        "Trail point count exceeds the V1.0.1 limit.",
+    )
+
+    index_text = (app / "index.html").read_text(encoding="utf-8")
+    controls_text = (app / "src" / "ui" / "createControlPanel.js").read_text(
+        encoding="utf-8"
+    )
+    require("阶段4 · 离线轨迹展示" in index_text, "Chinese-first title is missing.")
+    require("当前正在执行" in index_text, "Current execution sentence is missing.")
+    require("技术详情" in index_text, "Technical details panel is missing.")
+    require(
+        "辅助连接线表示不同扫描区域之间的移动，不代表持续喷洗" in controls_text,
+        "Auxiliary path explanation is missing.",
+    )
+    require(
+        "不连接PLC或真实设备" in index_text,
+        "Real-device boundary notice is missing.",
+    )
 
     exporter = app / "tools" / "export_viewer_scene.py"
     result = subprocess.run([sys.executable, str(exporter)], cwd=root, check=False)
@@ -91,6 +156,18 @@ def main() -> int:
         "Formal viewer data must use STAGE4_5_MACHINE_PATH.",
     )
     require(summary.get("point_count") == len(points), "point_count mismatch.")
+    require(len(points) == 2503, "Frozen Stage4.5-R viewer point count changed.")
+    require(summary.get("source_point_count") == 2503, "Source point count changed.")
+    require(summary.get("state_count") == 7, "State count changed.")
+    require(summary.get("zone_count") == 6, "Zone count changed.")
+    require(
+        math.isclose(summary.get("path_length_mm", 0), 328502.099, abs_tol=0.001),
+        "Frozen path length changed.",
+    )
+    require(
+        math.isclose(summary.get("duration_s", 0), 2570.902629, abs_tol=0.001),
+        "Frozen duration changed.",
+    )
     require(len(points) > 1, "Path points are missing.")
     require(
         [point.get("point_index") for point in points] == list(range(len(points))),

@@ -4,6 +4,9 @@ import { resolve } from "node:path";
 const appRoot = resolve(import.meta.dirname, "..");
 const scenePath = resolve(appRoot, "public", "data", "viewer_scene.json");
 const scene = JSON.parse(await readFile(scenePath, "utf8"));
+const profile = JSON.parse(
+  await readFile(resolve(appRoot, "config", "viewer_display_profile.json"), "utf8"),
+);
 const requireValue = (condition, message) => {
   if (!condition) throw new Error(message);
 };
@@ -21,6 +24,20 @@ requireValue(Array.isArray(scene.path_points), "path_points missing");
 requireValue(
   scene.path_summary?.point_count === scene.path_points.length,
   "point count mismatch",
+);
+requireValue(scene.path_points.length === 2503, "frozen point count changed");
+requireValue(
+  profile.current_segment_opacity
+    > profile.executed_path_opacity
+    && profile.executed_path_opacity > profile.future_path_opacity
+    && profile.future_path_opacity > profile.auxiliary_path_opacity,
+  "path opacity hierarchy invalid",
+);
+requireValue(profile.focus_current_state_default === true, "focus default invalid");
+requireValue(profile.show_auxiliary_paths_default === false, "auxiliary default invalid");
+requireValue(
+  profile.technical_details_expanded_default === false,
+  "technical details default invalid",
 );
 
 const stateColors = new Map(

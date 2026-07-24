@@ -41,13 +41,13 @@ async function bootstrap() {
   const sceneData = await loadViewerScene();
   const profile = sceneData.display_profile;
   const stage = createScene(container, profile);
-  const mpv = createMpvVehicle(sceneData.vehicle, profile.vehicle_opacity);
+  const mpv = createMpvVehicle(sceneData.vehicle, profile);
   stage.scene.add(mpv.group);
 
   const interpolator = createPathInterpolator(sceneData.path_points);
   const pathLines = createPathLines(sceneData.path_points, profile);
-  const scanner = createScannerPoint(profile.scanner_point_radius);
-  const trail = createTrail(interpolator.vectors, profile.trail_point_count);
+  const scanner = createScannerPoint(profile);
+  const trail = createTrail(sceneData.path_points, interpolator.vectors, profile);
   stage.scene.add(pathLines.group, scanner.group, trail.line);
 
   const playback = createPlaybackController({
@@ -62,7 +62,7 @@ async function bootstrap() {
   );
   cameraPresets.moveTo(profile.default_camera, 0.01);
 
-  const infoPanel = createInfoPanel(sceneData);
+  const infoPanel = createInfoPanel(sceneData, profile);
   const starts = stateStartTimes(sceneData.path_points);
   const statusBar = createStatusBar(profile, {
     play: () => playback.play(),
@@ -89,16 +89,17 @@ async function bootstrap() {
   });
 
   let fullPathVisible = profile.show_full_path;
-  createLegend(document.getElementById("legend"), sceneData.states, (stateId, visible) => {
-    const stateGroup = pathLines.stateGroups.get(stateId);
-    if (stateGroup) {
-      stateGroup.userData.enabled = visible;
-      stateGroup.visible = fullPathVisible && visible;
-    }
-  });
+  createLegend(
+    document.getElementById("legend"),
+    sceneData.states,
+    (stateId, visible) => {
+      pathLines.setStateVisible(stateId, visible);
+    },
+    { transition: profile.show_auxiliary_paths_default },
+  );
 
   let showPointLabel = profile.show_point_label;
-  createControlPanel(document.getElementById("display-controls"), {
+  createControlPanel(document.getElementById("display-controls"), profile, {
     onMode: (mode) => mpv.setMode(mode),
     onToggle: (key, enabled) => {
       if (key === "vehicle") mpv.group.visible = enabled;
@@ -106,8 +107,15 @@ async function bootstrap() {
         fullPathVisible = enabled;
         pathLines.setFullPathVisible(enabled);
       }
-      if (key === "executedPath") pathLines.executedLine.visible = enabled;
+      if (key === "executedPath") pathLines.setExecutedVisible(enabled);
       if (key === "trail") trail.line.visible = enabled;
+      if (key === "focusCurrentState") pathLines.setFocusCurrentState(enabled);
+      if (key === "auxiliaryPaths") {
+        pathLines.setAuxiliaryVisible(enabled);
+        const legendButton = document.querySelector('[data-state="transition"]');
+        legendButton?.classList.toggle("active", enabled);
+        legendButton?.setAttribute("aria-pressed", String(enabled));
+      }
       if (key === "axes") stage.ground.axes.visible = enabled;
       if (key === "grid") stage.ground.grid.visible = enabled;
       if (key === "pointLabel") showPointLabel = enabled;
@@ -133,7 +141,7 @@ async function bootstrap() {
   function updateFrame() {
     lastSample = interpolator.sample(playback.time);
     pathLines.update(lastSample);
-    scanner.update(lastSample.position, elapsed);
+    scanner.update(lastSample.position, elapsed, lastSample.point.state_id);
     trail.rebuild(lastSample);
     infoPanel.update(lastSample, playback.playing);
     statusBar.update(lastSample.progress);

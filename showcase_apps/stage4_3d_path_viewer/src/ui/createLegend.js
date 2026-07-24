@@ -1,7 +1,7 @@
 import { pathColor } from "../config/colors.js";
 import { stateLabel } from "../config/labels.js";
 
-export function createLegend(container, states, onToggle) {
+export function createLegend(container, states, onToggle, initialVisibility = {}) {
   const entries = states
     .filter((state) => state.state_id !== "dwell")
     .map((state) => ({
@@ -14,7 +14,8 @@ export function createLegend(container, states, onToggle) {
   entries.forEach((entry) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "legend-item active";
+    const isVisible = initialVisibility[entry.id] ?? true;
+    button.className = `legend-item${isVisible ? " active" : ""}`;
     button.dataset.state = entry.id;
     button.innerHTML = `<span class="legend-swatch" style="--swatch:${entry.color}"></span><span>${entry.label}</span>`;
     button.addEventListener("click", () => {
@@ -23,7 +24,7 @@ export function createLegend(container, states, onToggle) {
       button.setAttribute("aria-pressed", String(visible));
       onToggle(entry.id, visible);
     });
-    button.setAttribute("aria-pressed", "true");
+    button.setAttribute("aria-pressed", String(isVisible));
     container.appendChild(button);
   });
 }

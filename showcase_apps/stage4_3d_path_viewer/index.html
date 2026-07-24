@@ -10,21 +10,21 @@
     <div id="app">
       <header class="topbar">
         <div class="brand-block">
-          <p class="eyebrow">STAGE4 · OFFLINE VIEWER</p>
+          <p class="eyebrow">阶段4 · 离线轨迹展示 <small>STAGE4 OFFLINE VIEWER</small></p>
           <h1>AI无人洗车三维轨迹演示</h1>
         </div>
         <div class="source-block">
-          <span class="source-label">数据来源</span>
-          <strong id="source-name">Stage4.5连续清洗面路径</strong>
+          <strong id="source-name">数据来源：Stage4.5 连续清洗面路径</strong>
         </div>
         <div class="mode-badge">
           <span class="status-dot"></span>
-          <span id="mode-name">MPV演示映射</span>
+          <span id="mode-name">当前模式：通用MPV演示映射</span>
         </div>
       </header>
 
       <div class="mapping-notice">
-        当前为MPV演示映射，轨迹用于展示扫描逻辑，不代表真实MPV标定路径。
+        <strong>当前为通用MPV演示映射。</strong>
+        <span>轨迹用于展示扫描逻辑，不代表真实MPV标定路径或实机控制轨迹。</span>
       </div>
 
       <main class="workspace">
@@ -60,23 +60,39 @@
         <aside class="sidebar">
           <section class="panel live-panel">
             <div class="panel-heading">
-              <h2>运行状态</h2>
+              <h2>演示信息</h2>
               <span id="playback-state" class="mini-status">待播放</span>
             </div>
-            <dl class="metrics">
+            <dl class="metrics demo-metrics">
               <div><dt>车辆</dt><dd>通用MPV演示外形</dd></div>
-              <div><dt>当前状态</dt><dd><strong id="current-state">预冲洗</strong><small id="current-state-id">pre_rinse</small></dd></div>
-              <div><dt>当前区域</dt><dd><strong id="current-zone">车顶</strong><small id="current-zone-id">roof</small></dd></div>
-              <div><dt>当前点</dt><dd id="current-point">1 / 0</dd></div>
+              <div><dt>数据来源</dt><dd id="demo-source">Stage4.5 连续清洗面路径</dd></div>
+              <div><dt>当前状态</dt><dd><strong id="current-state">预冲洗</strong></dd></div>
+              <div><dt>当前区域</dt><dd><strong id="current-zone">车顶</strong></dd></div>
               <div><dt>当前进度</dt><dd id="current-progress">0.0%</dd></div>
-              <div><dt>当前坐标</dt><dd id="current-coordinate">X 0 · Y 0 · Z 0</dd></div>
               <div><dt>当前速度</dt><dd id="current-speed">未提供</dd></div>
-              <div><dt>当前段</dt><dd id="current-segment" class="technical-value">—</dd></div>
-              <div><dt>当前扫描线</dt><dd id="current-scan-pass" class="technical-value">—</dd></div>
               <div><dt>总路径</dt><dd id="total-path">—</dd></div>
               <div><dt>总候选时长</dt><dd id="total-duration">—</dd></div>
             </dl>
+            <p id="current-execution" class="execution-summary">
+              当前正在执行：正在对【车顶】进行【预冲洗】。
+            </p>
           </section>
+
+          <details id="technical-details" class="panel technical-details">
+            <summary>技术详情 <span>展开查看原始字段</span></summary>
+            <dl class="metrics technical-metrics">
+              <div><dt>当前点号</dt><dd id="current-point">1 / 0</dd></div>
+              <div><dt>当前坐标</dt><dd id="current-coordinate">X 0 · Y 0 · Z 0</dd></div>
+              <div><dt>state_id</dt><dd id="current-state-id">pre_rinse</dd></div>
+              <div><dt>zone_id</dt><dd id="current-zone-id">roof</dd></div>
+              <div><dt>segment_id</dt><dd id="current-segment">—</dd></div>
+              <div><dt>scan_pass_id</dt><dd id="current-scan-pass">—</dd></div>
+              <div><dt>surface_task_id</dt><dd id="current-surface-task">—</dd></div>
+              <div><dt>critical_point_type</dt><dd id="current-critical-type">—</dd></div>
+              <div><dt>source sequence index</dt><dd id="current-source-index">—</dd></div>
+              <div><dt>timestamp</dt><dd id="current-timestamp">—</dd></div>
+            </dl>
+          </details>
 
           <section class="panel">
             <div class="panel-heading"><h2>路径图例</h2><span>点击切换</span></div>

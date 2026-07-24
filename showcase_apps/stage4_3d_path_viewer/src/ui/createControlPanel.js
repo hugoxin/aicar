@@ -1,20 +1,25 @@
-const TOGGLES = [
-  ["vehicle", "显示车体", true],
-  ["fullPath", "完整路径", true],
-  ["executedPath", "已执行路径", true],
-  ["trail", "扫描尾迹", true],
-  ["axes", "坐标轴", false],
-  ["grid", "地面网格", true],
-  ["pointLabel", "点位标签", true],
-  ["lightMode", "浅色背景", false],
-];
+function toggles(profile) {
+  return [
+    ["vehicle", "显示车体", true],
+    ["fullPath", "完整路径", profile.show_full_path],
+    ["executedPath", "已执行路径", profile.show_executed_path],
+    ["trail", "扫描尾迹", profile.show_trail],
+    ["focusCurrentState", "聚焦当前状态", profile.focus_current_state_default],
+    ["auxiliaryPaths", "显示辅助连接线", profile.show_auxiliary_paths_default],
+    ["axes", "坐标轴", profile.show_axes],
+    ["grid", "地面网格", profile.show_grid],
+    ["pointLabel", "点位标签", profile.show_point_label],
+    ["lightMode", "浅色背景", false],
+  ];
+}
 
-export function createControlPanel(container, handlers) {
-  TOGGLES.forEach(([key, label, initial]) => {
+export function createControlPanel(container, profile, handlers) {
+  toggles(profile).forEach(([key, label, initial]) => {
     const wrapper = document.createElement("label");
     wrapper.className = "switch-control";
     const input = document.createElement("input");
     input.type = "checkbox";
+    input.dataset.control = key;
     input.checked = initial;
     input.addEventListener("change", () => handlers.onToggle?.(key, input.checked));
     const text = document.createElement("span");
@@ -28,6 +33,7 @@ export function createControlPanel(container, handlers) {
   const modeText = document.createElement("span");
   modeText.textContent = "车体模式";
   const select = document.createElement("select");
+  select.id = "vehicle-mode-select";
   select.setAttribute("aria-label", "车体显示模式");
   [
     ["solid-wireframe", "实体+线框"],
@@ -45,4 +51,10 @@ export function createControlPanel(container, handlers) {
   });
   modeWrapper.append(modeText, select);
   container.appendChild(modeWrapper);
+
+  const explanation = document.createElement("p");
+  explanation.className = "control-explanation";
+  explanation.textContent =
+    "辅助连接线表示不同扫描区域之间的移动，不代表持续喷洗。";
+  container.appendChild(explanation);
 }

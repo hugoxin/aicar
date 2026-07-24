@@ -1,119 +1,331 @@
 import * as THREE from "three";
-import { pathColor, VIEWER_COLORS } from "../config/colors.js";
+import { stateColor, VIEWER_COLORS } from "../config/colors.js";
 import { displayPositionToVector } from "./pathInterpolator.js";
 
-function makeLine(points, material) {
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  return new THREE.Line(geometry, material);
+export const DISPLAY_ROLES = Object.freeze({
+  MAIN_SCAN: "MAIN_SCAN",
+  AUXILIARY_CONNECTION: "AUXILIARY_CONNECTION",
+  UNKNOWN_PATH_ROLE: "UNKNOWN_PATH_ROLE",
+});
+
+const AUXILIARY_ID_PATTERN = /(transition|connection|connector|patch_link|local_link)/i;
+
+function hasValue(value) {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+export function classifyDisplayRole(previous, current) {
+  const identifiers = [
+    previous.segment_id,
+    current.segment_id,
+    previous.surface_task_id,
+    current.surface_task_id,
+  ].filter(Boolean);
+  if (
+    previous.is_transition
+    || current.is_transition
+    || identifiers.some((value) => AUXILIARY_ID_PATTERN.test(value))
+    || previous.critical_point_type === "STATE_BOUNDARY"
+    || current.critical_point_type === "STATE_BOUNDARY"
+  ) {
+    return DISPLAY_ROLES.AUXILIARY_CONNECTION;
+  }
+  if (
+    hasValue(previous.scan_pass_id)
+    && previous.scan_pass_id === current.scan_pass_id
+    && previous.state_id === current.state_id
+  ) {
+    return DISPLAY_ROLES.MAIN_SCAN;
+  }
+  if (hasValue(previous.scan_pass_id) && hasValue(current.scan_pass_id)) {
+    return DISPLAY_ROLES.AUXILIARY_CONNECTION;
+  }
+  return DISPLAY_ROLES.UNKNOWN_PATH_ROLE;
+}
+
+function lineMaterial(color, opacity, options = {}) {
+  return new THREE.LineBasicMaterial({
+    color,
+    transparent: true,
+    opacity,
+    depthTest: options.depthTest ?? true,
+    depthWrite: false,
+    blending: options.blending ?? THREE.NormalBlending,
+  });
+}
+
+function createLine(points, material) {
+  return new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(points),
+    material,
+  );
+}
+
+function createLineSegments(positions, material) {
+  const geometry = new THREE.BufferGeometry().setFromPoints(positions);
+  geometry.setDrawRange(0, 0);
+  return new THREE.LineSegments(geometry, material);
+}
+
+function makeStateEntry(stateId, profile) {
+  const group = new THREE.Group();
+  group.name = `path-${stateId}`;
+  group.userData.enabled = true;
+  return {
+    stateId,
+    group,
+    futureMaterials: [],
+    executedPositions: [],
+    executedCountAtIndex: null,
+    executedLine: null,
+    executedMaterial: lineMaterial(
+      stateColor(stateId),
+      profile.executed_path_opacity,
+      { depthTest: false },
+    ),
+  };
 }
 
 export function createPathLines(pathPoints, profile) {
   const group = new THREE.Group();
   group.name = "stage4-path-lines";
-  const stateGroups = new Map();
   const vectors = pathPoints.map((point) =>
     displayPositionToVector(point.display_position_mm),
   );
+  const stateEntries = new Map();
+  const stateGroups = new Map();
+  const auxiliaryGroup = new THREE.Group();
+  auxiliaryGroup.name = "path-auxiliary-connections";
+  auxiliaryGroup.userData.enabled = profile.show_auxiliary_paths_default;
+  const unknownGroup = new THREE.Group();
+  unknownGroup.name = "path-unknown-role";
 
-  let run = [];
-  let runKey = null;
-  function flushRun() {
-    if (run.length < 2 || !runKey) {
-      run = [];
-      return;
+  function stateEntry(stateId) {
+    if (!stateEntries.has(stateId)) {
+      const entry = makeStateEntry(stateId, profile);
+      stateEntries.set(stateId, entry);
+      stateGroups.set(stateId, entry.group);
+      group.add(entry.group);
     }
-    const [stateId, transitionFlag] = runKey.split("|");
-    const isTransition = transitionFlag === "1";
-    const line = makeLine(
-      run,
-      new THREE.LineBasicMaterial({
-        color: pathColor(stateId, isTransition),
-        transparent: true,
-        opacity: profile.path_opacity,
-        depthTest: false,
-      }),
-    );
-    line.renderOrder = isTransition ? 4 : 3;
-    const key = isTransition ? "transition" : stateId;
-    if (!stateGroups.has(key)) {
-      const stateGroup = new THREE.Group();
-      stateGroup.name = `path-${key}`;
-      stateGroups.set(key, stateGroup);
-      group.add(stateGroup);
-    }
-    stateGroups.get(key).add(line);
-    run = [];
+    return stateEntries.get(stateId);
   }
 
-  pathPoints.forEach((point, index) => {
-    const key = `${point.state_id ?? "transition"}|${point.is_transition ? 1 : 0}`;
-    if (key !== runKey) {
-      flushRun();
-      runKey = key;
-      if (index > 0) run.push(vectors[index - 1]);
+  const roleRuns = [];
+  let activeRun = null;
+  for (let index = 1; index < pathPoints.length; index += 1) {
+    const previous = pathPoints[index - 1];
+    const current = pathPoints[index];
+    const role = classifyDisplayRole(previous, current);
+    const stateId = current.state_id || previous.state_id || "unknown";
+    const key = `${role}|${stateId}`;
+    if (!activeRun || activeRun.key !== key) {
+      activeRun = {
+        key,
+        role,
+        stateId,
+        points: [vectors[index - 1], vectors[index]],
+      };
+      roleRuns.push(activeRun);
+    } else {
+      activeRun.points.push(vectors[index]);
     }
-    run.push(vectors[index]);
+  }
+
+  roleRuns.forEach((run) => {
+    let color = stateColor(run.stateId);
+    let opacity = profile.future_path_opacity;
+    let parent = stateEntry(run.stateId).group;
+    if (run.role === DISPLAY_ROLES.AUXILIARY_CONNECTION) {
+      color = VIEWER_COLORS.auxiliary;
+      opacity = profile.auxiliary_path_opacity;
+      parent = auxiliaryGroup;
+    } else if (run.role === DISPLAY_ROLES.UNKNOWN_PATH_ROLE) {
+      color = VIEWER_COLORS.unknown;
+      opacity = profile.future_path_opacity * 0.72;
+      parent = unknownGroup;
+    }
+    const material = lineMaterial(color, opacity);
+    material.userData.baseOpacity = opacity;
+    material.userData.stateId = run.stateId;
+    material.userData.role = run.role;
+    const line = createLine(run.points, material);
+    line.renderOrder = run.role === DISPLAY_ROLES.MAIN_SCAN ? 3 : 2;
+    parent.add(line);
+    if (run.role === DISPLAY_ROLES.MAIN_SCAN) {
+      stateEntry(run.stateId).futureMaterials.push(material);
+    }
   });
-  flushRun();
 
-  const executedPositions = new Float32Array(vectors.length * 3);
-  vectors.forEach((vector, index) => vector.toArray(executedPositions, index * 3));
-  const executedGeometry = new THREE.BufferGeometry();
-  executedGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(executedPositions, 3),
-  );
-  executedGeometry.setDrawRange(0, 1);
-  const executedLine = new THREE.Line(
-    executedGeometry,
-    new THREE.LineBasicMaterial({
-      color: VIEWER_COLORS.executed,
-      transparent: true,
-      opacity: 0.92,
-      depthTest: false,
-    }),
-  );
-  executedLine.renderOrder = 7;
+  group.add(auxiliaryGroup, unknownGroup);
+  stateGroups.set("transition", auxiliaryGroup);
 
-  const highlightPositions = new Float32Array(6);
-  const highlightGeometry = new THREE.BufferGeometry();
-  highlightGeometry.setAttribute(
+  const auxiliaryExecutedPositions = [];
+  const auxiliaryExecutedCountAtIndex = new Uint32Array(pathPoints.length);
+  pathPoints.forEach((point) => stateEntry(point.state_id || "unknown"));
+  stateEntries.forEach((entry) => {
+    entry.executedCountAtIndex = new Uint32Array(pathPoints.length);
+  });
+
+  for (let index = 1; index < pathPoints.length; index += 1) {
+    const previous = pathPoints[index - 1];
+    const current = pathPoints[index];
+    const role = classifyDisplayRole(previous, current);
+    const stateId = current.state_id || previous.state_id || "unknown";
+    if (role === DISPLAY_ROLES.MAIN_SCAN) {
+      stateEntry(stateId).executedPositions.push(vectors[index - 1], vectors[index]);
+    } else if (role === DISPLAY_ROLES.AUXILIARY_CONNECTION) {
+      auxiliaryExecutedPositions.push(vectors[index - 1], vectors[index]);
+    }
+    stateEntries.forEach((entry) => {
+      entry.executedCountAtIndex[index] = entry.executedPositions.length;
+    });
+    auxiliaryExecutedCountAtIndex[index] = auxiliaryExecutedPositions.length;
+  }
+
+  stateEntries.forEach((entry) => {
+    entry.executedLine = createLineSegments(
+      entry.executedPositions,
+      entry.executedMaterial,
+    );
+    entry.executedLine.name = `executed-${entry.stateId}`;
+    entry.executedLine.renderOrder = 7;
+    entry.group.add(entry.executedLine);
+  });
+  const auxiliaryExecutedMaterial = lineMaterial(
+    VIEWER_COLORS.auxiliary,
+    Math.min(profile.executed_path_opacity, profile.auxiliary_path_opacity * 1.45),
+    { depthTest: false },
+  );
+  const auxiliaryExecutedLine = createLineSegments(
+    auxiliaryExecutedPositions,
+    auxiliaryExecutedMaterial,
+  );
+  auxiliaryExecutedLine.renderOrder = 6;
+  auxiliaryGroup.add(auxiliaryExecutedLine);
+
+  const currentCapacity = 10;
+  const currentPositions = new Float32Array(currentCapacity * 3);
+  const currentGeometry = new THREE.BufferGeometry();
+  currentGeometry.setAttribute(
     "position",
-    new THREE.BufferAttribute(highlightPositions, 3),
+    new THREE.BufferAttribute(currentPositions, 3),
   );
-  const highlightLine = new THREE.Line(
-    highlightGeometry,
-    new THREE.LineBasicMaterial({
-      color: VIEWER_COLORS.currentSegment,
-      transparent: true,
-      opacity: 1,
-      depthTest: false,
-    }),
+  currentGeometry.setDrawRange(0, 0);
+  const currentGlowMaterial = lineMaterial(
+    VIEWER_COLORS.current,
+    profile.current_segment_opacity * 0.34,
+    { depthTest: false, blending: THREE.AdditiveBlending },
   );
-  highlightLine.renderOrder = 8;
-  group.add(executedLine, highlightLine);
+  const currentMaterial = lineMaterial(
+    VIEWER_COLORS.current,
+    profile.current_segment_opacity,
+    { depthTest: false },
+  );
+  const currentGlowLine = new THREE.Line(currentGeometry, currentGlowMaterial);
+  const currentLine = new THREE.Line(currentGeometry, currentMaterial);
+  currentGlowLine.renderOrder = 10;
+  currentLine.renderOrder = 11;
+  group.add(currentGlowLine, currentLine);
+
+  let fullPathVisible = true;
+  let executedVisible = true;
+  let focusCurrentState = profile.focus_current_state_default;
+  let auxiliaryVisible = profile.show_auxiliary_paths_default;
+  let currentStateId = pathPoints[0]?.state_id;
+
+  function applyPresentation() {
+    stateEntries.forEach((entry) => {
+      const enabled = entry.group.userData.enabled !== false;
+      entry.group.visible = enabled && (fullPathVisible || executedVisible);
+      const stateRatio =
+        focusCurrentState && entry.stateId !== currentStateId
+          ? profile.inactive_state_opacity_ratio
+          : 1;
+      entry.futureMaterials.forEach((material) => {
+        material.opacity = material.userData.baseOpacity * stateRatio;
+      });
+      entry.executedMaterial.opacity =
+        profile.executed_path_opacity * stateRatio;
+      if (entry.executedLine) entry.executedLine.visible = executedVisible;
+      entry.group.children.forEach((child) => {
+        if (child !== entry.executedLine) child.visible = fullPathVisible;
+      });
+    });
+    auxiliaryGroup.visible = auxiliaryVisible && fullPathVisible;
+    auxiliaryExecutedLine.visible = auxiliaryVisible && executedVisible;
+    unknownGroup.visible = fullPathVisible;
+  }
+
+  function updateCurrentWindow(sample) {
+    const start = Math.max(0, sample.index - 3);
+    const end = Math.min(vectors.length - 1, sample.index + 5);
+    const points = [];
+    for (let index = start; index <= sample.index; index += 1) {
+      points.push(vectors[index]);
+    }
+    points.push(sample.position);
+    for (let index = sample.nextIndex; index <= end; index += 1) {
+      points.push(vectors[index]);
+    }
+    points.slice(0, currentCapacity).forEach((point, index) => {
+      point.toArray(currentPositions, index * 3);
+    });
+    currentGeometry.attributes.position.needsUpdate = true;
+    currentGeometry.setDrawRange(0, Math.min(points.length, currentCapacity));
+  }
 
   function update(sample) {
-    executedGeometry.setDrawRange(0, Math.max(1, sample.index + 1));
-    sample.fromPosition.toArray(highlightPositions, 0);
-    sample.toPosition.toArray(highlightPositions, 3);
-    highlightGeometry.attributes.position.needsUpdate = true;
+    currentStateId = sample.point.state_id;
+    const executedIndex = sample.progress >= 1 ? sample.nextIndex : sample.index;
+    stateEntries.forEach((entry) => {
+      entry.executedLine.geometry.setDrawRange(
+        0,
+        entry.executedCountAtIndex[executedIndex] || 0,
+      );
+    });
+    auxiliaryExecutedLine.geometry.setDrawRange(
+      0,
+      auxiliaryExecutedCountAtIndex[executedIndex] || 0,
+    );
+    const color = new THREE.Color(stateColor(currentStateId)).lerp(
+      new THREE.Color(VIEWER_COLORS.current),
+      0.2,
+    );
+    currentMaterial.color.copy(color);
+    currentGlowMaterial.color.copy(color);
+    updateCurrentWindow(sample);
+    applyPresentation();
   }
 
+  applyPresentation();
   return {
     group,
     stateGroups,
-    executedLine,
-    highlightLine,
+    currentLine,
+    currentGlowLine,
     update,
     setStateVisible(stateId, visible) {
-      const stateGroup = stateGroups.get(stateId);
-      if (stateGroup) stateGroup.visible = visible;
+      const target = stateGroups.get(stateId);
+      if (target) target.userData.enabled = visible;
+      if (stateId === "transition") auxiliaryVisible = visible;
+      applyPresentation();
     },
     setFullPathVisible(visible) {
-      stateGroups.forEach((stateGroup) => {
-        stateGroup.visible = visible && stateGroup.userData.enabled !== false;
-      });
+      fullPathVisible = visible;
+      applyPresentation();
+    },
+    setExecutedVisible(visible) {
+      executedVisible = visible;
+      applyPresentation();
+    },
+    setFocusCurrentState(enabled) {
+      focusCurrentState = enabled;
+      applyPresentation();
+    },
+    setAuxiliaryVisible(enabled) {
+      auxiliaryVisible = enabled;
+      auxiliaryGroup.userData.enabled = enabled;
+      applyPresentation();
     },
   };
 }

@@ -91,6 +91,7 @@
 - [Stage4 3D Path Viewer Plan](../showcase_apps/stage4_3d_path_viewer/docs/STAGE4_3D_PATH_VIEWER_PLAN.md)
 - [Viewer Scene Data Contract](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_DATA_CONTRACT.md)
 - [Viewer Boundaries](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_BOUNDARIES.md)
+- [Viewer V1.0.1 Visual Patch](../showcase_apps/stage4_3d_path_viewer/docs/VIEWER_V1_0_1_VISUAL_PATCH.md)
 
 ## 9. 阶段2策略层
 

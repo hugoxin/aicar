@@ -57,6 +57,7 @@ REQUIRED_PATHS = [
     "docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_DIAGNOSIS.md",
     "docs/STAGE4_CONTINUOUS_SURFACE_PATH_REPAIR_PLAN.md",
     "docs/STAGE4_CONTINUOUS_SURFACE_BASELINE_SUMMARY.md",
+    "showcase_apps/stage4_3d_path_viewer/docs/VIEWER_V1_0_1_VISUAL_PATCH.md",
     "aicar_sim/README.md",
     "aicar_sim/requirements.txt",
     "aicar_sim/pyproject.toml",

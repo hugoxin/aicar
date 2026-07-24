@@ -392,7 +392,7 @@ python aicar_sim\scripts\check_continuous_surface_report_r.py
 
 ## Stage4 独立三维展示支线
 
-`showcase_apps\stage4_3d_path_viewer` 是从 Stage4.5 冻结 `main` 创建的独立 Three.js 展示应用。它通过 Python 把冻结的 Stage4.5-R 路径导出为 `viewer_scene.json`，显示通用 MPV、完整状态路径、发光扫描点、尾迹和时间轴播放。
+`showcase_apps\stage4_3d_path_viewer` 是从 Stage4.5 冻结 `main` 创建的独立 Three.js 展示应用。V1.0.1 通过 Python 把冻结的 Stage4.5-R 路径导出为 `viewer_scene.json`，并强化扫描点、当前执行段、状态聚焦、辅助连接线降噪和中文信息分层。
 
 ```powershell
 Set-Location F:\aicar\showcase_apps\stage4_3d_path_viewer

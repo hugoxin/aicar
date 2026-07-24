@@ -12,7 +12,7 @@ function roundedPart(width, height, length, radius, material) {
   return mesh;
 }
 
-export function createMpvVehicle(vehicle, opacity = 0.42) {
+export function createMpvVehicle(vehicle, profile) {
   const dimensions = vehicle.dimensions_mm;
   const proportions = vehicle.body_proportions;
   const length = dimensions.length_mm * MM_TO_M;
@@ -38,7 +38,7 @@ export function createMpvVehicle(vehicle, opacity = 0.42) {
     roughness: 0.46,
     metalness: 0.26,
     transparent: true,
-    opacity,
+    opacity: profile.vehicle_body_opacity,
     side: THREE.DoubleSide,
     depthWrite: false,
   });
@@ -47,7 +47,7 @@ export function createMpvVehicle(vehicle, opacity = 0.42) {
     roughness: 0.15,
     metalness: 0.08,
     transparent: true,
-    opacity: Math.min(0.7, opacity + 0.16),
+    opacity: Math.min(0.62, profile.vehicle_body_opacity + 0.18),
     depthWrite: false,
   });
   const tireMaterial = new THREE.MeshStandardMaterial({
@@ -138,7 +138,7 @@ export function createMpvVehicle(vehicle, opacity = 0.42) {
       new THREE.LineBasicMaterial({
         color: VIEWER_COLORS.bodyWire,
         transparent: true,
-        opacity: 0.7,
+        opacity: profile.vehicle_wireframe_opacity,
       }),
     );
     wire.position.copy(part.position);
